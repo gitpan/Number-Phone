@@ -1,7 +1,7 @@
 use ExtUtils::MakeMaker;
 WriteMakefile(
 		NAME         => 'Number::Phone',
-		VERSION_FROM => 'lib/Number/Phone.pm',
+		VERSION      => 1.1,
 		PREREQ_PM    => {
 		        # Storable           => 2.07,
 		}

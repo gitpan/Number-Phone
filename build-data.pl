@@ -17,7 +17,7 @@ open(MODULE, '>Data.pm') || die("Can't write Data.pm\n");
 print MODULE "package Number::Phone::UK::Data;\n\n";
 print MODULE "# automatically generated file, don't edit\n\n";
 
-my @geo_prefices = my @free_prefices = my @network_svc_prefices = my @corporate_prefices = my @personal_prefices = my @pager_prefices = my @mobile_prefices = my @special_prefices = my @adult_prefices = ();
+my @geo_prefices = my @free_prefices = my @network_svc_prefices = my @corporate_prefices = my @personal_prefices = my @pager_prefices = my @mobile_prefices = my @special_prefices = my @adult_prefices = my @ip_prefices = ();
 
 open(SABC, 'sabc.txt') || die("Can't read sabc.txt\n");
 
@@ -121,6 +121,8 @@ while(my $line = <S5>) {
     my $telco = $fields[3];
     my $format = $fields[4];
 
+    push @ip_prefices, $retard if($fields[5] =~ /voip/i);
+
     push @telco_length_data, [$retard, $telco, $format];
 }
 close(S5);
@@ -164,6 +166,7 @@ print MODULE "our \%pager_prefices = map { (\$_, 1) } qw(".join(' ', @pager_pref
 print MODULE "our \%mobile_prefices = map { (\$_, 1) } qw(".join(' ', @mobile_prefices).");\n";
 print MODULE "our \%special_prefices = map { (\$_, 1) } qw(".join(' ', @special_prefices).");\n";
 print MODULE "our \%adult_prefices = map { (\$_, 1) } qw(".join(' ', @adult_prefices).");\n";
+print MODULE "our \%ip_prefices = map { (\$_, 1) } qw(".join(' ', @ip_prefices).");\n";
 print MODULE "our \%telco_and_length = (\n";
 
 my %telco_format_cache = ();

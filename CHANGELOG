@@ -1,0 +1,6 @@
+2004-09-15	Number::Phone::UK now implements is_ipphone, and N::P::UK::Data
+                has appropriate data in it, as OFCOM have this week published
+                the allocations they made a few weeks ago.
+
+                Removed is_voip() alias, it didn't work properly under all the
+                possible ways of invoking it.

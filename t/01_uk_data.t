@@ -8,7 +8,7 @@ use diagnostics;
 
 use Number::Phone::UK;
 
-BEGIN { $| = 1; print "1..40\n"; }
+BEGIN { $| = 1; print "1..41\n"; }
 
 my $test = 0;
 
@@ -29,7 +29,7 @@ foreach my $method (qw(is_allocated is_fixed_line is_geographic is_valid)) {
     print 'not ' unless($number->$method());
     print 'ok '.(++$test)." $method works for a London number\n";
 }
-foreach my $method (qw(is_in_use is_mobile is_pager is_ipphone is_voip is_isdn is_tollfree is_specialrate is_adult is_personal is_corporate is_government is_international is_network_service)) {
+foreach my $method (qw(is_in_use is_mobile is_pager is_ipphone is_isdn is_tollfree is_specialrate is_adult is_personal is_corporate is_government is_international is_network_service is_ipphone)) {
     print 'not ' if($number->$method());
     print 'ok '.(++$test)." $method works for a London number\n";
 }
@@ -47,6 +47,10 @@ print 'ok '.(++$test)." 0+10 number has correct subscriber number\n";
 $number = Number::Phone->new('+447979866975');
 print 'not ' unless($number->is_mobile());
 print 'ok '.(++$test)." mobiles correctly identified\n";
+
+$number = Number::Phone->new('+445511431234');
+print 'not ' unless($number->is_ipphone());
+print 'ok '.(++$test)." VoIP correctly identified\n";
 
 $number = Number::Phone->new('+447600212345');
 print 'not ' unless($number->is_pager());

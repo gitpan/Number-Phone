@@ -10,7 +10,7 @@ use Number::Phone::UK::Data;
 
 use base 'Number::Phone';
 
-our $VERSION = '1.0';
+our $VERSION = '1.1';
 
 $Number::Phone::subclasses{country_code()} = __PACKAGE__;
 
@@ -95,6 +95,8 @@ sub is_valid {
 	grep { $Number::Phone::UK::Data::special_prefices{$_} } @retards;
     $cache->{$number}->{is_adult} =
 	grep { $Number::Phone::UK::Data::adult_prefices{$_} } @retards;
+    $cache->{$number}->{is_ipphone} =
+	grep { $Number::Phone::UK::Data::ip_prefices{$_} } @retards;
     $cache->{$number}->{is_allocated} = 
 	grep { $Number::Phone::UK::Data::telco_and_length{$_} } @retards;
 
@@ -120,7 +122,7 @@ sub is_valid {
 
 foreach my $is (qw(
     fixed_line geographic network_service tollfree corporate
-    personal pager mobile specialrate adult allocated
+    personal pager mobile specialrate adult allocated ipphone
 )) {
     no strict 'refs';
     *{__PACKAGE__."::is_$is"} = sub {

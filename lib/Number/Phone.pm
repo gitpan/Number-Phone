@@ -6,7 +6,7 @@ use diagnostics;
 
 use Scalar::Util 'blessed';
 
-our $VERSION = '1.0';
+our $VERSION = '1.1';
 our %subclasses = ();
 
 my @is_methods = qw(
@@ -36,10 +36,6 @@ foreach my $method (
 	undef;
     }
 
-}
-
-sub is_voip {
-    is_ipphone(@_);
 }
 
 sub type {
@@ -171,9 +167,7 @@ The number, when in use, can only refer to a pager.
 
 =item is_ipphone
 
-The number, when in use, can only refer to a VoIP service.  An alias for
-this method is C<is_voip()>, which is implemented in the super-class and
-should *not* be over-ridden.
+The number, when in use, can only refer to a VoIP service.
 
 =item is_isdn
 
