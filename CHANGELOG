@@ -1,3 +1,4 @@
+2004-12-05	1.3003	new UK number allocations
 2004-11-26	1.3002	OFCOM's UK data had some spurious spaces in numeric
                         fields, which broke some 070 numbers, these are now
 			filtered out
