@@ -138,7 +138,7 @@ while(my $line = <S7>) {
     my @fields = $csv->fields();
     next if($fields[2] ne 'Allocated');
     
-    my $retard = join('',@fields[0, 1]);
+    (my $retard = join('',@fields[0, 1])) =~ s/\D//g; # there's spaces in OFCOM's data!
     my $telco = $fields[4];
     my $format = $fields[6];
 

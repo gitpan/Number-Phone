@@ -8,7 +8,7 @@ use diagnostics;
 
 use Number::Phone::UK;
 
-BEGIN { $| = 1; print "1..44\n"; }
+BEGIN { $| = 1; print "1..45\n"; }
 
 my $test = 0;
 
@@ -104,3 +104,7 @@ print 'ok '.(++$test)." good, no area name for non-geographic numbers\n";
 $number = Number::Phone->new('+442087712924');
 print 'not ' unless($number->areaname() eq 'London');
 print 'ok '.(++$test)." London numbers return correct area name\n";
+
+$number = Number::Phone->new('+447092306588'); # dodgy spaces were appearing in data
+print 'not ' unless($number);
+print 'ok '.(++$test)." bad 070 data fixed\n";

@@ -14,3 +14,4 @@ t/01_uk_data.t
 t/50_number-country-phone.t
 t/51_number-country-phone_noexport.t
 t/52_number-country-phone_uk.t
+META.yml                                 Module meta-data (added by MakeMaker)
