@@ -1,3 +1,4 @@
+2004-11-10      1.3001  new UK number allocations
 2004-10-20      1.3     Added note about number portability in UK module.
                         Added areaname() method to interface definition
                           and an implementation in the UK module.
