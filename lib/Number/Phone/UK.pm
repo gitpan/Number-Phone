@@ -10,7 +10,7 @@ use Number::Phone::UK::Data;
 
 use base 'Number::Phone';
 
-our $VERSION = '1.1';
+our $VERSION = '1.2';
 
 $Number::Phone::subclasses{country_code()} = __PACKAGE__;
 
@@ -188,6 +188,10 @@ The number, when in use, goes to an individual person.
 =item is_corporate
 
 The number, when in use, goes to a business.
+
+=item is_ipphone
+
+The number, when in use, is terminated using VoIP.
 
 =item is_network_service
 
