@@ -1,0 +1,96 @@
+#!/usr/bin/perl -w
+
+my $loaded;
+
+use strict;
+use warnings;
+use diagnostics;
+
+use Number::Phone::UK;
+
+BEGIN { $| = 1; print "1..40\n"; }
+
+my $test = 0;
+
+my $number = Number::Phone->new('+44 142422 0000');
+print 'not ' unless($number->format() eq '+44 1424 220000');
+print 'ok '.(++$test)." 4+6 number formatted OK\n";
+$number = Number::Phone->new('+44 115822 0000');
+print 'not ' unless($number->format() eq '+44 115 8220000');
+print 'ok '.(++$test)." 3+7 number formatted OK\n";
+$number = Number::Phone->new('+442 0 8771 2924');
+print 'not ' unless($number->format() eq '+44 20 87712924');
+print 'ok '.(++$test)." 2+8 number formatted OK\n";
+print 'not ' unless($number->areacode() eq '20');
+print 'ok '.(++$test)." 2+8 number has correct area code\n";
+print 'not ' unless($number->subscriber() eq '87712924');
+print 'ok '.(++$test)." 2+8 number has correct subscriber number\n";
+foreach my $method (qw(is_allocated is_fixed_line is_geographic is_valid)) {
+    print 'not ' unless($number->$method());
+    print 'ok '.(++$test)." $method works for a London number\n";
+}
+foreach my $method (qw(is_in_use is_mobile is_pager is_ipphone is_voip is_isdn is_tollfree is_specialrate is_adult is_personal is_corporate is_government is_international is_network_service)) {
+    print 'not ' if($number->$method());
+    print 'ok '.(++$test)." $method works for a London number\n";
+}
+print 'not ' unless(join(', ', sort $number->type()) eq 'is_allocated, is_fixed_line, is_geographic, is_valid');
+print 'ok '.(++$test)." type() works\n";
+
+$number = Number::Phone->new('+448450033845');
+print 'not ' unless($number->format() eq '+44 8450033845');
+print 'ok '.(++$test)." 0+10 number formatted OK\n";
+print 'not ' unless($number->areacode() eq '');
+print 'ok '.(++$test)." 0+10 number has no area code\n";
+print 'not ' unless($number->subscriber() eq '8450033845');
+print 'ok '.(++$test)." 0+10 number has correct subscriber number\n";
+
+$number = Number::Phone->new('+447979866975');
+print 'not ' unless($number->is_mobile());
+print 'ok '.(++$test)." mobiles correctly identified\n";
+
+$number = Number::Phone->new('+447600212345');
+print 'not ' unless($number->is_pager());
+print 'ok '.(++$test)." pagers correctly identified\n";
+print 'not ' unless($number->is_tollfree());
+print 'ok '.(++$test)." toll-free pagers correctly identified\n";
+$number = Number::Phone->new('+447693912345');
+print 'not ' unless($number->is_pager());
+print 'not ' if($number->is_tollfree());
+print 'ok '.(++$test)." caller-pays pagers correctly identified\n";
+
+$number = Number::Phone->new('+44800001012');
+print 'not ' unless($number->is_tollfree());
+print 'ok '.(++$test)." toll-free numbers with significant F digit correctly identified\n";
+$number = Number::Phone->new('+44500123456');
+print 'not ' unless($number->is_tollfree());
+print 'ok '.(++$test)." C&W 0500 numbers correctly identified as toll-free\n";
+$number = Number::Phone->new('+448000341234');
+print 'not ' unless($number->is_tollfree());
+print 'ok '.(++$test)." generic toll-free numbers correctly identified\n";
+
+$number = Number::Phone->new('+448450033845');
+print 'not ' unless($number->is_specialrate());
+print 'ok '.(++$test)." special-rate numbers correctly identified\n";
+
+# test with 0908... too
+# OFCOM's files are inconsistent at the time of writing, so this test skipped
+# as I have no intention of correcting their fuckups
+$number = Number::Phone->new('+449090901234');
+print 'not ' unless($number->is_adult() && $number->is_specialrate());
+print 'ok '.(++$test)." 'adult' numbers correctly identified\n";
+
+$number = Number::Phone->new('+447000012345');
+print 'not ' unless($number->is_personal());
+print 'ok '.(++$test)." personal numbers correctly identified\n";
+
+$number = Number::Phone->new('+445588301234');
+print 'not ' unless($number->is_corporate());
+print 'ok '.(++$test)." corporate numbers correctly identified\n";
+
+$number = Number::Phone->new('+448200123456');
+print 'not ' unless($number->is_network_service());
+print 'ok '.(++$test)." network service numbers correctly identified\n";
+
+$number = Number::Phone->new('+448450033845');
+print 'not ' unless($number->operator() eq 'Interweb Design Ltd');
+print 'ok '.(++$test)." operators correctly identified\n";

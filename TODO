@@ -1,0 +1,11 @@
+Number::Phone::NANP superclass for all NANP countries
+  number format is ((+)1) ABC DEF XXXX
+  where A = 2 to 9
+        B = 0 to 8
+	D = 2 to 9
+	AB != 37 or 96
+	BC != 11
+        X = 0 to 9
+  see http://www.nanpa.com and http://www.cnac.ca
+  see Message-ID: <008001c406ba$6bd01820$dad4a645@anhmca.adelphia.net>
+      by Doug Ewell on Wed Mar 10 2004 in telnum-l

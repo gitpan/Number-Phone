@@ -1,0 +1,17 @@
+This package contains two modules.  Number::Phone is a base class for
+parsing and dealing with phone numbers.
+
+Number::Phone::UK inherits methods from it, over-riding some with UK-
+specific implementations.  The intention is that other people will write
+other country-specific classes exposing the same API.
+
+To install these modules, do the usual dance:
+
+    perl Makefile.PL
+    make
+    make test
+    make install
+
+Please note that the build-data.* files are not intended for your use.
+I use them to re-build the database of UK number allocations.  If you
+choose to use them, on your own head be it!
