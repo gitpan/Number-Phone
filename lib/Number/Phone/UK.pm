@@ -10,7 +10,7 @@ use Number::Phone::UK::Data;
 
 use base 'Number::Phone';
 
-our $VERSION = '1.2';
+our $VERSION = '1.3';
 
 $Number::Phone::subclasses{country_code()} = __PACKAGE__;
 
@@ -72,8 +72,8 @@ sub is_valid {
 
     my @retards = map { substr($parsed_number, 0, $_) } reverse 1..6;
 
-    # no numbers begin with 0, 3, 4, 5 or 6 currently; and quickly check length
-    $cache->{$number}->{is_valid} = (length($parsed_number) > 6 && length($parsed_number) < 11 && $digits{A} !~ /[0346]/) ? 1 : 0;
+    # and quickly check length
+    $cache->{$number}->{is_valid} = (length($parsed_number) > 6 && length($parsed_number) < 11) ? 1 : 0;
     return 0 unless($cache->{$number}->{is_valid});
 
     $cache->{$number}->{is_fixed_line} =
@@ -99,7 +99,6 @@ sub is_valid {
 	grep { $Number::Phone::UK::Data::ip_prefices{$_} } @retards;
     $cache->{$number}->{is_allocated} = 
 	grep { $Number::Phone::UK::Data::telco_and_length{$_} } @retards;
-
     if($cache->{$number}->{is_allocated}) {
         my($telco_and_length) = map { $Number::Phone::UK::Data::telco_and_length{$_} } grep { $Number::Phone::UK::Data::telco_and_length{$_} } @retards;
 	$cache->{$number}->{operator} = $Number::Phone::UK::Data::telco_format{$telco_and_length}->{telco};
@@ -108,6 +107,11 @@ sub is_valid {
 	    my($arealength, $subscriberlength) = split(/\+/, $cache->{$number}->{format});
 	    $cache->{$number}->{areacode} = substr($parsed_number, 0, $arealength);
 	    $cache->{$number}->{subscriber} = substr($parsed_number, $arealength);
+            $cache->{$number}->{areaname} = (
+                map {
+                    $Number::Phone::UK::Data::areanames{$_}
+                } grep { $Number::Phone::UK::Data::areanames{$_} } @retards
+            )[0];
 	    if(length($cache->{$number}->{subscriber}) != $subscriberlength) {
 	        # number wrong length!
                 $cache->{$number} = undef;
@@ -136,7 +140,7 @@ foreach my $is (qw(
 
 # define the other methods
 
-foreach my $method (qw(operator areacode subscriber)) {
+foreach my $method (qw(operator areacode areaname subscriber)) {
     no strict 'refs';
     *{__PACKAGE__."::$method"} = sub {
         my $self = shift;
@@ -220,6 +224,10 @@ sub regulator { 'OFCOM, http://www.ofcom.org.uk/'; }
 Return the area code - if applicable - for the number.  If not applicable,
 returns undef.
 
+=item areaname
+
+Return the area name - if applicable - for the number, or undef.
+
 =item subscriber
 
 Return the subscriber part of the number
@@ -260,6 +268,8 @@ NYI
 
 The results are only as up-to-date as the data included from OFCOM's
 official documentation of number range allocations.
+
+No attempt is made to deal with number portability.
 
 Please report bugs by email, including, if possible, a test case.             
 

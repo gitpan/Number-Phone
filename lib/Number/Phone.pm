@@ -6,7 +6,7 @@ use diagnostics;
 
 use Scalar::Util 'blessed';
 
-our $VERSION = '1.1';
+our $VERSION = '1.2';
 our %subclasses = ();
 
 my @is_methods = qw(
@@ -19,8 +19,8 @@ my @is_methods = qw(
 
 foreach my $method (
     @is_methods, qw(
-        country_code regulator areacode
-        subscriber operator
+        country_code regulator areacode areaname
+        subscriber operator translates_to
 	format country
     )
 ) {
@@ -216,7 +216,7 @@ enquiries, emergency services etc
 =back
 
 Other methods are as follows.  Some of them may return undef if the result
-is unknown:
+is unknown or not applicable:
 
 =over 4
 
@@ -234,6 +234,12 @@ regulator is, with optional details such as their web site or phone number.
 
 Return the area code - if applicable - for the number.  If not applicable,
 returns undef.
+
+=item areaname
+
+Return the name for the area code - if applicable.  If not applicable,
+returns undef.  For instance, for a number beginning +44 20 it would return
+'London'.  Note that this may return data in non-ASCII character sets.
 
 =item subscriber
 
@@ -261,6 +267,16 @@ for the UK number (0208) 771-2924 it would return +44 20 87712924.
 
 If the number is_international, return the two-letter ISO country code.
 Exception: for the UK, return 'uk', not 'gb'.
+
+=item translates_to
+
+If the number forwards to another number (such as a special rate number
+forwarding to a geographic number), or is part of a chunk of number-space
+mapped onto another chunk of number-space (such as where a country has a
+shortcut to (part of) another country's number-space, like how Gibraltar
+appears as an area code in Spain's numbering plan as well as having its
+own country code), then this method may return an object representing the
+target number.  Otherwise it returns undef.
 
 =back
 

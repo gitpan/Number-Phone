@@ -1,3 +1,8 @@
+Number::Phone::Country
+  restrict 'US' to just US codes
+  test +7
+  test that all ITU assigned country codes work
+
 Number::Phone::NANP superclass for all NANP countries
   number format is ((+)1) ABC DEF XXXX
   where A = 2 to 9

@@ -8,7 +8,7 @@ use diagnostics;
 
 use Number::Phone::UK;
 
-BEGIN { $| = 1; print "1..41\n"; }
+BEGIN { $| = 1; print "1..44\n"; }
 
 my $test = 0;
 
@@ -76,12 +76,12 @@ $number = Number::Phone->new('+448450033845');
 print 'not ' unless($number->is_specialrate());
 print 'ok '.(++$test)." special-rate numbers correctly identified\n";
 
-# test with 0908... too
-# OFCOM's files are inconsistent at the time of writing, so this test skipped
-# as I have no intention of correcting their fuckups
+$number = Number::Phone->new('+449088791234');
+print 'not ' unless($number->is_adult() && $number->is_specialrate());
+print 'ok '.(++$test)." 0908 'adult' numbers correctly identified\n";
 $number = Number::Phone->new('+449090901234');
 print 'not ' unless($number->is_adult() && $number->is_specialrate());
-print 'ok '.(++$test)." 'adult' numbers correctly identified\n";
+print 'ok '.(++$test)." 0909 'adult' numbers correctly identified\n";
 
 $number = Number::Phone->new('+447000012345');
 print 'not ' unless($number->is_personal());
@@ -98,3 +98,9 @@ print 'ok '.(++$test)." network service numbers correctly identified\n";
 $number = Number::Phone->new('+448450033845');
 print 'not ' unless($number->operator() eq 'Interweb Design Ltd');
 print 'ok '.(++$test)." operators correctly identified\n";
+
+print 'not ' if(defined($number->areaname()));
+print 'ok '.(++$test)." good, no area name for non-geographic numbers\n";
+$number = Number::Phone->new('+442087712924');
+print 'not ' unless($number->areaname() eq 'London');
+print 'ok '.(++$test)." London numbers return correct area name\n";

@@ -1,9 +1,15 @@
-This package contains two modules.  Number::Phone is a base class for
-parsing and dealing with phone numbers.
+This distribution contains several modules.
+
+Number::Phone is a base class for parsing and dealing with phone numbers.
 
 Number::Phone::UK inherits methods from it, over-riding some with UK-
 specific implementations.  The intention is that other people will write
 other country-specific classes exposing the same API.
+
+Number::Phone::Country is a useful module which will be used by various
+Number::Phone::* subclasses in the future, but can also be used on its own.
+It was originally written by T. J. Mather but is now maintained by me and
+distribute as part of this distribution.
 
 To install these modules, do the usual dance:
 

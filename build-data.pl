@@ -9,6 +9,7 @@ use warnings;
 
 use Text::CSV_XS;
 use Digest::MD5 'md5_base64';
+use Data::Dumper;
 
 my $csv = Text::CSV_XS->new();
 
@@ -17,7 +18,7 @@ open(MODULE, '>Data.pm') || die("Can't write Data.pm\n");
 print MODULE "package Number::Phone::UK::Data;\n\n";
 print MODULE "# automatically generated file, don't edit\n\n";
 
-my @geo_prefices = my @free_prefices = my @network_svc_prefices = my @corporate_prefices = my @personal_prefices = my @pager_prefices = my @mobile_prefices = my @special_prefices = my @adult_prefices = my @ip_prefices = ();
+my @geo_prefices = my @free_prefices = my @network_svc_prefices = my @corporate_prefices = my @personal_prefices = my @pager_prefices = my @mobile_prefices = my @special_prefices = my @adult_prefices = my @ip_prefices = my %areanames = ();
 
 open(SABC, 'sabc.txt') || die("Can't read sabc.txt\n");
 
@@ -29,25 +30,29 @@ while(my $line = <SABC>) {
 
     push @geo_prefices, $fields[0] if($fields[0] =~ /^[1234]/);
 
-    push @network_svc_prefices, $fields[0]
-	if($fields[3] =~ /(Emergency Services|Internet for Schools|Internet Services|(Internal|Inbound) Routing|Broadband Services)/i);
-    push @free_prefices, $fields[0]
-        if($fields[3] =~ /(Freephone|Free to Caller)/i);
-    push @corporate_prefices, $fields[0]
-        if($fields[3] eq 'Corporate Numbering');
-    push @personal_prefices, $fields[0]
-        if($fields[3] =~ /(Personal Numbering|Find-me-anywhere)/i);
-    push @pager_prefices, $fields[0]
-        if($fields[3] eq 'Paging services');
-    push @mobile_prefices, $fields[0]
-        if($fields[3] eq 'Mobile services');
-    push @special_prefices, $fields[0]
-        if(
-	    $fields[3] =~ /^(PRS|Special Services)/i ||
-	    $fields[3] eq 'Local Rate'
-	);
-    push @adult_prefices, $fields[0]
-        if($fields[3] =~ /(sexual entertainment|sexual nature)/i);
+    if($fields[3] =~ /(Emergency Services|Internet for Schools|Internet Services|(Internal|Inbound) Routing|Broadband Services)/i) {
+        push @network_svc_prefices, $fields[0]
+    } elsif($fields[3] =~ /(Freephone|Free to Caller)/i) {
+        push @free_prefices, $fields[0]
+    } elsif($fields[3] eq 'Corporate Numbering') {
+        push @corporate_prefices, $fields[0]
+    } elsif($fields[3] =~ /(Personal Numbering|Find-me-anywhere)/i) {
+        push @personal_prefices, $fields[0]
+    } elsif($fields[3] eq 'Paging services') {
+        push @pager_prefices, $fields[0]
+    } elsif($fields[3] eq 'Mobile services') {
+        push @mobile_prefices, $fields[0]
+    } elsif(
+        $fields[3] =~ /^(PRS|Special Services)/i ||
+	$fields[3] eq 'Local Rate'
+    ) {
+        push @special_prefices, $fields[0];
+        if($fields[3] =~ /(sexual entertainment|sexual nature)/i) {
+            push @adult_prefices, $fields[0]
+        }
+    } else {
+        $areanames{$fields[0]} = $fields[3];
+    }
 
     # FIXME - need to deal with 81NN onwards
 }
@@ -167,6 +172,14 @@ print MODULE "our \%mobile_prefices = map { (\$_, 1) } qw(".join(' ', @mobile_pr
 print MODULE "our \%special_prefices = map { (\$_, 1) } qw(".join(' ', @special_prefices).");\n";
 print MODULE "our \%adult_prefices = map { (\$_, 1) } qw(".join(' ', @adult_prefices).");\n";
 print MODULE "our \%ip_prefices = map { (\$_, 1) } qw(".join(' ', @ip_prefices).");\n";
+print MODULE "our \%areanames = (".join(', ', map {
+   s/\\/\\\\/g;
+   s/"/\\"/g;
+   s/( National Dialling)//ig;
+   s/^(.*)$/"$1"/ if(/\D/);
+   $_;
+} %areanames).");\n";
+
 print MODULE "our \%telco_and_length = (\n";
 
 my %telco_format_cache = ();
