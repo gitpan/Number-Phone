@@ -2,7 +2,6 @@ package Number::Phone;
 
 use strict;
 use warnings;
-use diagnostics;
 
 use Scalar::Util 'blessed';
 

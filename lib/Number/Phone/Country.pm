@@ -2,7 +2,6 @@ package Number::Phone::Country;
 
 use strict;
 use warnings;
-use diagnostics;
 
 our $VERSION = 0.5;
 our $use_uk = 0;
