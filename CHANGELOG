@@ -1,9 +1,24 @@
+2005-05-18	1.4	updated Number::Phone::Country to remove American
+			  Samoa's +684 code, it has migrated to +1 684 in
+			  the NANP
+			N::P::C now correctly identifies US numbers
+			  doesn't just assume a NANP number is US if it's
+			  not assigned to another country
+			N::P::C no longer uses <DATA>
+			N::P::C added missing countries
+			some tidying in N::P::C's tests
+			N::P->country now defaults to returning current country
+			some tidying in N::P base class
+			new UK number allocations
+			UK data file now has version number (autogen from date)
+			UK data fixed for numbers "Allocated for Migration only"
+			Added NANP class and NANP::XX subclasses
 2005-04-12	1.3004	new UK number allocations
-			also removed 'use diagnostics'
+			removed 'use diagnostics'
 2004-12-05	1.3003	new UK number allocations
 2004-11-26	1.3002	OFCOM's UK data had some spurious spaces in numeric
-                        fields, which broke some 070 numbers, these are now
-			filtered out
+                          fields, which broke some 070 numbers, these are now
+			  filtered out
 2004-11-10      1.3001  new UK number allocations
 2004-10-20      1.3     Added note about number portability in UK module.
                         Added areaname() method to interface definition

@@ -8,11 +8,13 @@ use diagnostics;
 
 use Number::Phone::UK;
 
-BEGIN { $| = 1; print "1..45\n"; }
+BEGIN { $| = 1; print "1..48\n"; }
 
 my $test = 0;
 
 my $number = Number::Phone->new('+44 142422 0000');
+print 'not ' unless($number->country() eq 'UK');
+print 'ok '.(++$test)." inherited country() method works\n";
 print 'not ' unless($number->format() eq '+44 1424 220000');
 print 'ok '.(++$test)." 4+6 number formatted OK\n";
 $number = Number::Phone->new('+44 115822 0000');
@@ -104,6 +106,14 @@ print 'ok '.(++$test)." good, no area name for non-geographic numbers\n";
 $number = Number::Phone->new('+442087712924');
 print 'not ' unless($number->areaname() eq 'London');
 print 'ok '.(++$test)." London numbers return correct area name\n";
+
+$number = Number::Phone->new('+448457283848'); # "Allocated for Migration only"
+print 'not ' unless($number);
+print 'ok '.(++$test)." 0845 'Allocated for Migration only' fixed\n";
+
+$number = Number::Phone->new('+448701540154'); # "Allocated for Migration only"
+print 'not ' unless($number);
+print 'ok '.(++$test)." 0870 'Allocated for Migration only' fixed\n";
 
 $number = Number::Phone->new('+447092306588'); # dodgy spaces were appearing in data
 print 'not ' unless($number);

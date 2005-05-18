@@ -5,7 +5,9 @@ use warnings;
 
 use Scalar::Util 'blessed';
 
-our $VERSION = '1.2';
+use Number::Phone::Country qw(noexport uk);
+
+our $VERSION = 1.3;
 our %subclasses = ();
 
 my @is_methods = qw(
@@ -20,21 +22,25 @@ foreach my $method (
     @is_methods, qw(
         country_code regulator areacode areaname
         subscriber operator translates_to
-	format country
+	format
     )
 ) {
     no strict 'refs';
     *{__PACKAGE__."::$method"} = sub {
-        print STDERR "calling ".__PACKAGE__."::$method\n" if($ENV{DEBUG});
+        print "calling ".__PACKAGE__."::$method\n" if($ENV{DEBUG});
         my $self = shift;
 	return undef if(blessed($self) && $self->isa(__PACKAGE__));
-        $self = shift if($self eq __PACKAGE__);
+        my $pkg = __PACKAGE__;
+        $self = shift if(
+            $self eq __PACKAGE__ ||
+            substr($self, 0, 2 + length(__PACKAGE__)) eq __PACKAGE__.'::'
+        );
+        print "    with $self\n" if($ENV{DEBUG});
         $self = __PACKAGE__->new($self)
             unless(blessed($self) && $self->isa(__PACKAGE__));
 	return $self->$method() if($self);
 	undef;
     }
-
 }
 
 sub type {
@@ -60,6 +66,14 @@ sub type {
     wantarray() ? @{$rval} : $rval;
 }
 
+sub country {
+    my $self = shift;
+    return undef if(!blessed($self));
+    (my $country = blessed($self)) =~ s/.*:://;
+    return undef unless(length($country) == 2);
+    return $country;
+}
+
 1;
 
 =head1 NAME
@@ -78,7 +92,7 @@ In a sub-class ...
 and to magically use the right subclass ...
 
     $daves_phone = Number::Phone->new('+442087712924');
-    $daves_other_phone = Number::Phone->new(UK => '07979 866 975');
+    $daves_other_phone = Number::Phone->new('+44 7979 866 975');
 
     if($daves_phone->is_mobile()) {
         send_rude_SMS();
@@ -98,6 +112,13 @@ sub new {
     ) {
         return $subclasses{$retard}->new("+$number") if($subclasses{$retard});
     }
+    # $number = '+'.$number;
+    # my $country = Number::Phone::Country::phone2country($number);
+    # return undef unless($country);
+    # print "got country $country for $number\n" if($ENV{DEBUG});
+    # eval "use Number::Phone::$country";
+    # return undef if($@);
+    # return "Number::Phone::$country"->new($number);
 }
 
 =head1 METHODS
@@ -264,7 +285,11 @@ for the UK number (0208) 771-2924 it would return +44 20 87712924.
 
 =item country
 
-If the number is_international, return the two-letter ISO country code.
+The two letter ISO country code for the country in which the call will
+terminate.  This is implemented in the superclass and you will only have
+to implement your own version for countries where part of the number
+range is overlayed with another country.
+
 Exception: for the UK, return 'uk', not 'gb'.
 
 =item translates_to
@@ -324,14 +349,11 @@ appropriate, do thus:
 
 as in the SYNOPSIS above.
 
-Note that the NANP countries may potentially be treated as a special case, as
-they all share +1.  For the small Carribean countries, it may be appropriate
-to use a "country" code of (eg, for Jamaica) 1876.  For the US and Canada,
-you should probably register lots of codes, 1NXX, for each NXX area code
-assigned to your country.  I also recommend that code common to all NANP
-countries, such as the C<is_valid()> method, should use something like
-Number::Phone::NANP for those (which would inherit from Number::Phone) and
-then have their national variations inherit from Number::Phone::NANP.
+Subclasses' names should be Number::Phone::XX, where XX is the two letter
+ISO code for the country, in upper case.  So, for example, France would be
+FR and Ireland would be IE.  As usual, the UK is an exception, using UK
+instead of the ISO-mandated GB.  NANP countries are also an exception,
+going like Number::Phone::NANP::XX.
 
 =head1 BUGS/FEEDBACK
 

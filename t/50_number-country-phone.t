@@ -1,42 +1,35 @@
-# Before `make install' is performed this script should be runnable with
-# `make test'. After `make install' it should work as `perl 1.t'
+use Test::More tests => 20;
 
-#########################
-
-# change 'tests => 1' to 'tests => last_test_to_print';
-
-use Test;
-BEGIN { plan tests => 19 };
 use Number::Phone::Country;
-ok(1); # If we made it this far, we're ok.
 
-#########################
+ok(phone2country("1-800-000-0000") eq "NANP", "NANP: toll-free number IDed as generic NANP in 1-xxx-xxx-xxxx format");
+ok(phone2country("1 800-000-0000") eq "NANP", "NANP: toll-free number IDed as generic NANP in 1 xxx-xxx-xxxx format");
+ok(phone2country("219-464-4824") eq "US", "NANP: US number IDed in xxx-xxx-xxxx format");
+ok(phone2country("(270) 274-5431") eq "US", "NANP: US number IDed in (xxx) xxx-xxxx format");
+ok(phone2country("1 416 595 6136") eq "CA", "NANP: CA number IDed in 1 xxx xxx xxxx format");
+ok(phone2country("787-764-1185") eq "PR", "NANP: PR number IDed in xxx-xxx-xxxx format");
 
-# Insert your test code below, the Test::More module is use()ed here so read
-# its man page ( perldoc Test::More ) for help writing this test script.
-
-my_test("219-464-4824","US");
-my_test("1-800-000-0000","US");
-my_test("1 800-000-0000","US");
-my_test("(270) 274-5431","US");
-my_test("+51-1-2217244","PE");
-my_test("+351-21-8463452","PT");
-my_test("1 416 595 6136","CA");
-my_test("787-764-1185","PR");
-my_test('+16841234567', 'AS');
-my_test('+6841234567', 'AS');    # FIXME delete on 2 Apr 2005
-my_test('+44 1234567890', 'GB');
-my_test('+3534812345678', 'GB');
-my_test('+3531234567', 'IE');
-my_test('+34956712345', 'GI');
-my_test('+35012345', 'GI');
-my_test('+3966982123', 'VA');
-my_test('+379123', 'VA');
-my_test('+3961234567', 'IT');
-
-
-sub my_test {
-  my ($phone, $expected_country) = @_;
-  my $actual_country = phone2country($phone);
-  ok($actual_country,$expected_country);
+# American Samoa has moved ...
+ok(phone2country('+16841234567') eq 'AS', "NANP: AS number IDed in +1684xxxxxxx format");
+ok(phone2country('6841234567') eq 'AS', "NANP: AS number IDed in xxxxxxxxxx format");
+{ no warnings;
+ok(phone2country('+6841234567') ne 'AS', "+684 *not* identified as AS"); 
 }
+# FIXME - test all countries!
+ok(phone2country('+34123412345') eq 'ES', "+34 IDed as Spain");
+ok(phone2country('+35012345') eq 'GI', "+350 IDed as Gibraltar");
+ok(phone2country("+351-21-8463452") eq "PT", "+351 IDed as Portugal");
+ok(phone2country('+3531234567') eq 'IE', "+353 IDed as Ireland");
+ok(phone2country('+379123') eq 'VA', "+379 IDed as Vatican");
+ok(phone2country('+3961234567') eq 'IT', "+39 IDed as Italy");
+ok(phone2country('+44 1234567890') eq 'GB', "+44 IDed as GB");
+ok(phone2country("+51-1-2217244") eq "PE", "+51 IDed as Peru");
+
+# special cases
+ok(phone2country('+3534812345678') eq 'GB', "+35348 IDed as GB");
+
+ok(phone2country('+34956712345') eq 'GI', "+349567 IDed as Gibraltar");
+
+ok(phone2country('+3966982123') eq 'VA', "+3966982 IDed as Vatican");
+
+# FIXME - add Kazakhstan/Russia weirdness

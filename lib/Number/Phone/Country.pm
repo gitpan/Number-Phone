@@ -3,7 +3,7 @@ package Number::Phone::Country;
 use strict;
 use warnings;
 
-our $VERSION = 0.5;
+our $VERSION = 1.0;
 our $use_uk = 0;
 
 sub import {
@@ -20,15 +20,106 @@ sub import {
     }
 }
 
-my %idd_codes;
+my %idd_codes = (
+    # 1     => 'NANP',
 
-while (<DATA>) {
-  s/\s+#.*//;
-  chomp;
-  last if /^__END__$/;
-  my ($code, $country) = split(",");
-  $idd_codes{$code} = $country;
-}
+    20      => 'EG', 212     => 'MA', 213     => 'DZ', 216     => 'TN',
+    218     => 'LY', 220     => 'GM', 221     => 'SN', 222     => 'MR',
+    223     => 'ML',
+    224     => 'GN',
+    225     => 'CI', 226     => 'BF', 227     => 'NE', 228     => 'TG',
+    229     => 'BJ', 230     => 'MU', 231     => 'LR', 232     => 'SL',
+    233     => 'GH', 234     => 'NG', 235     => 'TD', 236     => 'CF',
+    237     => 'CM', 238     => 'CV',
+    239     => 'ST', 240     => 'GQ', 241     => 'GA',
+    242     => 'CG', 243     => 'CD', 244     => 'AO', 245     => 'GW',
+    246     => 'IO', 247     => 'AC', 248     => 'SC', 249     => 'SD',
+    250     => 'RW', 251     => 'ET', 252     => 'SO', 253     => 'DJ',
+    254     => 'KE', 255     => 'TZ', 256     => 'UG', 257     => 'BI',
+    258     => 'MZ', 260     => 'ZM', 261     => 'MG', 262     => 'RE',
+    263     => 'ZW',
+    264     => 'NA', 265     => 'MW', 266     => 'LS', 267     => 'BW',
+    268     => 'SZ', 269     => 'KM', 27      => 'ZA', 290     => 'SH',
+    291     => 'ER',
+    297     => 'AW', 298     => 'FO', 299     => 'GL',
+    
+    30      => 'GR', 31      => 'NL', 32      => 'BE', 33      => 'FR',
+    34      => 'ES', 349567  => 'GI', 350     => 'GI', 351     => 'PT',
+    352     => 'LU', 353     => 'IE', 35348   => 'GB', 354     => 'IS',
+    355     => 'AL', 356     => 'MT', 357     => 'CY', 358     => 'FI',
+    359     => 'BG', 36      => 'HU', 370     => 'LT', 371     => 'LV',
+    372     => 'EE', 373     => 'MD', 374     => 'AM', 375     => 'BY',
+    376     => 'AD', 377     => 'MC', 378     => 'SM', 379     => 'VA',
+    380     => 'UA', 381     => 'YU', 385     => 'HR', 386     => 'SI',
+    387     => 'BA',
+    389     => 'MK', 39      => 'IT', 3966982 => 'VA',
+    40      => 'RO', 41      => 'CH', 420     => 'CZ', 421     => 'SK',
+    423     => 'LI',
+    43      => 'AT', 44      => 'GB', 45      => 'DK', 46      => 'SE',
+    47      => 'NO', 48      => 'PL', 49      => 'DE',
+    
+    500     => 'FK',
+    501     => 'BZ', 502     => 'GT', 503     => 'SV', 504     => 'HN',
+    505     => 'NI', 506     => 'CR', 507     => 'PA',
+    508     => 'PM', 509     => 'HT',
+    51      => 'PE', 52      => 'MX', 53      => 'CU', 54      => 'AR',
+    55      => 'BR', 56      => 'CL', 57      => 'CO', 58      => 'VE',
+    590     => 'GP', 591     => 'BO', 592     => 'GY', 593     => 'EC',
+    594     => 'GF', 595     => 'PY', 596     => 'MQ', 597     => 'SR',
+    598     => 'UY', 599     => 'AN',
+    
+    60      => 'MY', 61      => 'AU', 62      => 'ID', 63      => 'PH',
+    64      => 'NZ', 65      => 'SG', 66      => 'TH', 670     => 'TL',
+    672     => 'AUX',
+    673     => 'BN', 674     => 'NR', 675     => 'PG', 676     => 'TO',
+    677     => 'SB', 678     => 'VU', 679     => 'FJ', 680     => 'PW',
+    681     => 'WW', 682     => 'CK',
+    683     => 'NU', 685     => 'WS', 686     => 'KI', 687     => 'NC',
+    688     => 'TV',
+    689     => 'PF', 690     => 'TK', 691     => 'FM', 692     => 'MH',
+    
+    # 7     => 'RU & KZ',
+    
+    81      => 'JP', 82      => 'KR', 84      => 'VN', 850     => 'KP',
+    852     => 'HK', 853     => 'MO', 855     => 'KH', 856     => 'LA',
+    86      => 'CN',
+    880     => 'BD',
+    886     => 'TW',
+    
+    90      => 'TR', 91      => 'IN', 92      => 'PK', 93      => 'AF',
+    94      => 'LK', 95      => 'MM', 960     => 'MV', 961     => 'LB',
+    962     => 'JO', 963     => 'SY', 964     => 'IQ', 965     => 'KW',
+    966     => 'SA', 967     => 'YE', 968     => 'OM', 970     => 'PS',
+    971     => 'AE',
+    972     => 'IL', 973     => 'BH', 974     => 'QA', 975     => 'BT',
+    976     => 'MN', 977     => 'NP',
+    98      => 'IR',
+    992     => 'TJ',
+    993     => 'TM', 994     => 'AZ', 995     => 'GE',
+    996     => 'KG', 998     => 'UZ',
+
+    3883    => 'ETNS', # http://wtng.info/wtng-reg.html#Europewide
+    800     => 'InternationalFreephone',
+    808     => 'SharedCostServices',
+    870     => 'Inmarsat',
+    871     => 'Inmarsat',
+    872     => 'Inmarsat',
+    873     => 'Inmarsat',
+    874     => 'Inmarsat',
+    878     => 'UniversalPersonalTelecoms',
+    881     => 'GMMS',
+    882     => 'InternationalNetworks',
+    979     => 'InternationalPremiumRate',
+    991     => 'ITPCS',
+);
+
+# while (<DATA>) {
+#   s/\s+#.*//;
+#   chomp;
+#   last if /^__END__$/;
+#   my ($code, $country) = split(",");
+#   $idd_codes{$code} = $country;
+# }
 
 sub phone2country {
     my ($phone) = @_;
@@ -52,6 +143,10 @@ sub phone2country {
             902|905
         )$!x) {
             return 'CA';
+        }
+        # see http://www.nanpa.com/number_resource_info/area_code_maps.html
+        elsif($1 =~ m/^(205|251|256|334|659|907|480|520|602|623|928|501|479|870|209|213|310|323|341|369|408|415|424|442|510|530|559|562|619|626|627|628|650|657|661|669|707|714|747|752|760|764|805|818|831|858|909|916|925|935|949|951|303|719|720|970|203|475|860|959|302|202|239|305|321|352|386|407|561|689|727|754|772|786|813|850|863|904|941|954|229|404|470|478|678|706|770|912|808|208|217|224|309|312|331|464|618|630|708|773|815|847|872|219|260|317|574|765|812|319|515|563|641|712|316|620|785|913|270|502|606|859|225|318|337|504|985|207|227|240|301|410|443|667|339|351|413|508|617|774|781|857|978|231|248|269|278|313|517|586|616|679|734|810|906|947|989|218|320|507|612|651|763|952|228|601|662|314|417|557|573|636|660|816|975|406|308|402|702|775|603|201|551|609|732|848|856|862|908|973|505|575|212|315|347|516|518|585|607|631|646|716|718|845|914|917|252|336|704|828|910|919|980|984|701|216|234|283|330|380|419|440|513|567|614|740|937|405|580|918|503|541|971|215|267|412|445|484|570|610|717|724|814|835|878|401|803|843|864|605|423|615|731|865|901|931|210|214|254|281|325|361|409|430|432|469|512|682|713|737|806|817|830|832|903|915|936|940|956|972|979|385|435|801|802|276|434|540|571|703|757|804|206|253|360|425|509|564|304|262|414|608|715|920|307)$/) {
+            return 'US';
         }
 
         # see http://wtng.info/wtng-cod.html#WZ1
@@ -79,11 +174,8 @@ sub phone2country {
         elsif($1 eq '876') { return 'JM'; }
         elsif($1 eq '939') { return 'PR'; }
 
-        # FIXME - should we really return US for NANP-wide prefices like 800?
-        # I don't think so!
 
-        # see http://www.nanpa.com/number_resource_info/area_code_maps.html
-        else { return 'US'; }
+        else { return 'NANP'; }
     }
 
     # following are from http://www.itu.int/itudoc/itu-t/number/k/kaz/75917.html
@@ -108,194 +200,8 @@ sub phone2country {
 }
 
 1;
-__DATA__
-32,BE
-90,TR
-386,SI
-358,FI
-850,KR
-376,AD
-35348,GB
-44,GB
-599,AN
-55,BR
-84,VN
-379,VA
-3966982,VA
-27,ZA
-233,GH
-998,UZ
-95,MM
-57,CO
-220,GM
-20,EG
-231,LR
-994,AZ
-31,NL
-504,HN
-93,AF
-672,AQ
-964,IQ
-65,SG
-378,SM
-349567,GI
-350,GI
-968,OM
-675,PG
-261,MG
-291,ER
-853,MO
-374,AM
-58,VE
-226,BF
-684,AS # FIXME delete on 2 Apr 2005
-81,JP
-60,MY
-689,PF
-886,TW
-86,CN
-62,ID
-371,LV
-241,GA
-389,MK
-677,SB
-674,NR
-82,KR
-966,SA
-973,BH
-992,TJ
-228,TG
-590,GP
-236,CF
-268,SZ
-249,SD
-218,LY
-596,MQ
-49,DE
-224,GN
-993,TM
-234,NG
-385,HR
-502,GT
-594,GF
-974,QA
-420,CZ
-212,MA
-971,AE
-352,LU
-355,AL
-238,CV
-251,ET
-253,DJ
-509,HT
-961,LB
-47,NO
-976,MN
-98,IR
-256,UG
-216,TN
-357,CY
-43,AT
-855,KH
-372,EE
-686,KI
-852,HK
-33,FR
-63,PH
-680,PW
-227,NE
-977,NP
-598,UY
-244,AO
-880,BD
-255,TZ
-351,PT
-264,NA
-963,SY
-297,AW
-595,PY
-240,GQ
-359,BG
-690,TK
-61,AU
-230,MU
-299,GL
-377,MC
-92,PK
-232,SL
-423,LI
-263,ZW
-91,IN
-266,LS
-48,PL
-505,NI
-670,TL
-692,MH
-683,NU
-995,GE
-592,GY
-221,SN
-39,IT
-64,NZ
-41,CH
-258,MZ
-52,MX
-688,TV
-56,CL
-66,TH
-229,BJ
-45,DK
-260,ZM
-507,PA
-54,AR
-237,CM
-503,SV
-673,BN
-370,LT
-967,YE
-593,EC
-682,CK
-1,US
-353,IE
-506,CR
-375,BY
-30,GR
-380,UA
-965,KW
-222,MR
-252,SO
-40,RO
-250,RW
-381,YU
-501,BZ
-254,KE
-687,NC
-960,MV
-678,VU
-373,MD
-53,CU
-387,BA
-962,JO
-245,GW
-267,BW
-269,KM
-354,IS
-46,SE
-235,TD
-257,BI
-972,IL
-36,HU
-597,SR
-94,LK
-213,DZ
-51,PE
-356,MT
-591,BO
-34,ES
-265,MW
-975,BT
-242,CG
-__END__
+# __DATA__
+# __END__
 
 =head1 NAME
 
@@ -340,6 +246,10 @@ bug, while still retaining the ability to look up plain un-adorned NANP
 numbers without the +1 prefix, all non-NANP numbers *must* have their
 leading + sign.
 
+Another incompatibility - it was previously assumed that any number not
+assigned to some other country was in the US.  This was incorrect for (eg)
+800 numbers.  These are now identified as being generic NANP numbers.
+
 Will go out of date every time the NANP has one of its code splits/overlays.
 So that's about once a month then.  I'll do my best to keep it up to date.
 
@@ -353,7 +263,7 @@ originally by TJ Mather, E<lt>tjmather@maxmind.comE<gt>
 
 Copyright 2003 by MaxMind LLC
 
-Copyright 2004 David Cantrell
+Copyright 2004, 2005 David Cantrell
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

@@ -6,8 +6,10 @@
 
 rm -rf lib/Number/Phone/UK
 mkdir -p lib/Number/Phone/UK
-cd lib/Number/Phone/UK
-wget http://www.ofcom.org.uk/telecoms/ioi/numbers/numbers_administered/codelist.zip
-unzip codelist.zip
-perl ../../../../build-data.pl
-rm codelist.zip *txt
+(
+    cd lib/Number/Phone/UK
+    wget http://www.ofcom.org.uk/telecoms/ioi/numbers/numbers_administered/codelist.zip
+    unzip codelist.zip
+    perl ../../../../build-data.pl
+    rm codelist.zip *txt
+)

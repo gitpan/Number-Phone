@@ -9,7 +9,7 @@ use Number::Phone::UK::Data;
 
 use base 'Number::Phone';
 
-our $VERSION = '1.3';
+our $VERSION = 1.3;
 
 $Number::Phone::subclasses{country_code()} = __PACKAGE__;
 
@@ -21,9 +21,9 @@ Number::Phone::UK - UK-specific methods for Number::Phone
 
 =head1 SYNOPSIS
 
-    use Number::Phone;
+    use Number::Phone::UK;
 
-    $daves_phone = Number::Phone->new('UK', '01234567890');
+    $daves_phone = Number::Phone->new('+44 1234 567890');
 
 =cut
 
@@ -62,12 +62,12 @@ sub is_valid {
     return 1 if($cache->{$number}->{is_valid});
 
     my $parsed_number = $number;
-    my %digits;
+    # my %digits;
     $parsed_number =~ s/[^0-9+]//g;               # strip non-digits/plusses
     $parsed_number =~ s/^\+44//;                  # remove leading +44
     $parsed_number =~ s/^0//;                     # kill leading zero
 
-    @digits{qw(A B C D E F)} = split(//, $parsed_number, 6);
+    # @digits{qw(A B C D E F)} = split(//, $parsed_number, 7);
 
     my @retards = map { substr($parsed_number, 0, $_) } reverse 1..6;
 
@@ -211,8 +211,7 @@ sub country_code { 44; }
 
 =item regulator
 
-Returns some text in an appropriate character set saying who the telecoms
-regulator is, with optional details such as their web site or phone number.
+Returns informational text.
 
 =cut
 

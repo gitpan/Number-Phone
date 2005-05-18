@@ -17,6 +17,7 @@ open(MODULE, '>Data.pm') || die("Can't write Data.pm\n");
 
 print MODULE "package Number::Phone::UK::Data;\n\n";
 print MODULE "# automatically generated file, don't edit\n\n";
+print MODULE "our \$VERSION = 1.".join("", (gmtime())[5] + 1900, sprintf('%02d', (gmtime())[4] + 1), sprintf('%02d', (gmtime())[3])).";\n\n";
 
 my @geo_prefices = my @free_prefices = my @network_svc_prefices = my @corporate_prefices = my @personal_prefices = my @pager_prefices = my @mobile_prefices = my @special_prefices = my @adult_prefices = my @ip_prefices = my %areanames = ();
 
@@ -44,7 +45,8 @@ while(my $line = <SABC>) {
         push @mobile_prefices, $fields[0]
     } elsif(
         $fields[3] =~ /^(PRS|Special Services)/i ||
-	$fields[3] eq 'Local Rate'
+	$fields[3] eq 'Local Rate' ||
+        $fields[3] eq 'National Rate'
     ) {
         push @special_prefices, $fields[0];
         if($fields[3] =~ /(sexual entertainment|sexual nature)/i) {
@@ -78,7 +80,7 @@ while(my $line = <S8>) {
     $line =~ s/£/UKP/g;
     $csv->parse($line) || die("Bad CSV line in s8_code.txt\n\n$line\n\n");
     my @fields = $csv->fields();
-    next if($fields[2] ne 'Allocated' || $fields[5] eq 'mixed operators');
+    next if($fields[2] !~ /^Allocated( for Migration only)?$/ || $fields[5] eq 'mixed operators');
     
     my $retard = join('',@fields[0,1]);
     my $telco = $fields[5];
@@ -106,7 +108,7 @@ while(my $line = <S8F>) {
     $line =~ s/£/UKP/g;
     $csv->parse($line) || die("Bad CSV line in s8f_code.txt\n\n$line\n\n");
     my @fields = $csv->fields();
-    next if($fields[3] ne 'Allocated');
+    next if($fields[3] !~ /^Allocated( for Migration only)?$/);
     
     my $retard = join('',@fields[0..2]);
     my $telco = $fields[5];
