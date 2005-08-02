@@ -1,4 +1,5 @@
-2005-XX-XX	1.4001	Added phone2country_and_idd to N::P::Country
+2005-08-02	1.4002	New UK allocations
+2005-06-27	1.4001	Added phone2country_and_idd to N::P::Country
 			new UK allocations etc
 2005-05-18	1.4	updated Number::Phone::Country to remove American
 			  Samoa's +684 code, it has migrated to +1 684 in
