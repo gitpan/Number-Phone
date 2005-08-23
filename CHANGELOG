@@ -1,3 +1,8 @@
+2005-08-23	1.4003  Updated N::P::Country to use CS instead of YU for
+                          Yugoslavia (ISO 3166 has been updated)
+                        Fixed non-US and non-CA countries in N::P::Country's
+                          phone2country_and_idd function (BUGFIX)
+                        New UK allocations
 2005-08-02	1.4002	New UK allocations
 2005-06-27	1.4001	Added phone2country_and_idd to N::P::Country
 			new UK allocations etc

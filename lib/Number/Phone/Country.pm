@@ -3,7 +3,7 @@ package Number::Phone::Country;
 use strict;
 use warnings;
 
-our $VERSION = 1.1;
+our $VERSION = 1.2;
 our $use_uk = 0;
 
 sub import {
@@ -50,7 +50,7 @@ my %idd_codes = (
     359     => 'BG', 36      => 'HU', 370     => 'LT', 371     => 'LV',
     372     => 'EE', 373     => 'MD', 374     => 'AM', 375     => 'BY',
     376     => 'AD', 377     => 'MC', 378     => 'SM', 379     => 'VA',
-    380     => 'UA', 381     => 'YU', 385     => 'HR', 386     => 'SI',
+    380     => 'UA', 381     => 'CS', 385     => 'HR', 386     => 'SI',
     387     => 'BA',
     389     => 'MK', 39      => 'IT', 3966982 => 'VA',
     40      => 'RO', 41      => 'CH', 420     => 'CZ', 421     => 'SK',
@@ -113,14 +113,6 @@ my %idd_codes = (
     991     => 'ITPCS',
 );
 
-# while (<DATA>) {
-#   s/\s+#.*//;
-#   chomp;
-#   last if /^__END__$/;
-#   my ($code, $country) = split(",");
-#   $idd_codes{$code} = $country;
-# }
-
 sub phone2country {
     my ($phone) = @_;
     return (phone2country_and_idd($phone))[0];
@@ -155,32 +147,32 @@ sub phone2country_and_idd {
         }
 
         # see http://wtng.info/wtng-cod.html#WZ1
-        elsif($1 eq '242') { return 'BS'; }
-        elsif($1 eq '246') { return 'BB'; }
-        elsif($1 eq '264') { return 'AI'; }
-        elsif($1 eq '268') { return 'AG'; }
-        elsif($1 eq '284') { return 'VG'; }
-        elsif($1 eq '340') { return 'VI'; }
-        elsif($1 eq '345') { return 'KY'; }
-        elsif($1 eq '441') { return 'BM'; }
-        elsif($1 eq '473') { return 'GD'; }
-        elsif($1 eq '649') { return 'TC'; }
-        elsif($1 eq '664') { return 'MS'; }
-        elsif($1 eq '670') { return 'MP'; }
-        elsif($1 eq '671') { return 'GU'; }
-        elsif($1 eq '684') { return 'AS'; }
-        elsif($1 eq '758') { return 'LC'; }
-        elsif($1 eq '767') { return 'DM'; }
-        elsif($1 eq '784') { return 'VC'; }
-        elsif($1 eq '787') { return 'PR'; }
-        elsif($1 eq '809') { return 'DO'; }
-        elsif($1 eq '868') { return 'TT'; }
-        elsif($1 eq '869') { return 'KN'; }
-        elsif($1 eq '876') { return 'JM'; }
-        elsif($1 eq '939') { return 'PR'; }
+        elsif($1 eq '242') { return ('BS', 1); }
+        elsif($1 eq '246') { return ('BB', 1); }
+        elsif($1 eq '264') { return ('AI', 1); }
+        elsif($1 eq '268') { return ('AG', 1); }
+        elsif($1 eq '284') { return ('VG', 1); }
+        elsif($1 eq '340') { return ('VI', 1); }
+        elsif($1 eq '345') { return ('KY', 1); }
+        elsif($1 eq '441') { return ('BM', 1); }
+        elsif($1 eq '473') { return ('GD', 1); }
+        elsif($1 eq '649') { return ('TC', 1); }
+        elsif($1 eq '664') { return ('MS', 1); }
+        elsif($1 eq '670') { return ('MP', 1); }
+        elsif($1 eq '671') { return ('GU', 1); }
+        elsif($1 eq '684') { return ('AS', 1); }
+        elsif($1 eq '758') { return ('LC', 1); }
+        elsif($1 eq '767') { return ('DM', 1); }
+        elsif($1 eq '784') { return ('VC', 1); }
+        elsif($1 eq '787') { return ('PR', 1); }
+        elsif($1 eq '809') { return ('DO', 1); }
+        elsif($1 eq '868') { return ('TT', 1); }
+        elsif($1 eq '869') { return ('KN', 1); }
+        elsif($1 eq '876') { return ('JM', 1); }
+        elsif($1 eq '939') { return ('PR', 1); }
 
 
-        else { return 'NANP'; }
+        else { return ('NANP', 1); }
     }
 
     # following are from http://www.itu.int/itudoc/itu-t/number/k/kaz/75917.html
@@ -205,8 +197,6 @@ sub phone2country_and_idd {
 }
 
 1;
-# __DATA__
-# __END__
 
 =head1 NAME
 
@@ -261,6 +251,11 @@ assigned to some other country was in the US.  This was incorrect for (eg)
 
 Will go out of date every time the NANP has one of its code splits/overlays.
 So that's about once a month then.  I'll do my best to keep it up to date.
+
+=head1 WARNING
+
+Be aware that the ISO 3166 country code for Yugoslavia has changed.  It
+used to be YU, and is now CS.
 
 =head1 AUTHOR
 
