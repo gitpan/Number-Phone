@@ -3,13 +3,12 @@ package Number::Phone::NANP::BS;
 # numbering plan at http://www.itu.int/itudoc/itu-t/number/b/bhs/80946.html
 
 use strict;
-use warnings;
 
 use base 'Number::Phone::NANP';
 
 use Number::Phone::Country qw(noexport);
 
-our $VERSION = 1.0;
+our $VERSION = 1.1;
 
 my $cache = {};
 

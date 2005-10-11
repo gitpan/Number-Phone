@@ -1,3 +1,7 @@
+2005-10-11	1.4004	New UK allocations
+                        Removed 'use warnings' and 'use diagnostics' because
+                          they pointlessly require a later version of perl;
+                        re the above, tests now all use -w instead
 2005-08-23	1.4003  Updated N::P::Country to use CS instead of YU for
                           Yugoslavia (ISO 3166 has been updated)
                         Fixed non-US and non-CA countries in N::P::Country's

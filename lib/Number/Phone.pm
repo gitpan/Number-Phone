@@ -1,13 +1,12 @@
 package Number::Phone;
 
 use strict;
-use warnings;
 
 use Scalar::Util 'blessed';
 
 use Number::Phone::Country qw(noexport uk);
 
-our $VERSION = 1.3;
+our $VERSION = 1.4;
 our %subclasses = ();
 
 my @is_methods = qw(

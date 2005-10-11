@@ -1,9 +1,8 @@
 package Number::Phone::Country;
 
 use strict;
-use warnings;
 
-our $VERSION = 1.2;
+our $VERSION = 1.3;
 our $use_uk = 0;
 
 sub import {

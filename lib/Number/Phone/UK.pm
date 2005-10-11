@@ -1,7 +1,6 @@
 package Number::Phone::UK;
 
 use strict;
-use warnings;
 
 use Scalar::Util 'blessed';
 
@@ -9,7 +8,7 @@ use Number::Phone::UK::Data;
 
 use base 'Number::Phone';
 
-our $VERSION = 1.3;
+our $VERSION = 1.4;
 
 $Number::Phone::subclasses{country_code()} = __PACKAGE__;
 

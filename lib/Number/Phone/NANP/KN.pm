@@ -1,13 +1,12 @@
 package Number::Phone::NANP::KN;
 
 use strict;
-use warnings;
 
 use base 'Number::Phone::NANP';
 
 use Number::Phone::Country qw(noexport);
 
-our $VERSION = 1.0;
+our $VERSION = 1.1;
 
 my $cache = {};
 

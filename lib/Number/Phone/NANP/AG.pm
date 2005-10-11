@@ -3,11 +3,10 @@ package Number::Phone::NANP::AG;
 # numbering plan at http://www.itu.int/itudoc/itu-t/number/a/atg/75462.html
 
 use strict;
-use warnings;
 
 use base 'Number::Phone::NANP';
 
-our $VERSION = 1.0;
+our $VERSION = 1.1;
 
 my $cache = {};
 

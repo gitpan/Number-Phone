@@ -3,8 +3,6 @@
 my $loaded;
 
 use strict;
-use warnings;
-use diagnostics;
 
 use Number::Phone::UK;
 

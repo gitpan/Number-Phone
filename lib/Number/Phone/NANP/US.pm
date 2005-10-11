@@ -1,11 +1,10 @@
 package Number::Phone::NANP::US;
 
 use strict;
-use warnings;
 
 use base 'Number::Phone::NANP';
 
-our $VERSION = 1.0;
+our $VERSION = 1.1;
 
 my $cache = {};
 
