@@ -3,12 +3,13 @@ package Number::Phone::UK;
 use strict;
 
 use Scalar::Util 'blessed';
-
 use Number::Phone::UK::Data;
+
+use Data::Dumper;
 
 use base 'Number::Phone';
 
-our $VERSION = 1.4;
+our $VERSION = 1.5;
 
 $Number::Phone::subclasses{country_code()} = __PACKAGE__;
 
@@ -74,41 +75,42 @@ sub is_valid {
     $cache->{$number}->{is_valid} = (length($parsed_number) > 6 && length($parsed_number) < 11) ? 1 : 0;
     return 0 unless($cache->{$number}->{is_valid});
 
+    # die(Dumper($Number::Phone::UK::Data::db->{geo_prefices}));
     $cache->{$number}->{is_fixed_line} =
         $cache->{$number}->{is_geographic} =
-	grep { $Number::Phone::UK::Data::geo_prefices{$_} } @retards;
+	grep { $Number::Phone::UK::Data::db->{geo_prefices}->{$_} } @retards;
     $cache->{$number}->{is_network_service} =
-	grep { $Number::Phone::UK::Data::network_svc_prefices{$_} } @retards;
+	grep { $Number::Phone::UK::Data::db->{network_svc_prefices}->{$_} } @retards;
     $cache->{$number}->{is_tollfree} =
-	grep { $Number::Phone::UK::Data::free_prefices{$_} } @retards;
+	grep { $Number::Phone::UK::Data::db->{free_prefices}->{$_} } @retards;
     $cache->{$number}->{is_corporate} =
-	grep { $Number::Phone::UK::Data::corporate_prefices{$_} } @retards;
+	grep { $Number::Phone::UK::Data::db->{corporate_prefices}->{$_} } @retards;
     $cache->{$number}->{is_personal} =
-	grep { $Number::Phone::UK::Data::personal_prefices{$_} } @retards;
+	grep { $Number::Phone::UK::Data::db->{personal_prefices}->{$_} } @retards;
     $cache->{$number}->{is_pager} =
-	grep { $Number::Phone::UK::Data::pager_prefices{$_} } @retards;
+	grep { $Number::Phone::UK::Data::db->{pager_prefices}->{$_} } @retards;
     $cache->{$number}->{is_mobile} =
-	grep { $Number::Phone::UK::Data::mobile_prefices{$_} } @retards;
+	grep { $Number::Phone::UK::Data::db->{mobile_prefices}->{$_} } @retards;
     $cache->{$number}->{is_specialrate} =
-	grep { $Number::Phone::UK::Data::special_prefices{$_} } @retards;
+	grep { $Number::Phone::UK::Data::db->{special_prefices}->{$_} } @retards;
     $cache->{$number}->{is_adult} =
-	grep { $Number::Phone::UK::Data::adult_prefices{$_} } @retards;
+	grep { $Number::Phone::UK::Data::db->{adult_prefices}->{$_} } @retards;
     $cache->{$number}->{is_ipphone} =
-	grep { $Number::Phone::UK::Data::ip_prefices{$_} } @retards;
+	grep { $Number::Phone::UK::Data::db->{ip_prefices}->{$_} } @retards;
     $cache->{$number}->{is_allocated} = 
-	grep { $Number::Phone::UK::Data::telco_and_length{$_} } @retards;
+	grep { $Number::Phone::UK::Data::db->{telco_and_length}->{$_} } @retards;
     if($cache->{$number}->{is_allocated}) {
-        my($telco_and_length) = map { $Number::Phone::UK::Data::telco_and_length{$_} } grep { $Number::Phone::UK::Data::telco_and_length{$_} } @retards;
-	$cache->{$number}->{operator} = $Number::Phone::UK::Data::telco_format{$telco_and_length}->{telco};
-	$cache->{$number}->{format} = $Number::Phone::UK::Data::telco_format{$telco_and_length}->{format};
+        my($telco_and_length) = map { $Number::Phone::UK::Data::db->{telco_and_length}->{$_} } grep { $Number::Phone::UK::Data::db->{telco_and_length}->{$_} } @retards;
+	$cache->{$number}->{operator} = $Number::Phone::UK::Data::db->{telco_format}->{$telco_and_length}->{telco};
+	$cache->{$number}->{format} = $Number::Phone::UK::Data::db->{telco_format}->{$telco_and_length}->{format};
 	if($cache->{$number}->{format} ne '?') {
 	    my($arealength, $subscriberlength) = split(/\+/, $cache->{$number}->{format});
 	    $cache->{$number}->{areacode} = substr($parsed_number, 0, $arealength);
 	    $cache->{$number}->{subscriber} = substr($parsed_number, $arealength);
             $cache->{$number}->{areaname} = (
                 map {
-                    $Number::Phone::UK::Data::areanames{$_}
-                } grep { $Number::Phone::UK::Data::areanames{$_} } @retards
+                    $Number::Phone::UK::Data::db->{areanames}->{$_}
+                } grep { $Number::Phone::UK::Data::db->{areanames}->{$_} } @retards
             )[0];
 	    if(length($cache->{$number}->{subscriber}) != $subscriberlength) {
 	        # number wrong length!
@@ -286,3 +288,5 @@ Copyright 2004
 =cut
 
 1;
+
+__DATA__

@@ -1,3 +1,6 @@
+2005-10-16	1.5	UK data moved into an embedded DBM::Deep structure
+                          to save memory (NB: this adds dependencies)
+                        Added location() method
 2005-10-11	1.4004	New UK allocations
                         Removed 'use warnings' and 'use diagnostics' because
                           they pointlessly require a later version of perl;

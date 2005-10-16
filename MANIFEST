@@ -30,8 +30,6 @@ lib/Number/Phone/NANP/VG.pm
 lib/Number/Phone/NANP/VI.pm
 lib/Number/Phone/UK.pm
 lib/Number/Phone/UK/Data.pm
-build-data.sh
-build-data.pl
 NOTES
 TODO
 CHANGELOG

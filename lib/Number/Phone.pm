@@ -6,7 +6,7 @@ use Scalar::Util 'blessed';
 
 use Number::Phone::Country qw(noexport uk);
 
-our $VERSION = 1.4;
+our $VERSION = 1.5;
 our %subclasses = ();
 
 my @is_methods = qw(
@@ -21,12 +21,11 @@ foreach my $method (
     @is_methods, qw(
         country_code regulator areacode areaname
         subscriber operator translates_to
-	format
+	format location
     )
 ) {
     no strict 'refs';
     *{__PACKAGE__."::$method"} = sub {
-        print "calling ".__PACKAGE__."::$method\n" if($ENV{DEBUG});
         my $self = shift;
 	return undef if(blessed($self) && $self->isa(__PACKAGE__));
         my $pkg = __PACKAGE__;
@@ -34,7 +33,6 @@ foreach my $method (
             $self eq __PACKAGE__ ||
             substr($self, 0, 2 + length(__PACKAGE__)) eq __PACKAGE__.'::'
         );
-        print "    with $self\n" if($ENV{DEBUG});
         $self = __PACKAGE__->new($self)
             unless(blessed($self) && $self->isa(__PACKAGE__));
 	return $self->$method() if($self);
@@ -114,7 +112,6 @@ sub new {
     # $number = '+'.$number;
     # my $country = Number::Phone::Country::phone2country($number);
     # return undef unless($country);
-    # print "got country $country for $number\n" if($ENV{DEBUG});
     # eval "use Number::Phone::$country";
     # return undef if($@);
     # return "Number::Phone::$country"->new($number);
@@ -259,6 +256,13 @@ returns undef.
 Return the name for the area code - if applicable.  If not applicable,
 returns undef.  For instance, for a number beginning +44 20 it would return
 'London'.  Note that this may return data in non-ASCII character sets.
+
+=item location
+
+This returns an approximate geographic location for the number if possible.
+Obviously this only applies to fixed lines!  The data returned is, if defined,
+a reference to an array containing two elements, latitude and longitude.
+North of the equator and East of Greenwich are positive.
 
 =item subscriber
 
