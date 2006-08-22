@@ -1,3 +1,5 @@
+build-data.sh
+build-data.realwork
 README
 MANIFEST
 Makefile.PL

@@ -9,7 +9,7 @@ use Data::Dumper;
 
 use base 'Number::Phone';
 
-our $VERSION = 1.5;
+our $VERSION = 1.51;
 
 $Number::Phone::subclasses{country_code()} = __PACKAGE__;
 
@@ -69,7 +69,7 @@ sub is_valid {
 
     # @digits{qw(A B C D E F)} = split(//, $parsed_number, 7);
 
-    my @retards = map { substr($parsed_number, 0, $_) } reverse 1..6;
+    my @retards = map { substr($parsed_number, 0, $_) } reverse 1..7;
 
     # and quickly check length
     $cache->{$number}->{is_valid} = (length($parsed_number) > 6 && length($parsed_number) < 11) ? 1 : 0;

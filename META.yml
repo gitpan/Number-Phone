@@ -1,12 +1,11 @@
 # http://module-build.sourceforge.net/META-spec.html
 #XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
 name:         Number-Phone
-version:      1.5
+version:      1.51
 version_from: 
 installdirs:  site
 requires:
-    DBM::Deep:                     0.96
-    IO::Scalar:                    0
+    DBM::Deep:                     0.97
     Scalar::Util:                  0
 
 distribution_type: module

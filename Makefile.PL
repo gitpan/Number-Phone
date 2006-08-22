@@ -1,10 +1,9 @@
 use ExtUtils::MakeMaker;
 WriteMakefile(
 		NAME         => 'Number::Phone',
-		VERSION      => 1.5,
+		VERSION      => 1.51,
 		PREREQ_PM    => {
 			'Scalar::Util'	=> 0,
-                        'DBM::Deep'	=> 0.96, # need to pass filehandle
-                        'IO::Scalar'	=> 0
+                        'DBM::Deep'	=> 0.97, # need to pass DATA filehandle
 		}
 	     );

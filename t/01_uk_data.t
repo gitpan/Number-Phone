@@ -6,7 +6,7 @@ use strict;
 
 use Number::Phone::UK;
 
-BEGIN { $| = 1; print "1..50\n"; }
+BEGIN { $| = 1; print "1..48\n"; }
 
 my $test = 0;
 
@@ -48,19 +48,19 @@ $number = Number::Phone->new('+447979866975');
 print 'not ' unless($number->is_mobile());
 print 'ok '.(++$test)." mobiles correctly identified\n";
 
-$number = Number::Phone->new('+445511431234');
+$number = Number::Phone->new('+445600123456');
 print 'not ' unless($number->is_ipphone());
 print 'ok '.(++$test)." VoIP correctly identified\n";
 
-$number = Number::Phone->new('+447600212345');
-print 'not ' unless($number->is_pager());
-print 'ok '.(++$test)." pagers correctly identified\n";
-print 'not ' unless($number->is_tollfree());
-print 'ok '.(++$test)." toll-free pagers correctly identified\n";
+# toll-free pagers no longer exist
+# # $number = Number::Phone->new('+447600212345');
+# # print 'not ' unless($number->is_pager());
+# # print 'ok '.(++$test)." pagers correctly identified\n";
+# # print 'not ' unless($number->is_tollfree());
+# # print 'ok '.(++$test)." toll-free pagers correctly identified\n";
 $number = Number::Phone->new('+447693912345');
 print 'not ' unless($number->is_pager());
-print 'not ' if($number->is_tollfree());
-print 'ok '.(++$test)." caller-pays pagers correctly identified\n";
+print 'ok '.(++$test)." pagers correctly identified\n";
 
 $number = Number::Phone->new('+44800001012');
 print 'not ' unless($number->is_tollfree());

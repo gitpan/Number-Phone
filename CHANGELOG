@@ -1,3 +1,8 @@
+2005-08-22	1.51	Updated UK data to access DATA filehandle directly,
+			  which depends on DBM::Deep 0.97 and above;
+			New UK allocations;
+			Some improvements and fixes in OFCOM data parser;
+			Bug fixes :-( for UK numbers with a significant F digit
 2005-10-16	1.5	UK data moved into an embedded DBM::Deep structure
                           to save memory (NB: this adds dependencies)
                         Added location() method
