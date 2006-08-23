@@ -1,3 +1,4 @@
+2006-08-23      1.53    Doh!  How we loaded location data was buggy
 2006-08-23      1.52    Documentation patches;
                         Corrected CHANGELOG entry for v1.51;
                         Added location data for the UK
