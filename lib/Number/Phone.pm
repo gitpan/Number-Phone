@@ -6,7 +6,7 @@ use Scalar::Util 'blessed';
 
 use Number::Phone::Country qw(noexport uk);
 
-our $VERSION = 1.5;
+our $VERSION = 1.5001;
 our %subclasses = ();
 
 my @is_methods = qw(
@@ -261,8 +261,12 @@ returns undef.  For instance, for a number beginning +44 20 it would return
 
 This returns an approximate geographic location for the number if possible.
 Obviously this only applies to fixed lines!  The data returned is, if defined,
-a reference to an array containing two elements, latitude and longitude.
+a reference to an array containing two elements, latitude and longitude,
+in degrees.
 North of the equator and East of Greenwich are positive.
+You may optionally return a third element indicating how confident you are
+of the location.  Specify this as a number in kilometers indicating the radius
+of the error circle.
 
 =item subscriber
 
@@ -360,7 +364,8 @@ going like Number::Phone::NANP::XX.
 
 =head1 BUGS/FEEDBACK
 
-Please report bugs by email, including, if possible, a test case.
+Please report bugs by email or using http://rt.cpan.org, including,
+if possible, a test case.
 
 I welcome feedback from users.
 

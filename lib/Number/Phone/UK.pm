@@ -5,11 +5,9 @@ use strict;
 use Scalar::Util 'blessed';
 use Number::Phone::UK::Data;
 
-use Data::Dumper;
-
 use base 'Number::Phone';
 
-our $VERSION = 1.51;
+our $VERSION = 1.52;
 
 $Number::Phone::subclasses{country_code()} = __PACKAGE__;
 
@@ -62,7 +60,6 @@ sub is_valid {
     return 1 if($cache->{$number}->{is_valid});
 
     my $parsed_number = $number;
-    # my %digits;
     $parsed_number =~ s/[^0-9+]//g;               # strip non-digits/plusses
     $parsed_number =~ s/^\+44//;                  # remove leading +44
     $parsed_number =~ s/^0//;                     # kill leading zero
@@ -227,6 +224,40 @@ returns undef.
 
 Return the area name - if applicable - for the number, or undef.
 
+=item location
+
+For geographic numbers, this returns the location of the exchange to which
+that number is assigned, if available.  Otherwise returns undef.
+
+=cut
+
+sub location {
+    my $self = shift;
+    $self = (blessed($self) && $self->isa(__PACKAGE__)) ?
+        $self :
+        __PACKAGE__->new($self);
+
+    return undef unless($self->is_geographic());
+
+    my $parsed_number = ${$self};
+    $parsed_number =~ s/[^0-9+]//g;               # strip non-digits/plusses
+    $parsed_number =~ s/^\+44//;                  # remove leading +44
+    $parsed_number =~ s/^0//;                     # kill leading zero
+
+    my @retards = map { substr($parsed_number, 0, $_) } reverse(1..length($parsed_number));
+
+    eval "use Number::Phone::UK::DetailedLocations" ||
+        eval "use Number::Phone::UK::Exchanges";
+
+    foreach(@retards) {
+        if(exists($Number::Phone::UK::Exchanges::db->{exchg_prefices}->{$_})) {
+            return $Number::Phone::UK::Exchanges::db->{exchg_positions}->{$Number::Phone::UK::Exchanges::db->{exchg_prefices}->{$_}};
+        }
+    }
+
+    return undef;
+}
+
 =item subscriber
 
 Return the subscriber part of the number
@@ -249,7 +280,6 @@ sub format {
     $self = (blessed($self) && $self->isa(__PACKAGE__)) ?
         $self :
         __PACKAGE__->new($self);
-    my $format = $cache->{${$self}}->{format};
     return '+'.country_code().' '.
         ($self->areacode() ? $self->areacode().' ' : '').
 	$self->subscriber();
@@ -283,7 +313,7 @@ perl itself.
 
 David Cantrell E<lt>david@cantrell.org.ukE<gt>
 
-Copyright 2004
+Copyright 2004 - 2006
 
 =cut
 

@@ -6,7 +6,7 @@ use strict;
 
 use Number::Phone::UK;
 
-BEGIN { $| = 1; print "1..48\n"; }
+BEGIN { $| = 1; print "1..50\n"; }
 
 my $test = 0;
 
@@ -122,3 +122,10 @@ print 'not ' unless($number);
 print 'ok '.(++$test)." 0203 numbers are recognised\n";
 print 'not ' unless($number->is_allocated() && $number->is_geographic() && $number->is_fixed_line());
 print 'ok '.(++$test)." ... and their type looks OK\n";
+
+$number = Number::Phone->new('+442087712924');
+print 'not ' unless($number->location()->{lat} == 51.38309 && $number->location()->{long} == -0.336079);
+print 'ok '.(++$test)." geo numbers have correct location\n";
+$number = Number::Phone->new('+447979866975');
+print 'not ' if(defined($number->location()));
+print 'ok '.(++$test)." non-geo numbers have no location\n";
