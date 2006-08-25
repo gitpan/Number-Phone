@@ -7,7 +7,7 @@ use Number::Phone::UK::Data;
 
 use base 'Number::Phone';
 
-our $VERSION = 1.54;
+our $VERSION = 1.55;
 
 $Number::Phone::subclasses{country_code()} = __PACKAGE__;
 
@@ -246,12 +246,15 @@ sub location {
 
     my @retards = map { substr($parsed_number, 0, $_) } reverse(1..length($parsed_number));
 
-    eval "require Number::Phone::UK::DetailedLocations";
+    eval "require Number::Phone::UK::DetailedLocations" unless($ENV{TESTINGKILLTHEWABBIT});
     require Number::Phone::UK::Exchanges if(!$Number::Phone::UK::Exchanges::db);
 
     foreach(@retards) {
         if(exists($Number::Phone::UK::Exchanges::db->{exchg_prefices}->{$_})) {
-            return $Number::Phone::UK::Exchanges::db->{exchg_positions}->{$Number::Phone::UK::Exchanges::db->{exchg_prefices}->{$_}};
+            return [
+                $Number::Phone::UK::Exchanges::db->{exchg_positions}->{$Number::Phone::UK::Exchanges::db->{exchg_prefices}->{$_}}->{lat},
+                $Number::Phone::UK::Exchanges::db->{exchg_positions}->{$Number::Phone::UK::Exchanges::db->{exchg_prefices}->{$_}}->{long}
+            ];
         }
     }
 

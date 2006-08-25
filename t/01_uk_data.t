@@ -10,6 +10,8 @@ BEGIN { $| = 1; print "1..50\n"; }
 
 my $test = 0;
 
+$ENV{TESTINGKILLTHEWABBIT} = 1; # make sure we don't load detailed exchg data
+
 my $number = Number::Phone->new('+44 142422 0000');
 print 'not ' unless($number->country() eq 'UK');
 print 'ok '.(++$test)." inherited country() method works\n";
@@ -124,7 +126,7 @@ print 'not ' unless($number->is_allocated() && $number->is_geographic() && $numb
 print 'ok '.(++$test)." ... and their type looks OK\n";
 
 $number = Number::Phone->new('+442087712924');
-print 'not ' unless($number->location()->{lat} == 51.38309 && $number->location()->{long} == -0.336079);
+print 'not ' unless($number->location()->[0] == 51.38309 && $number->location()->[1] == -0.336079);
 print 'ok '.(++$test)." geo numbers have correct location\n";
 $number = Number::Phone->new('+447979866975');
 print 'not ' if(defined($number->location()));
