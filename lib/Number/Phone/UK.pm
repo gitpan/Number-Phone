@@ -116,6 +116,8 @@ sub is_valid {
 	    }
 	}
     }
+    # use Data::Dumper;
+    # print Dumper($Number::Phone::UK::Data::db);
     return $cache->{$number}->{is_valid};
 }
 

@@ -9,6 +9,5 @@ unzip codelist.zip
 perl build-data.realwork
 cat Data.pm temp.db > lib/Number/Phone/UK/Data.pm
 
-# perl -MDBM::Deep -MData::Dumper -e 'print Dumper(DBM::Deep->new("lib/Number/Phone/UK/temp.db"))'>database.txt
-rm codelist.zip *txt Data.pm temp.db
+rm codelist.zip s[0123456789]*.txt sabc.txt readme.txt Data.pm temp.db
 
