@@ -6,7 +6,7 @@ use Scalar::Util 'blessed';
 
 use Number::Phone::Country qw(noexport uk);
 
-our $VERSION = 1.5001;
+our $VERSION = 1.57;
 our %subclasses = ();
 
 my @is_methods = qw(
@@ -94,6 +94,13 @@ and to magically use the right subclass ...
     if($daves_phone->is_mobile()) {
         send_rude_SMS();
     }
+
+=head1 IMPORTANT NOTE WHAT YOU SHOULD READ
+
+All previous versions had a dependency on the excellent DBM::Deep module.
+Unfortunately its file format changed when it hit version 1.0.  Therefore
+this release has an old version of DBM::Deep bundled with it, which you
+may use in parallel with the new version.
 
 =cut
 
