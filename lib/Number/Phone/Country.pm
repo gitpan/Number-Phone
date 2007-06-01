@@ -2,7 +2,7 @@ package Number::Phone::Country;
 
 use strict;
 
-our $VERSION = 1.4;
+our $VERSION = 1.5;
 our $use_uk = 0;
 
 sub import {
@@ -35,26 +35,28 @@ my %idd_codes = (
     246     => 'IO', 247     => 'AC', 248     => 'SC', 249     => 'SD',
     250     => 'RW', 251     => 'ET', 252     => 'SO', 253     => 'DJ',
     254     => 'KE', 255     => 'TZ', 256     => 'UG', 257     => 'BI',
-    258     => 'MZ', 260     => 'ZM', 261     => 'MG', 262     => 'RE',
+    258     => 'MZ', 260     => 'ZM', 261     => 'MG',
+    2622691 => 'YT',  # \
+    26226960 => 'YT', # |
+    26226961 => 'YT', # | Mayotte fixed lines
+    26226962 => 'YT', # |
+    26226963 => 'YT', # |
+    26226964 => 'YT', # /
+    26263920 => 'YT', # \
+    26263921 => 'YT', # |
+    26263922 => 'YT', # |
+    26263923 => 'YT', # |
+    26263924 => 'YT', # | Mayotte GSM
+    26263965 => 'YT', # |
+    26263966 => 'YT', # |
+    26263967 => 'YT', # |
+    26263968 => 'YT', # |
+    26263969 => 'YT', # /
+    262     => 'RE',  # Assume that Reunion is everything else in +262
     263     => 'ZW',
     264     => 'NA', 265     => 'MW', 266     => 'LS', 267     => 'BW',
     268     => 'SZ',
-    26920   => 'YT',
-    26921   => 'YT',
-    26922   => 'YT',
-    26923   => 'YT',
-    26924   => 'YT',
-    2693    => 'KM',
-    2696    => 'YT',
-    26971   => 'KM',
-    26972   => 'KM',
-    26973   => 'KM',
-    26974   => 'KM',
-    26975   => 'KM',
-    26976   => 'KM',
-    26977   => 'KM',
-    26978   => 'KM',
-    26979   => 'KM',
+    269     => 'KM',
     27      => 'ZA', 290     => 'SH',
     291     => 'ER',
     297     => 'AW', 298     => 'FO', 299     => 'GL',
@@ -358,11 +360,9 @@ So that's about once a month then.  I'll do my best to keep it up to date.
 
 =head1 WARNING
 
-Be aware that the ISO 3166 country code for Yugoslavia has changed.  It
-used to be YU, and is now CS.
-
-The pesky Yugoslavs keep changing their minds.  They've changed again to
-RS and ME, with exciting new IDD code changes to go with it.  Yay.
+The Yugoslavs keep changing their minds about what country they want to be
+and what their ISO 3166 code and IDD prefix should be.  YU? CS? RS? ME?
+God knows.
 
 =head1 AUTHOR
 
@@ -376,7 +376,7 @@ Thanks to Shraga Bor-Sood for the updates in version 1.4.
 
 Copyright 2003 by MaxMind LLC
 
-Copyright 2004, 2005, 2006 David Cantrell
+Copyright 2004 - 2007 David Cantrell
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 
