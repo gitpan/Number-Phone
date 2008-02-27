@@ -22,10 +22,11 @@
 # 77: mobile
 # 78: mobile
 # 79: mobile
-# 80: free
+# 80: free to caller
 # 820: internet for schools
 # 84: special
 # 87: special
+# 90: special
 # 91: special
 # 92: special
 # 98: special
@@ -106,10 +107,10 @@ while(my $line = <S3>) {
     $line =~ s/£/UKP/g;
     $csv->parse($line) || die("Bad CSV line in s3_code.txt\n\n$line\n\n");
     my @fields = $csv->fields();
-    next if($fields[2] ne 'Allocated');
+    next if($fields[3] ne 'Allocated');
     
-    my $retard = join('',@fields[0,1]);
-    my $telco = $fields[4];
+    my $retard = join('',@fields[0 .. 2]);
+    my $telco = $fields[5];
     my $format = '10 digit numbers';
 
     push @telco_length_data, [$retard, $telco, $format];
@@ -220,15 +221,36 @@ my %telco_format_cache = ();
 my %telco_and_length = ();
 foreach my $datum (@telco_length_data) {
     my($retard, $telco, $format) = @{$datum};
-    $format = '0+10' if($format eq '(0)+10' || $format =~ /^10 digit number/i);
-    $format = '0+7' if($format =~ /^7 digit number/i);
-    $format = '0+9' if($format =~ /^9 digit number/i);
-    $format = '?' if($format eq 'RTO');
+    if($format eq 'N/A' || $format eq '(0)+10' || $format =~ /^10 digit number/i) {
+        $format = '0+10';
+    } elsif($format =~ /^7 digit number/i) {
+        $format = '0+7';
+    } elsif($format =~ /^9 digit number/i) {
+        $format = '0+9';
+    } elsif($format eq 'RTO') {
+        $format = '?';
+    } elsif($format eq '') {
+        warn "Empty format: $format (r: $retard; t: $telco)\n"
+            if($retard !~ /^[789]/);
+    } elsif($format eq 'Mixed 4+5 & 4+6') {
+        $format = '4+5 mixed';
+    } elsif(
+        $format ne '3+7' &&
+        $format ne '4+4' &&
+        $format ne '4+6' &&
+        $format ne '4+5' &&
+        $format ne '5+5' &&
+        $format ne '2+8' &&
+        $format ne '2+8' &&
+        $format ne 'Mixed 4+5 & 4+6'
+    ) {
+        warn "Unknown format: $format (r: $retard; t: $telco)\n";
+    }
 
     my $cache_key = md5_base64($telco.'_'.$format);
     $telco_format_cache{$cache_key} = {
         telco => $telco,
-	format => $format
+        format => $format
     };
 
     $telco_and_length{$retard} = $cache_key;
