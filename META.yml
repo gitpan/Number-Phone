@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               Number-Phone
-version:            1.7
+version:            1.7001
 abstract:           ~
 author:  []
 license:            unknown
@@ -8,6 +8,7 @@ distribution_type:  module
 configure_requires:
     ExtUtils::MakeMaker:  0
 requires:
+    Digest::MD5:   0
     Scalar::Util:  0
     Test::More:    0
 no_index:
