@@ -5,8 +5,9 @@ use strict;
 use Scalar::Util 'blessed';
 
 use Number::Phone::Country qw(noexport uk);
+use Number::Phone::StubCountry;
 
-our $VERSION = 1.7101;
+our $VERSION = 1.8;
 
 my @is_methods = qw(
     is_valid is_allocated is_in_use
@@ -98,8 +99,15 @@ and to magically use the right subclass ...
 
 in the example, the +44 is recognised as the country code for the UK,
 so the appropriate country-specific module is loaded if available.
-If you pass in a bogus country code or one for a country for which
-no supporting module is available, the constructor will return undef.
+
+If you pass in a bogus country code not recognised by
+Number::Phone::Country, the constructor will return undef.
+
+If you pass in a country code for which
+no supporting module is available, the constructor will return a
+minimal object that knows its country code and how to format a phone
+number, but nothing else.  Note that this is an incompatible change:
+previously it would return undef.
 
 =cut
 
@@ -129,8 +137,22 @@ sub new {
     return undef unless($country);
     $country = "NANP" if($number =~ /^\+1/);
     eval "use Number::Phone::$country";
-    return undef if($@);
+    return $class->_make_stub_object($number) if($@);
     return "Number::Phone::$country"->new($number);
+}
+
+sub _make_stub_object {
+  my $class = shift;
+  my $number = shift;
+  my $self = {
+    country => 'STUBFORCOUNTRYWITHNOMODULE',
+    country_idd_code => ''.Number::Phone::Country::country_code(Number::Phone::Country::phone2country($number)),
+    country_code => ''.Number::Phone::Country::phone2country($number),
+    number => $number
+  };
+  # use Data::Dumper; local $Data::Dumper::Indent = 1;
+  # print Dumper($self);
+  bless($self, 'Number::Phone::StubCountry');
 }
 
 =head1 METHODS
@@ -344,8 +366,11 @@ there isn't one, and looking the country up using
 Number::Phone::Country.  That gives us a two letter country code that
 is used to try to load the right module.
 
-The constructor returns undef if it can not figure out which subclass to
-use.
+The constructor returns undef if it can not figure out what country
+you're talking about, or a minimal object if there's no country-specific
+module available.  Note that in the case of there being no country-specific
+module available this is an incompatible change: previously it would
+return undef.
 
 =back
 
@@ -372,6 +397,11 @@ going like Number::Phone::NANP::XX.
 Note that subclasses no longer need to register themselves with
 Number::Phone.  In fact, registration is now *ignored* as the magic
 country detector now works properly.
+
+=head1 WARNING
+
+There is an incompatible change in version 1.8.  See the SYNOPSIS and
+the documentation for the C<new> method above.
 
 =head1 BUGS/FEEDBACK
 
