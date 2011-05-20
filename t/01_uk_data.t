@@ -6,7 +6,7 @@ use strict;
 
 use Number::Phone::UK;
 
-BEGIN { $| = 1; print "1..65\n"; }
+BEGIN { $| = 1; print "1..68\n"; }
 
 my $test = 0;
 
@@ -157,6 +157,14 @@ print 'ok '.(++$test)." 4+5 (mixed) format works\n";
 print 'not ' unless(Number::Phone->new('+441768881000')->format() eq
     '+44 1768 881000');
 print 'ok '.(++$test)." 4+6 (mixed) format works\n";
+
+$number = Number::Phone->new('+447400000000');
+print 'not ' unless($number->is_mobile());
+print 'ok '.(++$test)." 074 mobiles correctly identified\n";
+print 'not ' unless($number->operator() eq 'Hutchison 3G UK Ltd');
+print 'ok '.(++$test)." 074 mobiles have right operator\n";
+print 'not ' unless($number->format() eq '+44 7400000000');
+print 'ok '.(++$test)." 074 mobiles have right operator\n";
 
 $number = Number::Phone->new('+447500000000');
 print 'not ' unless($number->is_mobile());
