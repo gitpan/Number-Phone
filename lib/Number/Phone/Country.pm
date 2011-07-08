@@ -4,7 +4,7 @@ use strict;
 
 # *_codes are global so we can mock in some tests
 use vars qw($VERSION %idd_codes %prefix_codes);
-$VERSION = 1.6001;
+$VERSION = 1.6002;
 my $use_uk = 0;
 
 sub import {
@@ -24,7 +24,11 @@ sub import {
 %idd_codes = (
     # 1     => 'NANP',
 
-    20      => 'EG', 212     => 'MA', 213     => 'DZ', 216     => 'TN',
+    # 2* checked against wtng.info 2011-07-08
+    20      => 'EG', 212     => 'MA',
+    2125288 => 'EH', # \ from http://en.wikipedia.org/wiki/List_of_country_calling_codes#At_a_glance
+    2125289 => 'EH', # /
+    213     => 'DZ', 216     => 'TN',
     218     => 'LY', 220     => 'GM', 221     => 'SN', 222     => 'MR',
     223     => 'ML',
     224     => 'GN',
@@ -38,23 +42,9 @@ sub import {
     250     => 'RW', 251     => 'ET', 252     => 'SO', 253     => 'DJ',
     254     => 'KE', 255     => 'TZ', 256     => 'UG', 257     => 'BI',
     258     => 'MZ', 260     => 'ZM', 261     => 'MG',
-    2622691 => 'YT',  # \
-    26226960 => 'YT', # |
-    26226961 => 'YT', # | Mayotte fixed lines
-    26226962 => 'YT', # |
-    26226963 => 'YT', # |
-    26226964 => 'YT', # /
-    26263920 => 'YT', # \
-    26263921 => 'YT', # |
-    26263922 => 'YT', # |
-    26263923 => 'YT', # |
-    26263924 => 'YT', # | Mayotte GSM
-    26263965 => 'YT', # |
-    26263966 => 'YT', # |
-    26263967 => 'YT', # |
-    26263968 => 'YT', # |
-    26263969 => 'YT', # /
-    262     => 'RE',  # Assume that Reunion is everything else in +262
+    262269  => 'YT', # Mayotte fixed lines
+    262639  => 'YT', # Mayotte GSM
+    262     => 'RE', # Assume that Reunion is everything else in +262
     263     => 'ZW',
     264     => 'NA', 265     => 'MW', 266     => 'LS', 267     => 'BW',
     268     => 'SZ',
@@ -63,22 +53,37 @@ sub import {
     291     => 'ER',
     297     => 'AW', 298     => 'FO', 299     => 'GL',
     
+    # 3* checked against wtng.info 2011-07-08
     30      => 'GR', 31      => 'NL', 32      => 'BE', 33      => 'FR',
-    34      => 'ES', 349567  => 'GI', 350     => 'GI', 351     => 'PT',
+    34      => 'ES', 350     => 'GI', 351     => 'PT',
     352     => 'LU', 353     => 'IE', 35348   => 'GB', 354     => 'IS',
     355     => 'AL', 356     => 'MT', 357     => 'CY', 358     => 'FI',
     359     => 'BG', 36      => 'HU', 370     => 'LT', 371     => 'LV',
     372     => 'EE', 373     => 'MD', 374     => 'AM', 375     => 'BY',
-    376     => 'AD', 377     => 'MC', 378     => 'SM', 379     => 'VA',
-    380     => 'UA', 381     => 'RS', 382     => 'ME', 385     => 'HR',
+    376     => 'AD', 377     => 'MC',
+    37744   => 'KOS', # from http://en.wikipedia.org/wiki/List_of_country_calling_codes#At_a_glance
+    37745   => 'KOS',
+    38128   => 'KOS',
+    38129   => 'KOS',
+    38138   => 'KOS',
+    38139   => 'KOS',
+    38643   => 'KOS',
+    38649   => 'KOS',
+    378     => 'SM', 379     => 'VA',
+    380     => 'UA', 381     => 'RS',
+    382     => 'ME', 385     => 'HR',
     386     => 'SI',
     387     => 'BA',
     389     => 'MK', 39      => 'IT', 3966982 => 'VA',
+
+    # 4* checked against wtng.info 2011-07-08
     40      => 'RO', 41      => 'CH', 420     => 'CZ', 421     => 'SK',
     423     => 'LI',
-    43      => 'AT', 44      => 'GB', 45      => 'DK', 46      => 'SE',
+    43      => 'AT', 44      => 'GB',
+    45      => 'DK', 46      => 'SE',
     47      => 'NO', 48      => 'PL', 49      => 'DE',
     
+    # 5* checked against wtng.info 2011-07-08
     500     => 'FK',
     501     => 'BZ', 502     => 'GT', 503     => 'SV', 504     => 'HN',
     505     => 'NI', 506     => 'CR', 507     => 'PA',
@@ -87,8 +92,12 @@ sub import {
     55      => 'BR', 56      => 'CL', 57      => 'CO', 58      => 'VE',
     590     => 'GP', 591     => 'BO', 592     => 'GY', 593     => 'EC',
     594     => 'GF', 595     => 'PY', 596     => 'MQ', 597     => 'SR',
-    598     => 'UY', 599     => 'AN',
+    598     => 'UY',
+    599     => 'BQ',
+    5995    => 'SX', # will move to +1 721 in Sep 2011
+    5999    => 'CW',
     
+    # 6* checked against wtng.info 2011-07-08
     60      => 'MY',
     61      => 'AU',
     6189162 => 'CC', # Cocos (Keeling) Islands
@@ -107,14 +116,20 @@ sub import {
     688     => 'TV',
     689     => 'PF', 690     => 'TK', 691     => 'FM', 692     => 'MH',
     
-    # 7     => 'RU & KZ',
+    # 7* from http://en.wikipedia.org/wiki/Telephone_numbers_in_Kazakhstan
+    # checked 2011-07-08
+    76      => 'KZ',
+    77      => 'KZ',
+    7       => 'RU',
     
+    # 8* checked against wtng.info 2011-07-08
     81      => 'JP', 82      => 'KR', 84      => 'VN', 850     => 'KP',
     852     => 'HK', 853     => 'MO', 855     => 'KH', 856     => 'LA',
     86      => 'CN',
     880     => 'BD',
     886     => 'TW',
     
+    # 9* checked against wtng.info 2011-07-08
     90      => 'TR', 91      => 'IN', 92      => 'PK', 93      => 'AF',
     94      => 'LK', 95      => 'MM', 960     => 'MV', 961     => 'LB',
     962     => 'JO', 963     => 'SY', 964     => 'IQ', 965     => 'KW',
@@ -127,7 +142,7 @@ sub import {
     993     => 'TM', 994     => 'AZ', 995     => 'GE',
     996     => 'KG', 998     => 'UZ',
 
-    3883    => 'ETNS', # http://wtng.info/wtng-reg.html#Europewide
+    # these checked against wtng.info 2011-07-08
     800     => 'InternationalFreephone',
     808     => 'SharedCostServices',
     870     => 'Inmarsat',
@@ -136,18 +151,17 @@ sub import {
     873     => 'Inmarsat',
     874     => 'Inmarsat',
     878     => 'UniversalPersonalTelecoms',
-    8812    => 'Ellipso',    # \
-    8813    => 'Ellipso',    # |
-    8816    => 'Iridium',    # | Sat-phones
+    8816    => 'Iridium',    # \ Sat-phones
     8817    => 'Iridium',    # |
     8818    => 'Globalstar', # |
     8819    => 'Globalstar', # /
     882     => 'InternationalNetworks',
+    888     => 'TelecomsForDisasterRelief',
     # 979 is used for testing when we fail to load a module when we
     # know what "country" it is
     979     => 'InternationalPremiumRate',
     991     => 'ITPCS',
-    # 999 deliberately NYI for testing
+    # 999 deliberately NYI for testing; proposed to be like 888.
 );
 
 # Prefix Codes hash
@@ -163,7 +177,7 @@ sub import {
     'AI' => [  '1',  '011',    '1'], # Anguilla
     'AL' => ['355',   '00',    '0'], # Albania
     'AM' => ['374',   '00',    '8'], # Armenia
-    'AN' => ['599',   '00',    '0'], # Netherlands Antilles
+    'BQ' => ['599',   '00',    '0'], # Bonaire, Saint Eustatius and Saba (ex-Netherland Antilles)
     'AO' => ['244',   '00',    '0'], # Angola
     'AQ' => ['672',  undef,  undef], # Antarctica
     'AR' => [ '54',   '00',    '0'], # Argentina
@@ -274,7 +288,7 @@ sub import {
     'KR' => [ '82',  '001',    '0'], # Korea (South)
     'KW' => ['965',   '00',    '0'], # Kuwait
     'KY' => [  '1',  '011',    '1'], # Cayman Islands
-    'KZ' => [  '7',  '810',    '8'], # Kazakhstan (IDD really 8**10)
+    'KZ' => [  '7',  '810',    '8'], # Kazakhstan (IDD really 8[pause]10)
     'LA' => ['856',   '00',    '0'], # Laos
     'LB' => ['961',   '00',    '0'], # Lebanon
     'LC' => [  '1',  '011',    '1'], # Saint Lucia
@@ -391,7 +405,7 @@ sub import {
     'WF' => ['681',   '19',  undef], # Wallis and Futuna Islands
     'WS' => ['685',    '0',    '0'], # Samoa (Western)
     'YE' => ['967',   '00',    '0'], # Yemen
-    'YT' => ['269',   '00',  undef], # Mayotte
+    'YT' => ['262',   '00',  undef], # Mayotte
     'ZA' => [ '27',   '09',    '0'], # South Africa
     'ZM' => ['260',   '00',    '0'], # Zambia
     'ZW' => ['263',  '110',    '0'], # Zimbabwe
@@ -413,92 +427,104 @@ sub phone2country_and_idd {
 
     if($phone =~ m!^1(\d{3})\d{7}$!) {
 
-        # see http://www.cnac.ca/mapcodes.htm
+        # see http://www.cnac.ca/co_codes/co_code_status_map.htm
+	# checked 2011-07-08
         if($1 =~ m!^(
-            204|226|250|289|
-            306|
-            403|416|418|438|450|
-            506|514|519|            # add 587 from Jun 2008
-            604|613|647|
-            705|709|778|780|
-            807|819|867|
-            902|905
+	    204|
+	    226|
+	    249|
+	    250|
+	    289|
+	    306|
+	    343|
+	    365|
+	    403|
+	    416|
+	    418|
+	    431|
+	    438|
+	    450|
+	    506|
+	    514|
+	    519|
+	    579|
+	    581|
+	    587|
+	    604|
+	    613|
+	    647|
+	    705|
+	    709|
+	    778|
+	    780|
+	    807|
+	    819|
+	    867|
+	    873|
+	    902|
+	    905
         )$!x) {
             return ('CA', 1);
         }
         # see http://www.nanpa.com/number_resource_info/area_code_maps.html
         elsif($1 =~ m!^(
-            201|202|203|205|206|207|208|209|
-            210|212|213|214|215|216|217|218|219|
-            224|225|227|228|229|
-            231|234|239|
-            240|248|
-            251|252|253|254|256|
-            260|262|267|269|270|276|278|281|283|
-            301|302|303|304|305|307|308|309|
-            310|312|313|314|315|316|317|318|319|
-            320|321|323|325|
-            330|331|334|336|337|339|
-            341|347|
-            351|352|
-            360|361|369|
-            380|385|386|
-            401|402|404|405|406|407|408|409|
-            410|412|413|414|415|417|419|
-            423|424|425|
-            430|432|434|435|
-            440|442|443|445|
-            464|469|
-            470|475|478|479|
-            480|484|
-            501|502|503|504|505|507|508|509|
-            510|512|513|515|516|517|518|
-            520|
-            530|
-            540|541|
-            551|557|559|
-            561|562|563|564|567|
-            570|571|573|574|575|
-            580|585|586|
-            601|602|603|605|606|607|608|609|
-            610|612|614|615|616|617|618|619|
-            620|623|626|627|628|
-            630|631|636|
-            641|646|
-            650|651|657|659|
-            660|661|662|667|669|
-            678|679|
-            682|689|
-            701|702|703|704|706|707|708|
-            712|713|714|715|716|717|718|719|
-            720|724|727|
-            731|732|734|737|
-            740|747|
-            752|754|757|
-            760|762|763|764|765|769|
-            770|772|773|774|775|
-            781|785|786|
-            801|802|803|804|805|806|808|
-            810|812|813|814|815|816|817|818|
-            828|
-            830|831|832|835|
-            843|845|847|848|
-            850|856|857|858|859|
-            860|862|863|864|865|
-            870|872|878|
-            901|903|904|906|907|908|909|
-            910|912|913|914|915|916|917|918|919|
-            920|925|928|
-            931|935|936|937|
-            940|941|947|949|
-            951|952|954|956|959|
-            970|971|972|973|975|978|979|
-            980|984|985|989
+          205|251|256|334|659|938|
+          907|250|
+          480|520|602|623|928|
+          327|479|501|870|
+          209|213|310|323|341|369|408|415|424|442|510|530|559|562|619|626|627|628|650|657|661|669|707|714|747|760|764|805|818|831|858|909|916|925|935|949|951|
+          303|719|720|970|
+          203|475|860|959|
+          302|
+          202|
+          239|305|321|352|386|407|561|689|727|754|772|786|813|850|863|904|941|954|
+          229|404|470|478|678|706|762|770|912|
+          808|
+          208|
+          217|224|309|312|331|447|464|618|630|708|730|773|779|815|847|872|
+          219|260|317|574|765|812|
+          319|515|563|641|712|
+          316|620|785|913|
+          270|364|502|606|859|
+          225|318|337|504|985|
+          207|
+          227|240|301|410|443|667|
+          339|351|413|508|617|774|781|857|978|
+          231|248|269|313|517|586|616|679|734|810|906|947|989|
+          218|320|507|612|651|763|952|
+          228|601|662|769|
+          314|417|557|573|636|660|816|975|
+          406|
+          308|402|531|
+          702|775|
+          603|
+          201|551|609|732|848|856|862|908|973|
+          505|575|
+          212|315|347|516|518|585|607|631|646|716|718|845|914|917|929|
+          252|336|704|828|910|919|980|984|
+          701|
+          216|234|283|330|380|419|440|513|567|614|740|937|
+          405|539|580|918|
+          458|503|541|971|
+          215|267|272|412|445|484|570|582|610|717|724|814|835|878|
+          401|
+          803|843|864|
+          605|
+          423|615|731|865|901|931|
+          210|214|254|281|325|361|409|430|432|469|512|682|713|737|806|817|830|832|903|915|936|940|956|972|979|
+          385|435|801|
+          802|
+          276|434|540|571|703|757|804|
+          206|253|360|425|509|564|
+          304|681|
+          262|274|414|534|608|715|920|
+          307
         )$!x) {
             return ('US', 1);
         }
 
         # see http://wtng.info/wtng-cod.html#WZ1
+	# checked 2011-07-08
         elsif($1 eq '242') { return ('BS', 1); }
         elsif($1 eq '246') { return ('BB', 1); }
         elsif($1 eq '264') { return ('AI', 1); }
@@ -519,27 +545,13 @@ sub phone2country_and_idd {
         elsif($1 eq '787') { return ('PR', 1); }
         elsif($1 eq '809') { return ('DO', 1); }
         elsif($1 eq '829') { return ('DO', 1); } # overlay
+        elsif($1 eq '849') { return ('DO', 1); } # overlay
         elsif($1 eq '868') { return ('TT', 1); }
         elsif($1 eq '869') { return ('KN', 1); }
         elsif($1 eq '876') { return ('JM', 1); }
         elsif($1 eq '939') { return ('PR', 1); } # overlay
 
         else { return ('NANP', 1); }
-    }
-
-    # following are from http://www.itu.int/itudoc/itu-t/number/k/kaz/75917.html
-    # and http://wtng.info/ccod-7.html
-    # see also http://wtng.info/wtng-kk.html#Kazakstan
-    elsif($phone =~ /^7/) {
-        return ('KZ', 7) if($phone =~ /^7(
-            300|
-            310|311|312|313|314|315|316|317|318|
-            320|321|322|323|324|325|326|327|328|329|
-            333|336|
-            570|571|573|574|
-            700
-        )/x);
-        return ('RU', 7);
     }
 
     else {
@@ -619,6 +631,10 @@ off by passing the 'noexport' constant when you use the module.
 Also be aware that the ISO code for the United Kingdom is GB, not UK.  If
 you would prefer UK, pass the 'uk' constant.
 
+I have put in number ranges for Kosovo, which does not yet have an ISO
+country code.  I have used KOS, as that is used by the UN Development
+Programme.  This may change in the future.
+
 =head1 FUNCTIONS
 
 The following functions are available:
@@ -650,8 +666,8 @@ country.
 
 =item phone2country($phone)
 
-Returns the ISO country code for a phone number.  eg, for +441234567890
-it returns 'GB' (or 'UK' if you've told it to).
+Returns the ISO country code (or KOS for Kosovo) for a phone number.
+eg, for +441234567890 it returns 'GB' (or 'UK' if you've told it to).
 
 =item phone2country_and_idd($phone)
 
@@ -683,7 +699,7 @@ So that's about once a month then.  I'll do my best to keep it up to date.
 
 The Yugoslavs keep changing their minds about what country they want to be
 and what their ISO 3166 code and IDD prefix should be.  YU? CS? RS? ME?
-God knows.
+God knows.  And then there's Kosovo ...
 
 =head1 AUTHOR
 
