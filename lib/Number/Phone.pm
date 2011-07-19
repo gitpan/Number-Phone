@@ -7,7 +7,7 @@ use Scalar::Util 'blessed';
 use Number::Phone::Country qw(noexport uk);
 use Number::Phone::StubCountry;
 
-our $VERSION = 1.8002;
+our $VERSION = 1.8003;
 
 my @is_methods = qw(
     is_valid is_allocated is_in_use
@@ -115,14 +115,14 @@ sub new {
     my $class = shift;
     my($country, $number) = @_;
 
-    if(!defined($number)) {
+    if(!defined($number)) { # one arg
       $number = $country;
     } elsif($country =~ /[a-z]/i) { # eg 'UK', '12345'
       $number = '+'.
                 Number::Phone::Country::country_code($country).
 		$number
         unless(index($number, '+'.Number::Phone::Country::country_code($country)) == 0);
-    } else {
+    } else { # (+)NNN
       $number = join('', grep { defined } ($country, $number));
     }
 
