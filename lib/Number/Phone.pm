@@ -7,7 +7,7 @@ use Scalar::Util 'blessed';
 use Number::Phone::Country qw(noexport uk);
 use Number::Phone::StubCountry;
 
-our $VERSION = 1.8003;
+our $VERSION = 1.8005;
 
 my @is_methods = qw(
     is_valid is_allocated is_in_use
@@ -64,11 +64,10 @@ sub type {
 }
 
 sub country {
-    my $self = shift;
-    return undef if(!blessed($self));
-    (my $country = blessed($self)) =~ s/.*:://;
-    return undef unless(length($country) == 2);
-    return $country;
+    my $class = blessed(shift);
+    return unless $class;
+    my ($country) = $class =~ m/^Number::Phone::([A-Z]{2})(?:::|$)/;
+    $country
 }
 
 1;
