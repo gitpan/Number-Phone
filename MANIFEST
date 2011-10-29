@@ -1,6 +1,3 @@
-build-data.sh
-build-data.realwork
-build-data.exchanges
 README
 MANIFEST
 Makefile.PL
@@ -54,4 +51,10 @@ t/901_bugfix_N-P-New-CC-number.t
 lib/Number/Phone/StubCountry.pm
 t/902_bugfix-rt61177.t
 t/31_country-for-subclass.t
+MANIFEST.SKIP
+ARTISTIC.txt
+Apache-2.0.txt
+GPL2.txt
+lib/Number/Phone/Country/Data.pm
+lib/Number/Phone/NANP/Data.pm
 META.yml                                 Module meta-data (added by MakeMaker)
