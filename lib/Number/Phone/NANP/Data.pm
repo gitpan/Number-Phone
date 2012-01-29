@@ -21,7 +21,7 @@
   use strict;
   use warnings;
   use vars qw(%areanames);
-our $VERSION = 1.20111029122755;
+our $VERSION = 1.20120129233212;
 
 
 
@@ -14147,6 +14147,7 @@ our $VERSION = 1.20111029122755;
     '1662963' => "Nettleton\,\ MS",
     '1662983' => "Bruce\,\ MS",
     '1662993' => "Ripley\,\ MS",
+    '1667' => "Maryland",
     '1678' => "Georgia",
     '1678339' => "Alpharetta\,\ GA",
     '1678493' => "Canton\,\ GA",
@@ -23271,6 +23272,7 @@ our $VERSION = 1.20111029122755;
     '1979968' => "La\ Grange\,\ TX",
     '1980' => "North\ Carolina",
     '1980207' => "Charlotte\,\ NC",
+    '1984' => "North\ Carolina",
     '1985' => "Louisiana",
     '1985223' => "Houma\,\ LA",
     '1985229' => "Kentwood\,\ LA",
