@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20120129233326;
+our $VERSION = 1.20121027224531;
 
 my $formatters = [];
-my $validators = {'personal_number' => '','toll_free' => '80\\d{6}','pager' => '','mobile' => '2\\d{7}','voip' => '','fixed_line' => '6\\d{7}','special_rate' => '()|(90\\d{6})|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (371630 => 'Jelgava',371631 => 'Tukums',371632 => 'Talsi',371633 => 'Kuldiga',371634 => 'Liepaja',371635 => 'Ventspils',371636 => 'Ventspils',371637 => 'Dobele',371638 => 'Saldus',371639 => 'Bauska',371640 => 'Limba\Å\¾i',371641 => 'C\Ä\“sis',371642 => 'Valmiera',371643 => 'Al\Å\«ksne',371644 => 'Gulbene',371645 => 'Balvi',371646 => 'R\Ä\“zekne',371647 => 'Valka',371648 => 'Madona',371649 => 'Aizkraukle',371650 => 'Ogre',371651 => 'Aizkraukle',371652 => 'J\Ä\“kabpils',371653 => 'Prei\Ä\¼i',371654 => 'Daugavpils',371655 => 'Ogre',371656 => 'Kr\Ä\slava',371657 => 'Ludza',371658 => 'Daugavpils',371659 => 'C\Ä\“sis',37166 => 'Riga',37167 => 'Riga',371682 => 'Valmiera',371683 => 'J\Ä\“kabpils',371684 => 'Liep\Ä\ja',371686 => 'Jelgava',);
+my $validators = {'personal_number' => '','toll_free' => '80\\d{6}','pager' => '','mobile' => '2\\d{7}','voip' => '','fixed_line' => '6[3-8]\\d{6}','special_rate' => '(81\\d{6})|(90\\d{6})|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (371630 => 'Jelgava',371631 => 'Tukums',371632 => 'Talsi',371633 => 'Kuldiga',371634 => 'Liepaja',371635 => 'Ventspils',371636 => 'Ventspils',371637 => 'Dobele',371638 => 'Saldus',371639 => 'Bauska',371640 => 'Limba\Å\¾i',371641 => 'C\Ä\“sis',371642 => 'Valmiera',371643 => 'Al\Å\«ksne',371644 => 'Gulbene',371645 => 'Balvi',371646 => 'R\Ä\“zekne',371647 => 'Valka',371648 => 'Madona',371649 => 'Aizkraukle',371650 => 'Ogre',371651 => 'Aizkraukle',371652 => 'J\Ä\“kabpils',371653 => 'Prei\Ä\¼i',371654 => 'Daugavpils',371655 => 'Ogre',371656 => 'Kr\Ä\slava',371657 => 'Ludza',371658 => 'Daugavpils',371659 => 'C\Ä\“sis',37166 => 'Riga',37167 => 'Riga',371682 => 'Valmiera',371683 => 'J\Ä\“kabpils',371684 => 'Liep\Ä\ja',371686 => 'Jelgava',);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"371$prefix"} if exists($map{"371$prefix"});
       }

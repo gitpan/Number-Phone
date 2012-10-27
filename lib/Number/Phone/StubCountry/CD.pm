@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20120129233326;
+our $VERSION = 1.20121027224531;
 
-my $formatters = [{'pattern' => '([89]\\d{2})(\\d{3})(\\d{3})','leading_digits' => '[89]'},{'pattern' => '([1-6]\\d)(\\d{5})','leading_digits' => '[1-6]'}];
-my $validators = {'personal_number' => '','toll_free' => '','pager' => '','mobile' => '(?:8[0-2489]|9[7-9])\\d{7}','voip' => '','fixed_line' => '[1-6]\\d{6}','special_rate' => '()|()|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2431 => 'Kinshasa',2432 => 'Katanga',2433 => 'Bas\-Congo\/Bandundu',2434 => 'Kasai\-Oriental\/Kasai\-Occidental',2435 => 'Oriental\ Province\ \(Kisanga\/Mbandaka\)',2436 => 'North\ Kivu\/South\ Kivu\/Maniema',);
+my $formatters = [{'pattern' => '([89]\\d{2})(\\d{3})(\\d{3})','leading_digits' => '8[0-259]|9'},{'pattern' => '(\\d{2})(\\d{2})(\\d{3})','leading_digits' => '8[48]'},{'pattern' => '(\\d{2})(\\d{5})','leading_digits' => '[1-6]'}];
+my $validators = {'personal_number' => '','toll_free' => '','pager' => '','mobile' => '8(?:[0-259]\\d{2}|[48])\\d{5}|9[7-9]\\d{7}','voip' => '','fixed_line' => '[1-6]\\d{6}','special_rate' => '()|()|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2431 => 'Kinshasa',2432 => 'Katanga',2433 => 'Bas\-Congo\/Bandundu',2434 => 'Kasai\-Oriental\/Kasai\-Occidental',2435 => 'Oriental\ Province\ \(Kisanga\/Mbandaka\)',2436 => 'North\ Kivu\/South\ Kivu\/Maniema',);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"243$prefix"} if exists($map{"243$prefix"});
       }

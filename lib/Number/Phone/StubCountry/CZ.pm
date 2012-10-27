@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20120129233326;
+our $VERSION = 1.20121027224531;
 
-my $formatters = [];
-my $validators = {'personal_number' => '70[01]\\d{6}','toll_free' => '800\\d{6}','pager' => '','mobile' => '(?:60[1-8]|7(?:0[25]|[2379]\\d))\\d{6}','voip' => '9[17]0\\d{6}','fixed_line' => '2\\d{8}|(?:3[1257-9]|4[16-9]|5[13-9])\\d{7}','special_rate' => '(8[134]\\d{7})|(9(?:0[05689]|76)\\d{6})|(9(?:5[056]|7[234])\\d{6})'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (4202 => 'Prague',42031 => 'Central\ Bohemian\ Region',42032 => 'Central\ Bohemian\ Region',42035 => 'Karlovy\ Vary\ Region',42037 => 'Plze\Å\ˆ\ Region',42038 => 'South\ Bohemian\ Region',42039 => 'South\ Bohemian\ Region',42041 => '\Ã\šst\Ã\­\ nad\ Labem\ Region',42046 => 'Pardubice\ Region',42047 => '\Ã\šst\Ã\­\ nad\ Labem\ Region',42048 => 'Liberec\ Region',42049 => 'Hradec\ Kr\Ã\¡lov\Ã\©\ Region',42051 => 'South\ Moravian\ Region',42053 => 'South\ Moravian\ Region',42054 => 'South\ Moravian\ Region',42055 => 'Moravian\-Silesian\ Region',42056 => 'Vyso\Ä\ina\ Region',42057 => 'Zl\Ã\­n\ Region',42058 => 'Olomouc\ Region',42059 => 'Moravian\-Silesian\ Region',);
+my $formatters = [{'pattern' => '([2-9]\\d{2})(\\d{3})(\\d{3})','leading_digits' => '[2-8]|9[015-7]'},{'pattern' => '(96\\d)(\\d{3})(\\d{3})(\\d{3})','leading_digits' => '96'},{'pattern' => '(9\\d)(\\d{3})(\\d{3})(\\d{3})','leading_digits' => '9[36]'}];
+my $validators = {'personal_number' => '70[01]\\d{6}','toll_free' => '800\\d{6}','pager' => '','mobile' => '(?:60[1-8]|7(?:0[2-5]|[2379]\\d))\\d{6}','voip' => '9[17]0\\d{6}','fixed_line' => '2\\d{8}|(?:3[1257-9]|4[16-9]|5[13-9])\\d{7}','special_rate' => '(8[134]\\d{7})|(9(?:0[05689]|76)\\d{6})|(9(?:5[056]|7[234])\\d{6})'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (4202 => 'Prague',42031 => 'Central\ Bohemian\ Region',42032 => 'Central\ Bohemian\ Region',42035 => 'Karlovy\ Vary\ Region',42037 => 'Plze\Å\ˆ\ Region',42038 => 'South\ Bohemian\ Region',42039 => 'South\ Bohemian\ Region',42041 => '\Ã\šst\Ã\­\ nad\ Labem\ Region',42046 => 'Pardubice\ Region',42047 => '\Ã\šst\Ã\­\ nad\ Labem\ Region',42048 => 'Liberec\ Region',42049 => 'Hradec\ Kr\Ã\¡lov\Ã\©\ Region',42051 => 'South\ Moravian\ Region',42053 => 'South\ Moravian\ Region',42054 => 'South\ Moravian\ Region',42055 => 'Moravian\-Silesian\ Region',42056 => 'Vyso\Ä\ina\ Region',42057 => 'Zl\Ã\­n\ Region',42058 => 'Olomouc\ Region',42059 => 'Moravian\-Silesian\ Region',);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"420$prefix"} if exists($map{"420$prefix"});
       }

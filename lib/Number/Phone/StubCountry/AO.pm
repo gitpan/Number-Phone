@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20120129233326;
+our $VERSION = 1.20121027224531;
 
 my $formatters = [];
-my $validators = {'personal_number' => '','toll_free' => '','pager' => '','mobile' => '9[1-3]\\d{7}','voip' => '','fixed_line' => '2\\d(?:[26-9]\\d|\\d[26-9])\\d{5}','special_rate' => '()|()|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (24431 => 'Cabinda',24432 => 'Zaire',244321 => 'Soyo',24433 => 'Uige',24434 => 'Bengo',244348 => 'Caxito',24435 => 'Cuanza\ Norte',244358 => 'N\'Dalatando',24436 => 'Cuanza\ Sul',244363 => 'Sumbe',244364 => 'Porto\ Amboim',24441 => 'Huambo',24448 => 'Bie',244485 => 'Kuito',24449 => 'Cuando\ Cubango',24451 => 'Malange',244526 => 'Dundo',24453 => 'Lunda\ Sul',244535 => 'Saurimo',24454 => 'Moxico',244546 => 'Luena',24461 => 'Huila',244612 => 'Lubango',24464 => 'Namibe',244643 => 'Tombua',24465 => 'Cunene',244652 => 'St\.\ Clara\/Cunene',244655 => 'Ondjiva',24472 => 'Benguela',244722 => 'Lobito',244726 => 'Bela\ Vista',244728 => 'Baia\ Farta',244729 => 'Catumbela',244777 => 'Dama\ Universal',);
+my $validators = {'personal_number' => '','toll_free' => '','pager' => '','mobile' => '9[1-4]\\d{7}','voip' => '','fixed_line' => '2\\d(?:[26-9]\\d|\\d[26-9])\\d{5}','special_rate' => '()|()|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (24422 => 'Luanda',244231 => 'Cabinda',244232 => 'Zaire',2442321 => 'Soyo',244233 => 'Uige',244234 => 'Bengo',2442348 => 'Caxito',244235 => 'Cuanza\ Norte',2442358 => 'N\'Dalatando',244236 => 'Cuanza\ Sul',2442363 => 'Sumbe',2442364 => 'Porto\ Amboim',244241 => 'Huambo',244248 => 'Bie',2442485 => 'Kuito',244249 => 'Cuando\ Cubango',2442498 => 'Menongue',244251 => 'Malange',244252 => 'Lunda\ Norte',2442524 => 'Lucapa',2442526 => 'Dundo',244253 => 'Lunda\ Sul',2442535 => 'Saurimo',244254 => 'Moxico',2442546 => 'Luena',244261 => 'Huila',2442612 => 'Lubango',244264 => 'Namibe',2442643 => 'Tombua',244265 => 'Cunene',2442652 => 'Kuroka',2442655 => 'Ondjiva',244272 => 'Benguela',2442722 => 'Lobito',2442726 => 'Bela\ Vista',2442728 => 'Baia\ Farta',2442729 => 'Catumbela',2442777 => 'Dama\ Universal',);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"244$prefix"} if exists($map{"244$prefix"});
       }

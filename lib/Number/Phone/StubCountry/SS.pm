@@ -16,19 +16,19 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-package Number::Phone::StubCountry::AN;
+package Number::Phone::StubCountry::SS;
 use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20120129233326;
+our $VERSION = 1.20121027224531;
 
-my $formatters = [{'pattern' => '(\\d{3})(\\d{4})','leading_digits' => '[13-7]'},{'pattern' => '(9)(\\d{3})(\\d{4})','leading_digits' => '9'}];
-my $validators = {'personal_number' => '','toll_free' => '','pager' => '','mobile' => '(?:318|5(?:1[01]|2[0-7]|5\\d|8[016-8])|7(?:0[01]|[89]\\d)|9(?:5(?:[1246]\\d|3[01])|6(?:[1679]\\d|3[01])))\\d{4}|416[15-8]\\d{3}','voip' => '','fixed_line' => '(?:318|5(?:25|4\\d|8[239])|7(?:1[578]|50)|9(?:[48]\\d{2}|50\\d|7(?:2[0-2]|[34]\\d|6[35-7]|77)))\\d{4}|416[0239]\\d{3}','special_rate' => '((?:10|69)\\d{5})|()|()'};
+my $formatters = [];
+my $validators = {'personal_number' => '','toll_free' => '','pager' => '','mobile' => '(?:12|9[1257])\\d{7}','voip' => '','fixed_line' => '18\\d{7}','special_rate' => '()|()|()'};
 sub new {
   my $class = shift;
   my $number = shift;
-  $number =~ s/(^\+599|\D)//g;
+  $number =~ s/(^\+211|\D)//g;
   my $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
   return $self->is_valid() ? $self : undef;
 }

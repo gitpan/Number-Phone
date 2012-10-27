@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20120129233326;
+our $VERSION = 1.20121027224531;
 
-my $formatters = [{'pattern' => '(\\d{2})(\\d{3})(\\d{2})(\\d{2})','leading_digits' => '(?:1[28]|2(?:[45]2|[0-36])|365)'},{'pattern' => '(\\d{2})(\\d{2})(\\d{2})(\\d{2})','leading_digits' => '22'},{'pattern' => '(\\d{2})(\\d{2})(\\d{2})(\\d{2})','leading_digits' => '36[0-46-9]'},{'pattern' => '(\\d{3})(\\d)(\\d{2})(\\d{2})','leading_digits' => '1[013-79]|2(?:[45][13-9]|[7-9])'},{'pattern' => '(\\d{2})(\\d{3})(\\d{2})(\\d{2})','leading_digits' => '[4-8]'},{'pattern' => '(\\d{3})(\\d{2})(\\d{2})(\\d{2})','leading_digits' => '9'}];
-my $validators = {'personal_number' => '','toll_free' => '88\\d{7}','pager' => '','mobile' => '(?:[46]0|5[015]|7[07])\\d{7}','voip' => '','fixed_line' => '(?:1(?:(?:[28]\\d|9)\\d|02|1[0-589]|3[358]|4[013-79]|5[0-479]|6[02346-9]|7[0-24-8])|2(?:02\\d|1(?:2[0-8]|42|6)|2(?:2[0-79]|3[0-35]|42|[1-35-9]|)|3(?:3[0-58]|[0-24])|4(?:2[0124579]|[1468])|5(?:2[0124579]|5)|6(?:2\\d|3[0128]|[56])|79)|365?\\d|44\\d{2})\\d{5}','special_rate' => '()|(900200\\d{3})|()'};
+my $formatters = [{'pattern' => '(\\d{2})(\\d{3})(\\d{2})(\\d{2})','leading_digits' => '(?:1[28]|2(?:[45]2|[0-36])|365)'},{'pattern' => '(\\d{2})(\\d{3})(\\d{2})(\\d{2})','leading_digits' => '[4-8]'},{'pattern' => '(\\d{3})(\\d{2})(\\d{2})(\\d{2})','leading_digits' => '9'}];
+my $validators = {'personal_number' => '','toll_free' => '88\\d{7}','pager' => '','mobile' => '(?:4[04]|5[015]|60|7[07])\\d{7}','voip' => '','fixed_line' => '(?:1[28]\\d|2(?:02|1[24]|2[2-4]|33|[45]2|6[23])|365)\\d{6}','special_rate' => '()|(900200\\d{3})|()'};
 sub new {
   my $class = shift;
   my $number = shift;
