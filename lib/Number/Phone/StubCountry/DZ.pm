@@ -21,7 +21,7 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20121027224531;
+our $VERSION = 1.20121030162647;
 
 my $formatters = [{'pattern' => '([1-4]\\d)(\\d{2})(\\d{2})(\\d{2})','leading_digits' => '[1-4]'},{'pattern' => '([5-8]\\d{2})(\\d{2})(\\d{2})(\\d{2})','leading_digits' => '[5-8]'},{'pattern' => '(9\\d)(\\d{3})(\\d{2})(\\d{2})','leading_digits' => '9'}];
 my $validators = {'personal_number' => '','toll_free' => '800\\d{6}','pager' => '','mobile' => '(?:5[56]|7[7-9])\\d{7}|6(?:[569]\\d|70)\\d{6}','voip' => '98[23]\\d{6}','fixed_line' => '(?:1\\d|2[014-79]|3[0-8]|4[0135689])\\d{6}|9619\\d{5}','special_rate' => '(80[12]1\\d{5})|(80[3-689]1\\d{5})|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (21321 => 'Algiers',21327 => 'Chlef',21329 => 'Ghardaia\/Illizi\/Tamanrasset',21331 => 'Constantine',21332 => 'El\ Oued',21333 => 'Batna\/Beskra',21334 => 'B\Ã\©ja\Ã\¯a\/Jijel',21335 => 'Bordj\ Bou\ Arreridj',21337 => 'Tebessa',21338 => 'Annaba\/Skikda',21341 => 'Oran',21343 => 'Tlemcen',21349 => 'Adrar\/B\Ã\©char\/Tindouf',);
