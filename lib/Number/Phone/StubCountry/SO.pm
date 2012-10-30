@@ -21,7 +21,7 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20121030162647;
+our $VERSION = 1.20121030225421;
 
 my $formatters = [{'pattern' => '(\\d)(\\d{6})','leading_digits' => '2[0-79]|[13-5]'},{'pattern' => '(\\d)(\\d{7})','leading_digits' => '24|[67]'},{'pattern' => '(\\d{2})(\\d{5,7})','leading_digits' => '15|28|6[178]|9'},{'pattern' => '(69\\d)(\\d{6})','leading_digits' => '69'}];
 my $validators = {'personal_number' => '','toll_free' => '','pager' => '','mobile' => '(?:15\\d|2(?:4\\d|8)|6[17-9]?\\d{2}|7\\d{2}|9[01]\\d)\\d{5}','voip' => '','fixed_line' => '(?:[134]\\d|2[0-79]|5[57-9])\\d{5}','special_rate' => '()|()|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2521 => 'Hargeisa',25251 => 'Mangauno',25261 => 'Mogadishu',);

@@ -21,7 +21,7 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20121030162647;
+our $VERSION = 1.20121030225421;
 
 my $formatters = [];
 my $validators = {'personal_number' => '','toll_free' => '','pager' => '','mobile' => '(?:[79]\\d|8[0-79])\\d{4}','voip' => '','fixed_line' => '(?:2[03-9]|3[0-5]|4[1-7]|88)\\d{4}','special_rate' => '()|(36\\d{4})|()'};

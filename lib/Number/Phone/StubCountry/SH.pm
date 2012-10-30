@@ -21,7 +21,7 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20121030162647;
+our $VERSION = 1.20121030225421;
 
 my $formatters = [];
 my $validators = {'personal_number' => '','toll_free' => '','pager' => '','mobile' => 'NA','voip' => '','fixed_line' => '(?:[2-468]\\d|7[01])\\d{2}','special_rate' => '()|((?:[59]\\d|7[2-9])\\d{2})|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2902 => 'Jamestown',2903 => 'St\.\ Helena',2904 => 'St\.\ Helena',2906 => 'St\.\ Helena',2907 => 'St\.\ Helena',2908 => 'Tristan\ da\ Cunha',);
