@@ -1,3 +1,17 @@
+2012-11-21      2.2     Bugfix stub countries to not have random \ in
+                          area names;
+                        Minor doco fix "from Number::Phone::UK, it would
+                          return DE" is obviously wrong;
+                        Some stuff in stubs for the breakup of the
+                          Dutch colonies in the Caribbean;
+                        New allocations;
+                        Documentation (and stub implementation in superclass)
+                          for new operator_ported() method;
+                        New dial_to() method;
+                        Much doco improvement;
+                        Switch to DBM::Deep 2 for UK data, to fix Windows
+                          test failures, see eg http://tinyurl.com/n-p2-1fail;
+
 2012-10-30      2.1     Fix so we don't die trying to parse Inmarsat
                           and other non-country entities, see
                           https://github.com/DrHyde/perl-modules-Number-Phone/issues/8

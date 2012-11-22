@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20121030225421;
+our $VERSION = 1.20121122000027;
 
 my $formatters = [{'pattern' => '(\\d)(\\d{6,7})','leading_digits' => '7'},{'pattern' => '(\\d{2})(\\d{4,6})','leading_digits' => '[2-4]'},{'pattern' => '(\\d)(\\d{7})','leading_digits' => '5'}];
-my $validators = {'personal_number' => '','toll_free' => '','pager' => '','mobile' => '5\\d{7}','voip' => '','fixed_line' => '2[1-4]\\d{5,6}|3(?:1\\d{6}|[23]\\d{4,6})|4(?:[125]\\d{5,6}|[36]\\d{6}|[78]\\d{4,6})|7\\d{6,7}','special_rate' => '()|()|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (5321 => 'Guant\Ã\¡namo\ Province',5322 => 'Santiago\ de\ Cuba\ Province',5323 => 'Granma\ Province',5324 => 'Holgu\Ã\­n\ Province',5331 => 'Las\ Tunas\ Province',5332 => 'Camag\Ã\¼ey\ Province',5333 => 'Ciego\ de\ \Ã\vila\ Province',5341 => 'Sancti\ Sp\Ã\­ritus\ Province',5342 => 'Villa\ Clara\ Province',5343 => 'Cienfuegos\ Province',5345 => 'Matanzas\ Province',5346 => 'Isle\ of\ Youth',5347 => 'Havana\ Province',5348 => 'Pinar\ del\ R\Ã\­o\ Province',537 => 'Havana\ City',);
+my $validators = {'personal_number' => '','toll_free' => '','pager' => '','mobile' => '5\\d{7}','voip' => '','fixed_line' => '2[1-4]\\d{5,6}|3(?:1\\d{6}|[23]\\d{4,6})|4(?:[125]\\d{5,6}|[36]\\d{6}|[78]\\d{4,6})|7\\d{6,7}','special_rate' => '()|()|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (5321 => "Guant\Ã\¡namo\ Province",5322 => "Santiago\ de\ Cuba\ Province",5323 => "Granma\ Province",5324 => "Holgu\Ã\­n\ Province",5331 => "Las\ Tunas\ Province",5332 => "Camag\Ã\¼ey\ Province",5333 => "Ciego\ de\ \Ã\vila\ Province",5341 => "Sancti\ Sp\Ã\­ritus\ Province",5342 => "Villa\ Clara\ Province",5343 => "Cienfuegos\ Province",5345 => "Matanzas\ Province",5346 => "Isle\ of\ Youth",5347 => "Havana\ Province",5348 => "Pinar\ del\ R\Ã\­o\ Province",537 => "Havana\ City",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"53$prefix"} if exists($map{"53$prefix"});
       }

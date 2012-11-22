@@ -7,7 +7,7 @@ use Number::Phone::UK::Data;
 
 use base 'Number::Phone';
 
-our $VERSION = 1.6;
+our $VERSION = 1.61;
 
 my $cache = {};
 
@@ -325,6 +325,23 @@ sub format {
         !$self->is_allocated() ? ( ${$self} =~ /^\+44/ ? substr(${$self}, 3) : substr(${$self}, 1)) :
                                  $self->subscriber()
     );
+}
+
+=item intra_country_dial_to
+
+Within the UK numbering plan you can *always* dial 0xxxx xxxxxx
+for intra-country calls. In most places the leading 0$areacode is
+optional but in some it is required (see
+L<http://consumers.ofcom.org.uk/dial-the-code/>) and over time this
+will apply to more areas.
+
+=cut
+
+sub intra_country_dial_to {
+  my $from = shift;
+  my $to   = shift;
+
+  return '0'.($to->areacode() ? $to->areacode() : '').$to->subscriber();
 }
 
 =item country

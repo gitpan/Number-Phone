@@ -18,7 +18,10 @@ no_index:
     - t
     - inc
 requires:
+  DBM::Deep: 2.0008
   Digest::MD5: 0
   Scalar::Util: 0
   Test::More: 0
-version: 2.1
+version: 2.2
+x_resource:
+  repository: https://github.com/DrHyde/perl-modules-Number-Phone

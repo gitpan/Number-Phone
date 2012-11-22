@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20121030225421;
+our $VERSION = 1.20121122000027;
 
 my $formatters = [];
-my $validators = {'personal_number' => '','toll_free' => '','pager' => '','mobile' => 'NA','voip' => '','fixed_line' => '(?:[267]\\d|3[0-5]|4[4-69])\\d{2}','special_rate' => '()|()|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2471 => 'Georgetown',2472 => 'U\.S\.\ Base',2473 => 'Travellers\ Hill',2474 => 'Two\ Boats',2475 => 'Georgetown',2476 => 'Georgetown',2477 => 'Georgetown',2478 => 'Georgetown',2479 => 'Georgetown',);
+my $validators = {'personal_number' => '','toll_free' => '','pager' => '','mobile' => 'NA','voip' => '','fixed_line' => '(?:[267]\\d|3[0-5]|4[4-69])\\d{2}','special_rate' => '()|()|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2471 => "Georgetown",2472 => "U\.S\.\ Base",2473 => "Travellers\ Hill",2474 => "Two\ Boats",2475 => "Georgetown",2476 => "Georgetown",2477 => "Georgetown",2478 => "Georgetown",2479 => "Georgetown",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"247$prefix"} if exists($map{"247$prefix"});
       }

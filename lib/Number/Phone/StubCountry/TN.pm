@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20121030225421;
+our $VERSION = 1.20121122000027;
 
 my $formatters = [];
-my $validators = {'personal_number' => '','toll_free' => '','pager' => '','mobile' => '(?:[259]\\d|4[0-2])\\d{6}','voip' => '','fixed_line' => '(?:3[012]|7\\d)\\d{6}','special_rate' => '()|(8[0128]\\d{6})|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (21670 => 'Ben\ Arous',21671 => 'Ariana\/Ben\ Arous\/Carthage\/Tunis',21672 => 'Bizerte\/Nabeul\/Zaghouan',21673 => 'Chebba\/Hamman\-Sousse\/Khenis\/Mahdia\/Monastir\/Sousse',21674 => 'Agareb\/Sfax',21675 => 'Gabes\/Kebili\/Medenine\/Tataouine',21676 => 'Gafsa\/Sidi\ Bouzid\/Tozeur',21677 => 'Haffouz\/Kairouan\/Kasserine',21678 => 'Beja\/Jendouba\/Kef\/La\ Kef\/Siliana\/Tabarka',);
+my $validators = {'personal_number' => '','toll_free' => '','pager' => '','mobile' => '(?:[259]\\d|4[0-2])\\d{6}','voip' => '','fixed_line' => '(?:3[012]|7\\d)\\d{6}','special_rate' => '()|(8[0128]\\d{6})|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (21670 => "Ben\ Arous",21671 => "Ariana\/Ben\ Arous\/Carthage\/Tunis",21672 => "Bizerte\/Nabeul\/Zaghouan",21673 => "Chebba\/Hamman\-Sousse\/Khenis\/Mahdia\/Monastir\/Sousse",21674 => "Agareb\/Sfax",21675 => "Gabes\/Kebili\/Medenine\/Tataouine",21676 => "Gafsa\/Sidi\ Bouzid\/Tozeur",21677 => "Haffouz\/Kairouan\/Kasserine",21678 => "Beja\/Jendouba\/Kef\/La\ Kef\/Siliana\/Tabarka",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"216$prefix"} if exists($map{"216$prefix"});
       }

@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20121030225421;
+our $VERSION = 1.20121122000027;
 
 my $formatters = [];
-my $validators = {'personal_number' => '','toll_free' => '','pager' => '','mobile' => '7(?:0(?:[01279]0|3[03]|4[05]|5[06]|6[03-5]|8[029])|6(?:1[23]|2[89]|3[3489]|4[6-9]|5\\d|6[3-9]|7[45]|8[3-8])|7\\d{2}|8(?:01|1[01]))\\d{5}','voip' => '33301\\d{4}','fixed_line' => '3(?:0(?:1[01]|80)|3(?:8[1-9]|9[2-9]))\\d{5}','special_rate' => '()|()|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (221338 => 'Dakar',221339 => 'Outside\ Dakar',);
+my $validators = {'personal_number' => '','toll_free' => '','pager' => '','mobile' => '7(?:0(?:[01279]0|3[03]|4[05]|5[06]|6[03-5]|8[029])|6(?:1[23]|2[89]|3[3489]|4[6-9]|5\\d|6[3-9]|7[45]|8[3-8])|7\\d{2}|8(?:01|1[01]))\\d{5}','voip' => '33301\\d{4}','fixed_line' => '3(?:0(?:1[01]|80)|3(?:8[1-9]|9[2-9]))\\d{5}','special_rate' => '()|()|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (221338 => "Dakar",221339 => "Outside\ Dakar",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"221$prefix"} if exists($map{"221$prefix"});
       }
