@@ -21,7 +21,7 @@
   use strict;
   use warnings;
   use vars qw(%areanames);
-our $VERSION = 1.20121122000026;
+our $VERSION = 1.20121129182821;
 
 
 

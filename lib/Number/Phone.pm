@@ -7,7 +7,7 @@ use Scalar::Util 'blessed';
 use Number::Phone::Country qw(noexport uk);
 use Number::Phone::StubCountry;
 
-our $VERSION = '2.2';
+our $VERSION = '2.2001';
 
 my $NOSTUBS = 0;
 sub import {
@@ -186,7 +186,9 @@ sub new {
     return undef unless($country);
     $country = "NANP" if($number =~ /^\+1/);
     eval "use Number::Phone::$country";
-    return $class->_make_stub_object($number) if($@);
+    if($@ || !"Number::Phone::$country"->isa('Number::Phone')) {
+        return $class->_make_stub_object($number)
+    }
     return "Number::Phone::$country"->new($number);
 }
 

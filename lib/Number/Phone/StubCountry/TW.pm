@@ -21,7 +21,7 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20121122000027;
+our $VERSION = 1.20121129182822;
 
 my $formatters = [{'pattern' => '([2-8])(\\d{3,4})(\\d{4})','leading_digits' => '[2-7]|8[1-9]'},{'pattern' => '([89]\\d{2})(\\d{3})(\\d{3})','leading_digits' => '80|9'}];
 my $validators = {'personal_number' => '','toll_free' => '800\\d{6}','pager' => '','mobile' => '9\\d{8}','voip' => '','fixed_line' => '[2-8]\\d{7,8}','special_rate' => '()|(900\\d{6})|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (8862 => "Taipei",8863 => "Taoyuan\/Hsinchu\/Yilan\/Hualien",88637 => "Miaoli",8864 => "Taichung\/Changhua",88649 => "Nantou",8865 => "Chiayi\/Yunlin",8866 => "Tainan\/Penghu",8867 => "Kaohsiung",8868 => "Pingtung",88682 => "Kinmen",886826 => "Wuqiu",886836 => "Matsu",88689 => "Taitung",);

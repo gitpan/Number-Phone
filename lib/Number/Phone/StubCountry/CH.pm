@@ -21,7 +21,7 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20121122000027;
+our $VERSION = 1.20121129182822;
 
 my $formatters = [{'pattern' => '([2-9]\\d)(\\d{3})(\\d{2})(\\d{2})','leading_digits' => '[2-7]|[89]1'},{'pattern' => '([89]\\d{2})(\\d{3})(\\d{3})','leading_digits' => '8[047]|90'},{'pattern' => '(\\d{3})(\\d{2})(\\d{3})(\\d{2})(\\d{2})','leading_digits' => '860'}];
 my $validators = {'personal_number' => '878\\d{6}','toll_free' => '800\\d{6}','pager' => '','mobile' => '7[46-9]\\d{7}','voip' => '','fixed_line' => '(?:2[12467]|3[1-4]|4[134]|5[12568]|6[12]|[7-9]1)\\d{7}','special_rate' => '(84[0248]\\d{6})|(90[016]\\d{6})|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (4121 => "Lausanne",4122 => "Geneva",4124 => "Yverdon\/Aigle",4126 => "Fribourg",4127 => "Sion",4131 => "Berne",4132 => "Bienne\/Neuch\Ã\¢tel\/Soleure\/Jura",4133 => "Thun",4134 => "Burgdorf\/Langnau\ i\.E\.",4141 => "Lucerne",4143 => "Zurich",4144 => "Zurich",4152 => "Winterthur",4155 => "Rapperswil",4156 => "Baden",4161 => "Basel",4162 => "Olten",4171 => "St\.\ Gallen",4181 => "Chur",4191 => "Bellinzona",);
