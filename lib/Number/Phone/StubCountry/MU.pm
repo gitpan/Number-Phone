@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20121129182822;
+our $VERSION = 1.20130704221644;
 
 my $formatters = [];
-my $validators = {'personal_number' => '','toll_free' => '80[012]\\d{4}','pager' => '2(?:1[89]|2\\d)\\d{4}','mobile' => '(?:25\\d|4(?:2[12389]|9\\d)|7\\d{2}|87[15-8]|9[1-8]\\d)\\d{4}','voip' => '3(?:20|9\\d)\\d{4}','fixed_line' => '(?:2(?:[034789]\\d|1[0-7]|6[1-69])|4(?:[013-8]\\d|2[4-7])|[56]\\d{2}|8(?:14|3[129]))\\d{4}','special_rate' => '()|(30\\d{5})|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2302 => "North\ Region",2304 => "Central\ Region",2306 => "South\ Region",230814 => "Agalega",23083 => "Rodrigues",23087 => "Rodrigues",);
+my $validators = {'personal_number' => '','toll_free' => '80[012]\\d{4}','pager' => '2(?:1[89]|2\\d)\\d{4}','mobile' => '(?:25\\d|4(?:2[12389]|9\\d)|7\\d{2}|8(?:20|7[15-8])|9[1-8]\\d)\\d{4}','voip' => '3(?:20|9\\d)\\d{4}','fixed_line' => '(?:2(?:[034789]\\d|1[0-7]|6[1-69])|4(?:[013-8]\\d|2[4-7])|[56]\\d{2}|8(?:14|3[129]))\\d{4}','special_rate' => '()|(30\\d{5})|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2302 => "North\ Region",2304 => "Central\ Region",2306 => "South\ Region",230814 => "Agalega",23083 => "Rodrigues",23087 => "Rodrigues",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"230$prefix"} if exists($map{"230$prefix"});
       }

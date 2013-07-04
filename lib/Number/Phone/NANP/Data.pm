@@ -21,7 +21,7 @@
   use strict;
   use warnings;
   use vars qw(%areanames);
-our $VERSION = 1.20121129182821;
+our $VERSION = 1.20130704221643;
 
 
 
@@ -2448,6 +2448,7 @@ our $VERSION = 1.20121129182821;
     '1231947' => "Traverse\ City\,\ MI",
     '1231995' => "Traverse\ City\,\ MI",
     '1234' => "Ohio",
+    '1236' => "British\ Columbia",
     '1239' => "Florida",
     '1239213' => "Naples\,\ FL",
     '1239225' => "Fort\ Myers\,\ FL",
@@ -7670,6 +7671,7 @@ our $VERSION = 1.20121129182821;
     '1361992' => "Corpus\ Christi\,\ TX",
     '1361993' => "Corpus\ Christi\,\ TX",
     '1361994' => "Corpus\ Christi\,\ TX",
+    '1365' => "Ontario",
     '1385' => "Utah",
     '1386' => "Florida",
     '1386226' => "Daytona\ Beach\,\ FL",
@@ -11011,6 +11013,7 @@ our $VERSION = 1.20121129182821;
     '1435893' => "Richfield\,\ UT",
     '1435896' => "Richfield\,\ UT",
     '1435946' => "Garden\ City\,\ UT",
+    '1437' => "Ontario",
     '1438' => "Qu\Ã\©bec",
     '1440' => "Ohio",
     '1440204' => "Lorain\,\ OH",
@@ -18645,6 +18648,7 @@ our $VERSION = 1.20121129182821;
     '1636970' => "St\.\ Peters\,\ MO",
     '1636978' => "O\'Fallon\,\ MO",
     '1636980' => "O\'Fallon\,\ MO",
+    '1639' => "Saskatchewan",
     '1641' => "Iowa",
     '1641209' => "Fairfield\,\ IA",
     '1641227' => "Baxter\,\ IA",

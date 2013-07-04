@@ -22,6 +22,6 @@ requires:
   Digest::MD5: 0
   Scalar::Util: 0
   Test::More: 0
-version: 2.2001
+version: 2.2002
 x_resource:
   repository: https://github.com/DrHyde/perl-modules-Number-Phone

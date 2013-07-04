@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20121129182822;
+our $VERSION = 1.20130704221644;
 
 my $formatters = [{'pattern' => '([279]\\d)(\\d{3})(\\d{3})','leading_digits' => '[279]'},{'pattern' => '(7\\d{2})(\\d{3})(\\d{3})','leading_digits' => '7'},{'pattern' => '([4-6])(\\d{3})(\\d{3})','leading_digits' => '[4-6]'},{'pattern' => '(\\d{2})(\\d{3})(\\d{4})','leading_digits' => '[38]'}];
-my $validators = {'personal_number' => '','toll_free' => '','pager' => '','mobile' => '(?:4[67]|5\\d|6[4-8]|7(?:7[67]\\d|\\d{2})|88\\d{2})\\d{5}','voip' => '33200\\d{4}','fixed_line' => '2\\d{7}','special_rate' => '()|(90\\d{6})|()'};
+my $validators = {'personal_number' => '','toll_free' => '','pager' => '','mobile' => '(?:4[67]|5\\d|6[4-8]|77?\\d{2}|88\\d{2})\\d{5}','voip' => '33200\\d{4}','fixed_line' => '2\\d{7}','special_rate' => '()|(90\\d{6})|()'};
 sub new {
   my $class = shift;
   my $number = shift;
