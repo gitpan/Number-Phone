@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20130704221644;
+our $VERSION = 1.20140415215547;
 
 my $formatters = [];
-my $validators = {'personal_number' => '','toll_free' => '','pager' => '','mobile' => '(?:5[0-68]|7\\d)\\d{3}','voip' => '','fixed_line' => '(?:2\\d|3[13-7]|4[1-5])\\d{3}','special_rate' => '()|()|()'};
+my $validators = {'pager' => '','special_rate' => '()|()|()','personal_number' => '','toll_free' => '','fixed_line' => '(?:2\\d|3[13-7]|4[1-5])\\d{3}','voip' => '','mobile' => '(?:5[0-68]|7\\d)\\d{3}'};
 sub new {
   my $class = shift;
   my $number = shift;

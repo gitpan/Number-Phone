@@ -21,10 +21,15 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20130704221644;
+our $VERSION = 1.20140415215547;
 
 my $formatters = [];
-my $validators = {'personal_number' => '','toll_free' => '','pager' => '','mobile' => '(?:29\\d|7(?:1[1-3]|[4-9]\\d))\\d{5}','voip' => '','fixed_line' => '22(?:2[0-7]|[3-5]0)\\d{4}','special_rate' => '()|()|()'};
+my $validators = {'fixed_line' => '22(?:2[0-7]|[3-5]0)\\d{4}','toll_free' => '','voip' => '','mobile' => '(?:29|7[14-9])\\d{6}','pager' => '','special_rate' => '()|()|()','personal_number' => ''};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2572220 => "Bujumbura",2572221 => "Bujumbura",2572222 => "Bujumbura",2572223 => "Bujumbura",2572224 => "Bujumbura",2572225 => "Bujumbura",2572226 => "West\ zone",2572227 => "Rural\ areas",2572230 => "North\ zone",2572240 => "Central\ east\ zone",2572250 => "South\ zone",);
+      foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
+        return $map{"257$prefix"} if exists($map{"257$prefix"});
+      }
+      return undef;
+    }
 sub new {
   my $class = shift;
   my $number = shift;

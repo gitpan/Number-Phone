@@ -4,7 +4,7 @@
       "unknown"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "ExtUtils::MakeMaker version 6.6302, CPAN::Meta::Converter version 2.120630",
+   "generated_by" : "ExtUtils::MakeMaker version 6.66, CPAN::Meta::Converter version 2.120921",
    "license" : [
       "unknown"
    ],
@@ -40,7 +40,7 @@
       }
    },
    "release_status" : "stable",
-   "version" : "2.2002",
+   "version" : "2.2003",
    "x_resource" : {
       "repository" : "https://github.com/DrHyde/perl-modules-Number-Phone"
    }

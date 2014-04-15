@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20130704221644;
+our $VERSION = 1.20140415215547;
 
-my $formatters = [{'pattern' => '([2-4679])(\\d{3})(\\d{4})','leading_digits' => '[2-4679][2-8]'},{'pattern' => '(5[0256])(\\d{3})(\\d{4})','leading_digits' => '5'},{'pattern' => '([479]00)(\\d)(\\d{5})','leading_digits' => '[479]0'},{'pattern' => '([68]00)(\\d{2,9})','leading_digits' => '60|8'}];
-my $validators = {'personal_number' => '','toll_free' => '400\\d{6}|800\\d{2,9}','pager' => '','mobile' => '5[0256]\\d{7}','voip' => '','fixed_line' => '[2-4679][2-8]\\d{6}','special_rate' => '(700[05]\\d{5})|(900[02]\\d{5})|(600[25]\\d{5})'};
+my $formatters = [{'leading_digits' => '[2-4679][2-8]','pattern' => '([2-4679])(\\d{3})(\\d{4})'},{'pattern' => '(5[0256])(\\d{3})(\\d{4})','leading_digits' => '5'},{'pattern' => '([479]00)(\\d)(\\d{5})','leading_digits' => '[479]0'},{'leading_digits' => '60|8','pattern' => '([68]00)(\\d{2,9})'}];
+my $validators = {'special_rate' => '(700[05]\\d{5})|(900[02]\\d{5})|(600[25]\\d{5})','personal_number' => '','pager' => '','voip' => '','mobile' => '5[0256]\\d{7}','fixed_line' => '[2-4679][2-8]\\d{6}','toll_free' => '400\\d{6}|800\\d{2,9}'};
 sub new {
   my $class = shift;
   my $number = shift;

@@ -21,10 +21,15 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20130704221644;
+our $VERSION = 1.20140415215547;
 
 my $formatters = [];
-my $validators = {'personal_number' => '','toll_free' => '','pager' => '','mobile' => '(?:318[1456]|416[15-8]|7(?:0[01]|[89]\\d)\\d)\\d{3}|','voip' => '','fixed_line' => '(?:318[023]|416[0239]|7(?:1[578]|50)\\d)\\d{3}','special_rate' => '()|()|()'};
+my $validators = {'voip' => '','mobile' => '(?:318[14-68]|416[15-9]|7(?:0[01]|7[07]|[89]\\d)\\d)\\d{3}','fixed_line' => '(?:318[023]|416[023]|7(?:1[578]|50)\\d)\\d{3}','toll_free' => '','personal_number' => '','special_rate' => '()|()|()','pager' => ''};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (599318 => "St\.\ Eustatius",599416 => "Saba",599715 => "Bonaire",599717 => "Bonaire",599718 => "Bonaire",599750 => "Bonaire",);
+      foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
+        return $map{"599$prefix"} if exists($map{"599$prefix"});
+      }
+      return undef;
+    }
 sub new {
   my $class = shift;
   my $number = shift;

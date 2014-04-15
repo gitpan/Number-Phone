@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20130704221644;
+our $VERSION = 1.20140415215640;
 
 my $formatters = [];
-my $validators = {'personal_number' => '','toll_free' => '','pager' => '','mobile' => '(?:2[0-2]|[3679]\\d)\\d{5}','voip' => '','fixed_line' => '(?:4(?:[23]\\d{2}|4(?:1[024679]|[6-9]\\d))|5(?:54[0-7]|6(?:[67]\\d)|7(?:1[04]|2[035]|3[58]|48))|8\\d{3})\\d{3}','special_rate' => '()|()|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (22042 => "Banjul",22043 => "Serekunda",220441 => "Sanyang",220446 => "Kotu",220447 => "Yundum",220449 => "Bakau",);
+my $validators = {'voip' => '','mobile' => '(?:2[0-6]|[3679]\\d)\\d{5}','toll_free' => '','fixed_line' => '(?:4(?:[23]\\d{2}|4(?:1[024679]|[6-9]\\d))|5(?:54[0-7]|6(?:[67]\\d)|7(?:1[04]|2[035]|3[58]|48))|8\\d{3})\\d{3}','special_rate' => '()|()|()','personal_number' => '','pager' => ''};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (22042 => "Banjul",22043 => "Bundung\/Serekunda",220441 => "Sanyang",2204410 => "Brufut",2204412 => "Tanji",2204416 => "Tujereng",2204417 => "Sanyang",2204419 => "Kartong",22044195 => "Berending",220446 => "Kotu\/Senegambia",220447 => "Yundum",220448 => "Brikama\/Kanilia",2204480 => "Bondali",2204485 => "Kafuta",2204486 => "Gunjur",2204487 => "Faraba",2204488 => "Sibanor",2204489 => "Bwiam",220449 => "Bakau",2205540 => "Kaiaf",2205541 => "Kwenella",2205542 => "Nyorojattaba",2205543 => "Japeneh\/Soma",2205544 => "Bureng",2205545 => "Pakaliba",2205546 => "Kudang",2205547 => "Jareng",220566 => "Baja\ Kunda\/Basse\/Fatoto\/Gambisara\/Garawol\/Misera\/Sambakunda\/Sudowol",2205665 => "Kuntaur",2205666 => "Numeyel",220567 => "Sotuma",2205674 => "Bansang",2205676 => "Georgetown",2205678 => "Brikama\-Ba",2205710 => "Barra",2205714 => "Ndugukebbe",2205720 => "Kerewan",2205723 => "Njabakunda",2205725 => "Iliasa",2205735 => "Farafenni",2205738 => "Ngensanjal",2205748 => "Kaur",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"220$prefix"} if exists($map{"220$prefix"});
       }
