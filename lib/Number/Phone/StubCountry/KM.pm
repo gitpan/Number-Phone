@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20140415215640;
+our $VERSION = 1.20140425182230;
 
-my $formatters = [];
-my $validators = {'toll_free' => '','fixed_line' => '7(?:6[0-37-9]|7[0-57-9])\\d{4}','voip' => '','mobile' => '3[234]\\d{5}','pager' => '','special_rate' => '()|((?:39[01]|9[01]0)\\d{4})|()','personal_number' => ''};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (269760 => "Domoni",269761 => "Mutsamudu",269762 => "Moh\Ã\©li",269763 => "Moroni",269767 => "Mb\Ã\©ni",269768 => "Mitsamiouli",269769 => "Foumbouni",269770 => "Domoni",269771 => "Mutsamudu",269772 => "Moh\Ã\©li",269773 => "Moroni",269774 => "Moroni",269775 => "Moroni",269777 => "Mb\Ã\©ni",269778 => "Mitsamiouli",269779 => "Foumbouni",);
+my $formatters = [{'pattern' => '(\\d{3})(\\d{2})(\\d{2})'}];
+my $validators = {'toll_free' => '','mobile' => '3[234]\\d{5}','geographic' => '7(?:6[0-37-9]|7[0-57-9])\\d{4}','personal_number' => '','pager' => '','voip' => '','fixed_line' => '7(?:6[0-37-9]|7[0-57-9])\\d{4}','special_rate' => '()|((?:39[01]|9[01]0)\\d{4})|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (269760 => "Domoni",269761 => "Mutsamudu",269762 => "Moh\Ã\©li",269763 => "Moroni",269767 => "Mb\Ã\©ni",269768 => "Mitsamiouli",269769 => "Foumbouni",269770 => "Domoni",269771 => "Mutsamudu",269772 => "Moh\Ã\©li",269773 => "Moroni",269774 => "Moroni",269775 => "Moroni",269777 => "Mb\Ã\©ni",269778 => "Mitsamiouli",269779 => "Foumbouni",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"269$prefix"} if exists($map{"269$prefix"});
       }

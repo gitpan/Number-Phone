@@ -1,6 +1,7 @@
 #!/usr/bin/perl -w
 
-use Test::More tests => 301;
+use Test::More;
+END { done_testing }
 
 use lib 't/inc';
 use fatalwarnings;
@@ -19,10 +20,8 @@ ok(phone2country("1 800 555 0199") eq "NANP", "NANP: toll-free number IDed as ge
 
 # NANP
 # FIXME make sure a decent number of CA and US codes are covered!
-ok(phone2country("1 226 555 0199") eq "CA", "NANP: CA: 226");
-ok(phone2country("1 438 555 0199") eq "CA", "NANP: CA: 438");
-ok(phone2country("1 601 555 0199") eq "US", "NANP: US: 601");
-ok(phone2country("1 706 555 0199") eq "US", "NANP: US: 706");
+ok(phone2country("1 2042345678") eq "CA", "NANP: CA: 204");
+ok(phone2country("1 2012345678") eq "US", "NANP: US: 201");
 
 # NANP little countries, in area code order
 ok(phone2country('1 242 555 0199') eq 'BS', 'NANP: BS: 242');

@@ -3,15 +3,21 @@ use warnings;
 
 $ENV{TESTINGKILLTHEWABBIT} = 1; # make sure we don't load detailed exchg data
 
-sub is_mocked_uk { $Number::Phone::Country::idd_codes{'44'} eq 'MOCK' }
-sub skip_if_mocked {
-  my($msg, $count, $sub) = @_;
-  SKIP: {
-    skip $msg, $count if(is_mocked_uk());
-    $sub->();
-  };
+{
+  no warnings 'redefine';
+  sub is_mocked_uk { $Number::Phone::Country::idd_codes{'44'} eq 'MOCK' }
+  sub skip_if_mocked {
+    my($msg, $count, $sub) = @_;
+    SKIP: {
+      skip $msg, $count if(is_mocked_uk());
+      $sub->();
+    };
+  }
 }
  
+note("Common tests for Number::Phone::UK, and also for N::P::StubCountry::MOCK");
+note("The latter is a sanity testto make sure that stubs are built correctly,");
+note("and the comprehensive UK tests make a good torture-test.");
 
 my $number = Number::Phone->new('+44 142422 0000');
 isa_ok($number, 'Number::Phone::'.(is_mocked_uk() ? 'StubCountry::MOCK' : 'UK'));
@@ -38,12 +44,23 @@ skip_if_mocked("libphonenumber doesn't do areacode/subscriber", 2, sub {
 foreach my $method (qw(is_geographic is_valid), is_mocked_uk() ? () : qw(is_allocated)) {
     ok($number->$method(), "$method works for a London number");
 }
-foreach my $method (qw(is_in_use is_fixed_line is_mobile is_pager is_ipphone is_isdn is_tollfree is_specialrate is_adult is_personal is_corporate is_government is_international is_network_service is_ipphone)) {
+foreach my $method (qw(is_in_use is_mobile is_pager is_ipphone is_isdn is_tollfree is_specialrate is_adult is_personal is_corporate is_government is_international is_network_service is_ipphone)) {
     ok(!$number->$method(), "$method works for a London number");
 }
+
 # might be forwarded to a mobile at the switch
-ok(!defined($number->is_fixed_line()), "geographic numbers return is_fixed_line == undef");
-is(join(', ', sort $number->type()), join(', ', sort (qw(is_geographic is_valid), is_mocked_uk() ? () : qw(is_allocated))), "type() works");
+if(is_mocked_uk()) {
+    ok($number->is_fixed_line(), "geographic numbers have is_fixed_line");
+} else {
+    ok(!defined($number->is_fixed_line()), "geographic numbers return is_fixed_line == undef");
+}
+
+# libphonenumber doesn't do allocation but does think geographic numbers are fixed lines
+is_deeply(
+    [sort $number->type()],
+    [sort ((is_mocked_uk() ? 'is_fixed_line' : 'is_allocated'), qw(is_valid is_geographic))],
+    "... and their type looks OK"
+);
 
 $number = Number::Phone->new('+448450033845');
 is($number->format(), is_mocked_uk() ? '+44 845 003 3845' : '+44 8450033845', "0+10 number formatted OK");
@@ -111,8 +128,13 @@ ok($number, "bad 070 data fixed");
 
 $number = Number::Phone->new('+442030791234'); # new London 020 3 numbers
 ok($number, "0203 numbers are recognised");
-# libphonenumber doesn't do allocation
-is_deeply([sort $number->type()], [sort ((!is_mocked_uk() ? 'is_allocated' : ()), qw(is_valid is_geographic))], "... and their type looks OK");
+
+# libphonenumber doesn't do allocation but does think geographic numbers are fixed lines
+is_deeply(
+    [sort $number->type()],
+    [sort ((is_mocked_uk() ? 'is_fixed_line' : 'is_allocated'), qw(is_valid is_geographic))],
+    "... and their type looks OK"
+);
 
 $number = Number::Phone->new('+445600123456');
 ok($number->is_ipphone(), "VoIP correctly identified");
@@ -206,5 +228,4 @@ foreach my $tuple (
   });
 }
 
-done_testing();
 1;

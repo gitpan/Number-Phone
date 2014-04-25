@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20140415215640;
+our $VERSION = 1.20140425182230;
 
-my $formatters = [{'leading_digits' => '2','pattern' => '(2)(\\d{3})(\\d{3})(\\d{2})'},{'pattern' => '([3-5]\\d)(\\d{3})(\\d{2})(\\d{2})','leading_digits' => '[3-5]'},{'leading_digits' => '[689]','pattern' => '([689]\\d{2})(\\d{3})(\\d{3})'}];
-my $validators = {'special_rate' => '(8[5-9]\\d{7})|(9(?:[78]\\d{7}|00\\d{6}))|(96\\d{7})','personal_number' => '','pager' => '','mobile' => '9(?:0[1-8]|1[0-24-9]|4[0489])\\d{6}','voip' => '6(?:5[0-4]|9[0-6])\\d{6}','toll_free' => '800\\d{6}','fixed_line' => '[2-5]\\d{8}'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (4212 => "Bratislava",42131 => "Dunajsk\Ã\¡\ Streda",42132 => "Tren\Ä\\Ã\­n",42133 => "Trnava",42134 => "Senica",42135 => "Nov\Ã\©\ Z\Ã\¡mky",42136 => "Levice",42137 => "Nitra",42138 => "Topo\Ä\¾\Ä\any",42141 => "\Å\½ilina",42142 => "Pova\Å\¾sk\Ã\¡\ Bystrica",42143 => "Martin",42144 => "Liptovsk\Ã\½\ Mikul\Ã\¡\Å\¡",42145 => "Zvolen",42146 => "Prievidza",42147 => "Lu\Ä\enec",42148 => "Bansk\Ã\¡\ Bystrica",42151 => "Pre\Å\¡ov",42152 => "Poprad",42153 => "Spi\Å\¡sk\Ã\¡\ Nov\Ã\¡\ Ves",42154 => "Bardejov",42155 => "Ko\Å\¡ice",42156 => "Michalovce",42157 => "Humenn\Ã\©",42158 => "Ro\Å\¾\Å\ˆava",);
+my $formatters = [{'leading_digits' => '2','pattern' => '(2)(\\d{3})(\\d{3})(\\d{2})'},{'pattern' => '([3-5]\\d)(\\d{3})(\\d{2})(\\d{2})','leading_digits' => '[3-5]'},{'pattern' => '([689]\\d{2})(\\d{3})(\\d{3})','leading_digits' => '[689]'}];
+my $validators = {'toll_free' => '800\\d{6}','geographic' => '[2-5]\\d{8}','mobile' => '9(?:0[1-8]|1[0-24-9]|4[0489])\\d{6}','personal_number' => '','pager' => '','voip' => '6(?:5[0-4]|9[0-6])\\d{6}','fixed_line' => '[2-5]\\d{8}','special_rate' => '(8[5-9]\\d{7})|(9(?:[78]\\d{7}|00\\d{6}))|(96\\d{7})'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (4212 => "Bratislava",42131 => "Dunajsk\Ã\¡\ Streda",42132 => "Tren\Ä\\Ã\­n",42133 => "Trnava",42134 => "Senica",42135 => "Nov\Ã\©\ Z\Ã\¡mky",42136 => "Levice",42137 => "Nitra",42138 => "Topo\Ä\¾\Ä\any",42141 => "\Å\½ilina",42142 => "Pova\Å\¾sk\Ã\¡\ Bystrica",42143 => "Martin",42144 => "Liptovsk\Ã\½\ Mikul\Ã\¡\Å\¡",42145 => "Zvolen",42146 => "Prievidza",42147 => "Lu\Ä\enec",42148 => "Bansk\Ã\¡\ Bystrica",42151 => "Pre\Å\¡ov",42152 => "Poprad",42153 => "Spi\Å\¡sk\Ã\¡\ Nov\Ã\¡\ Ves",42154 => "Bardejov",42155 => "Ko\Å\¡ice",42156 => "Michalovce",42157 => "Humenn\Ã\©",42158 => "Ro\Å\¾\Å\ˆava",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"421$prefix"} if exists($map{"421$prefix"});
       }

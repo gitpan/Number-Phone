@@ -1,6 +1,6 @@
 package Number::Phone::Country::Data;
 
-$VERSION = '1.0';
+$VERSION = '1.1';
 %Number::Phone::Country::idd_codes = (
     # 1     => 'NANP',
 
@@ -64,6 +64,11 @@ $VERSION = '1.0';
     43      => 'AT', 44      => 'GB',
     45      => 'DK', 46      => 'SE',
     47      => 'NO', 48      => 'PL', 49      => 'DE',
+
+    # http://en.wikipedia.org/wiki/Telephone_numbers_in_the_United_Kingdom#Crown_dependencies
+    441481 => 'GG', 447781 => 'GG', 447839 => 'GG', 447911 => 'GG',
+    441534 => 'JE', 447509 => 'JE', 447797 => 'JE', 447937 => 'JE', 447700 => 'JE', 447829 => 'JE',
+    441624 => 'IM', 447624 => 'IM', 447524 => 'IM', 447924 => 'IM',
     
     # 5* checked against wtng.info 2011-07-08
     500     => 'FK',
@@ -124,6 +129,8 @@ $VERSION = '1.0';
     996     => 'KG', 998     => 'UZ',
 
     # these checked against wtng.info 2011-07-08
+    # https://en.wikipedia.org/wiki/Global_Mobile_Satellite_System
+    # https://en.wikipedia.org/wiki/International_Networks_%28country_code%29
     800     => 'InternationalFreephone',
     808     => 'SharedCostServices',
     870     => 'Inmarsat',
@@ -132,11 +139,23 @@ $VERSION = '1.0';
     873     => 'Inmarsat',
     874     => 'Inmarsat',
     878     => 'UniversalPersonalTelecoms',
-    8816    => 'Iridium',    # \ Sat-phones
+    881     => 'GMSS',       # \ Sat-phones
+    8810    => 'ICO',        # |
+    8811    => 'ICO',        # |
+    8812    => 'Ellipso',    # |
+    8813    => 'Ellipso',    # |
+    # 8814 is spare          # |
+    # 8815 is spare          # |
+    8816    => 'Iridium',    # |
     8817    => 'Iridium',    # |
     8818    => 'Globalstar', # |
     8819    => 'Globalstar', # /
     882     => 'InternationalNetworks',
+    883     => 'InternationalNetworks',
+    883120  => 'Telenor',
+    883130  => 'Mobistar',
+    883140  => 'MTTGlobalNetworks',
+    8835100 => 'VOXBON',
     888     => 'TelecomsForDisasterRelief',
     # 979 is used for testing when we fail to load a module when we
     # know what "country" it is
@@ -228,6 +247,7 @@ $VERSION = '1.0';
     'GD' => [  '1',  '011',    '4'], # Grenada
     'GE' => ['995',  '810',    '8'], # Georgia
     'GF' => ['594',   '00',  undef], # French Guiana
+    'GG' => [ '44',   '00',    '0'], # Guernsey
     'GH' => ['233',   '00',  undef], # Ghana
     'GI' => ['350',   '00',  undef], # Gibraltar
     'GL' => ['299',   '00',  undef], # Greenland
@@ -250,12 +270,14 @@ $VERSION = '1.0';
     'ID' => [ '62',  '001',    '0'], # Indonesia
     'IE' => ['353',   '00',    '0'], # Ireland
     'IL' => ['972',   '00',    '0'], # Israel
+    'IM' => [ '44',   '00',    '0'], # Isle of Man
     'IN' => [ '91',   '00',    '0'], # India
     'IO' => ['246',   '00',  undef], # British Indian Ocean Territory
     'IQ' => ['964',   '00',    '0'], # Iraq
     'IR' => [ '98',   '00',    '0'], # Iran, Islamic Republic of
     'IS' => ['354',   '00',    '0'], # Iceland
     'IT' => [ '39',   '00',  undef], # Italy
+    'JE' => [ '44',   '00',    '0'], # Jersey
     'JM' => [  '1',  '011',    '1'], # Jamaica
     'JO' => ['962',   '00',    '0'], # Jordan
     'JP' => [ '81',  '001',    '0'], # Japan
