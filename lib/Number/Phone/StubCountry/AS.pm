@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20140425182229;
+our $VERSION = 1.20140617214231;
 
 my $formatters = [{'pattern' => '(\\d{3})(\\d{4})'},{'pattern' => '(\\d{3})(\\d{3})(\\d{4})'}];
-my $validators = {'special_rate' => '()|(900[2-9]\\d{6})|()','fixed_line' => '6846(?:22|33|44|55|77|88|9[19])\\d{4}','pager' => '','voip' => '','personal_number' => '5(?:00|33|44)[2-9]\\d{6}','geographic' => '6846(?:22|33|44|55|77|88|9[19])\\d{4}','mobile' => '684(?:25[2468]|7(?:3[13]|70))\\d{4}','toll_free' => '8(?:00|44|55|66|77|88)[2-9]\\d{6}'};use Number::Phone::NANP::Data;sub areaname { Number::Phone::NANP::Data::areaname("1".shift()->{number}); }
+my $validators = {'special_rate' => '()|(900[2-9]\\d{6})|()','voip' => '','fixed_line' => '6846(?:22|33|44|55|77|88|9[19])\\d{4}','pager' => '','mobile' => '684(?:25[2468]|7(?:3[13]|70))\\d{4}','personal_number' => '5(?:00|33|44|66|77)[2-9]\\d{6}','toll_free' => '8(?:00|44|55|66|77|88)[2-9]\\d{6}','geographic' => '6846(?:22|33|44|55|77|88|9[19])\\d{4}'};use Number::Phone::NANP::Data;sub areaname { Number::Phone::NANP::Data::areaname("1".shift()->{number}); }
 sub new {
   my $class = shift;
   my $number = shift;

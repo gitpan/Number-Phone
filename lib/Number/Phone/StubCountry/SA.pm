@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20140425182230;
+our $VERSION = 1.20140617214232;
 
-my $formatters = [{'leading_digits' => '[1-467]','pattern' => '([1-467])(\\d{3})(\\d{4})'},{'leading_digits' => '1[1-467]','pattern' => '(1\\d)(\\d{3})(\\d{4})'},{'leading_digits' => '5','pattern' => '(5\\d)(\\d{3})(\\d{4})'},{'pattern' => '(92\\d{2})(\\d{5})','leading_digits' => '92'},{'leading_digits' => '80','pattern' => '(800)(\\d{3})(\\d{4})'},{'leading_digits' => '81','pattern' => '(811)(\\d{3})(\\d{3,4})'}];
-my $validators = {'special_rate' => '(92[05]\\d{6})|()|()','fixed_line' => '11\\d{7}|1?(?:2[24-8]|3[35-8]|4[3-68]|6[2-5]|7[235-7])\\d{6}','voip' => '','pager' => '','personal_number' => '','mobile' => '(?:5[013-689]|811)\\d{7}','geographic' => '11\\d{7}|1?(?:2[24-8]|3[35-8]|4[3-68]|6[2-5]|7[235-7])\\d{6}','toll_free' => '800\\d{7}'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (96611 => "Riyadh\/Kharj",96612 => "Makkah\/Jeddah",96613 => "Dammam\/Khobar\/Dahran",96614 => "Madenah\/Arar\/Tabuk\/Yanbu",96616 => "Hail\/Qasim",96617 => "Abha\/Najran\/Jezan",9662 => "Makkah\/Jeddah",9663 => "Dammam\/Khobar\/Dahran",9664 => "Madenah\/Arar\/Tabuk\/Yanbu",9666 => "Hail\/Qasim",9667 => "Abha\/Najran\/Jezan",);
+my $formatters = [{'pattern' => '([1-467])(\\d{3})(\\d{4})','leading_digits' => '[1-467]'},{'pattern' => '(1\\d)(\\d{3})(\\d{4})','leading_digits' => '1[1-467]'},{'leading_digits' => '5','pattern' => '(5\\d)(\\d{3})(\\d{4})'},{'leading_digits' => '92','pattern' => '(92\\d{2})(\\d{5})'},{'pattern' => '(800)(\\d{3})(\\d{4})','leading_digits' => '80'},{'leading_digits' => '81','pattern' => '(811)(\\d{3})(\\d{3,4})'}];
+my $validators = {'fixed_line' => '11\\d{7}|1?(?:2[24-8]|3[35-8]|4[3-68]|6[2-5]|7[235-7])\\d{6}','pager' => '','special_rate' => '(92[05]\\d{6})|()|()','voip' => '','geographic' => '11\\d{7}|1?(?:2[24-8]|3[35-8]|4[3-68]|6[2-5]|7[235-7])\\d{6}','toll_free' => '800\\d{7}','personal_number' => '','mobile' => '(?:5[013-689]|811)\\d{7}'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (96611 => "Riyadh\/Kharj",96612 => "Makkah\/Jeddah",96613 => "Dammam\/Khobar\/Dahran",96614 => "Madenah\/Arar\/Tabuk\/Yanbu",96616 => "Hail\/Qasim",96617 => "Abha\/Najran\/Jezan",9662 => "Makkah\/Jeddah",9663 => "Dammam\/Khobar\/Dahran",9664 => "Madenah\/Arar\/Tabuk\/Yanbu",9666 => "Hail\/Qasim",9667 => "Abha\/Najran\/Jezan",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"966$prefix"} if exists($map{"966$prefix"});
       }

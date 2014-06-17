@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20140425182229;
+our $VERSION = 1.20140617214231;
 
 my $formatters = [{'pattern' => '(\\d{2})(\\d{2})(\\d{2})(\\d{2})'}];
-my $validators = {'fixed_line' => '(?:2(?:0[023]|1[02357]|[23][045]|4[03-5])|3(?:0[06]|1[069]|[2-4][07]|5[09]|6[08]))\\d{5}','special_rate' => '()|()|()','pager' => '','voip' => '','personal_number' => '','geographic' => '(?:2(?:0[023]|1[02357]|[23][045]|4[03-5])|3(?:0[06]|1[069]|[2-4][07]|5[09]|6[08]))\\d{5}','mobile' => '(?:0[1-9]|4[0-24-9]|5[4-9]|6[015-79]|77)\\d{6}','toll_free' => ''};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (22520 => "Plateau",22521 => "Abidjan",22522 => "Cocody",22523 => "Banco",22524 => "Abobo",22530 => "Yamoussoukro",22531 => "Bouak\Ã\©",22532 => "Daloa",22533 => "Man",22534 => "San\ Pedro",22535 => "Abengourou",22536 => "Korhogo",);
+my $validators = {'pager' => '','fixed_line' => '(?:2(?:0[023]|1[02357]|[23][045]|4[03-5])|3(?:0[06]|1[069]|[2-4][07]|5[09]|6[08]))\\d{5}','voip' => '','special_rate' => '()|()|()','geographic' => '(?:2(?:0[023]|1[02357]|[23][045]|4[03-5])|3(?:0[06]|1[069]|[2-4][07]|5[09]|6[08]))\\d{5}','toll_free' => '','mobile' => '(?:0[1-9]|4[0-24-9]|5[4-9]|6[015-79]|77)\\d{6}','personal_number' => ''};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (22520 => "Plateau",22521 => "Abidjan",22522 => "Cocody",22523 => "Banco",22524 => "Abobo",22530 => "Yamoussoukro",22531 => "Bouak\Ã\©",22532 => "Daloa",22533 => "Man",22534 => "San\ Pedro",22535 => "Abengourou",22536 => "Korhogo",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"225$prefix"} if exists($map{"225$prefix"});
       }

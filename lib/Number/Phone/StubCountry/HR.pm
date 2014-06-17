@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20140425182230;
+our $VERSION = 1.20140617214232;
 
-my $formatters = [{'pattern' => '(1)(\\d{4})(\\d{3})','leading_digits' => '1'},{'leading_digits' => '6[09]','pattern' => '(6[09])(\\d{4})(\\d{3})'},{'leading_digits' => '62','pattern' => '(62)(\\d{3})(\\d{3,4})'},{'pattern' => '([2-5]\\d)(\\d{3})(\\d{3})','leading_digits' => '[2-5]'},{'leading_digits' => '9','pattern' => '(9\\d)(\\d{3})(\\d{3,4})'},{'pattern' => '(9\\d)(\\d{4})(\\d{4})','leading_digits' => '9'},{'leading_digits' => '9','pattern' => '(9\\d)(\\d{3,4})(\\d{3})(\\d{3})'},{'leading_digits' => '6[145]|7','pattern' => '(\\d{2})(\\d{2})(\\d{2,3})'},{'pattern' => '(\\d{2})(\\d{3,4})(\\d{3})','leading_digits' => '6[145]|7'},{'leading_digits' => '8','pattern' => '(80[01])(\\d{2})(\\d{2,3})'},{'pattern' => '(80[01])(\\d{3,4})(\\d{3})','leading_digits' => '8'}];
-my $validators = {'mobile' => '9[1257-9]\\d{6,10}','geographic' => '1\\d{7}|(?:2[0-3]|3[1-5]|4[02-47-9]|5[1-3])\\d{6}','toll_free' => '80[01]\\d{4,7}','personal_number' => '7[45]\\d{4,7}','fixed_line' => '1\\d{7}|(?:2[0-3]|3[1-5]|4[02-47-9]|5[1-3])\\d{6}','special_rate' => '()|(6(?:[09]\\d{7}|[145]\\d{4,7}))|(62\\d{6,7})','pager' => '','voip' => ''};
+my $formatters = [{'leading_digits' => '1','pattern' => '(1)(\\d{4})(\\d{3})'},{'leading_digits' => '6[09]','pattern' => '(6[09])(\\d{4})(\\d{3})'},{'pattern' => '(62)(\\d{3})(\\d{3,4})','leading_digits' => '62'},{'pattern' => '([2-5]\\d)(\\d{3})(\\d{3})','leading_digits' => '[2-5]'},{'pattern' => '(9\\d)(\\d{3})(\\d{3,4})','leading_digits' => '9'},{'leading_digits' => '9','pattern' => '(9\\d)(\\d{4})(\\d{4})'},{'leading_digits' => '9','pattern' => '(9\\d)(\\d{3,4})(\\d{3})(\\d{3})'},{'pattern' => '(\\d{2})(\\d{2})(\\d{2,3})','leading_digits' => '6[145]|7'},{'pattern' => '(\\d{2})(\\d{3,4})(\\d{3})','leading_digits' => '6[145]|7'},{'leading_digits' => '8','pattern' => '(80[01])(\\d{2})(\\d{2,3})'},{'leading_digits' => '8','pattern' => '(80[01])(\\d{3,4})(\\d{3})'}];
+my $validators = {'geographic' => '1\\d{7}|(?:2[0-3]|3[1-5]|4[02-47-9]|5[1-3])\\d{6}','toll_free' => '80[01]\\d{4,7}','mobile' => '9[1257-9]\\d{6,10}','personal_number' => '7[45]\\d{4,7}','pager' => '','fixed_line' => '1\\d{7}|(?:2[0-3]|3[1-5]|4[02-47-9]|5[1-3])\\d{6}','voip' => '','special_rate' => '()|(6(?:[09]\\d{7}|[145]\\d{4,7}))|(62\\d{6,7})'};
 sub new {
   my $class = shift;
   my $number = shift;

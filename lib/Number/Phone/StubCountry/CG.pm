@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20140425182229;
+our $VERSION = 1.20140617214231;
 
-my $formatters = [{'leading_digits' => '[02]','pattern' => '(\\d{2})(\\d{3})(\\d{4})'},{'leading_digits' => '8','pattern' => '(\\d)(\\d{4})(\\d{4})'}];
-my $validators = {'personal_number' => '','fixed_line' => '222[1-589]\\d{5}','special_rate' => '()|()|()','voip' => '','pager' => '','geographic' => '222[1-589]\\d{5}','mobile' => '0[14-6]\\d{7}','toll_free' => '800\\d{6}'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2422221 => "Cuvette",2422222 => "Likouala\/Sangha",2422223 => "Pool",2422224 => "Plateaux",2422225 => "Bouenza\/Lekoumou\/Niari",2422228 => "Brazzaville",2422229 => "Pointe\-Noire",);
+my $formatters = [{'pattern' => '(\\d{2})(\\d{3})(\\d{4})','leading_digits' => '[02]'},{'pattern' => '(\\d)(\\d{4})(\\d{4})','leading_digits' => '8'}];
+my $validators = {'voip' => '','special_rate' => '()|()|()','pager' => '','fixed_line' => '222[1-589]\\d{5}','personal_number' => '','mobile' => '0[14-6]\\d{7}','toll_free' => '800\\d{6}','geographic' => '222[1-589]\\d{5}'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2422221 => "Cuvette",2422222 => "Likouala\/Sangha",2422223 => "Pool",2422224 => "Plateaux",2422225 => "Bouenza\/Lekoumou\/Niari",2422228 => "Brazzaville",2422229 => "Pointe\-Noire",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"242$prefix"} if exists($map{"242$prefix"});
       }
