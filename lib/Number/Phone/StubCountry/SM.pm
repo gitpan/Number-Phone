@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20140617214232;
+our $VERSION = 1.20140822223716;
 
-my $formatters = [{'leading_digits' => '[5-7]','pattern' => '(\\d{2})(\\d{2})(\\d{2})(\\d{2})'},{'pattern' => '(0549)(\\d{6})','leading_digits' => '0'},{'pattern' => '(\\d{6})','leading_digits' => '[89]'}];
-my $validators = {'pager' => '','fixed_line' => '0549(?:8[0157-9]|9\\d)\\d{4}','voip' => '5[158]\\d{6}','special_rate' => '()|(7[178]\\d{6})|()','geographic' => '0549(?:8[0157-9]|9\\d)\\d{4}','personal_number' => '','mobile' => '6[16]\\d{6}','toll_free' => ''};
+my $formatters = [{'leading_digits' => '[5-7]','pattern' => '(\\d{2})(\\d{2})(\\d{2})(\\d{2})'},{'pattern' => '(0549)(\\d{6})','leading_digits' => '0'},{'leading_digits' => '[89]','pattern' => '(\\d{6})'}];
+my $validators = {'special_rate' => '()|(7[178]\\d{6})|()','personal_number' => '','voip' => '5[158]\\d{6}','mobile' => '6[16]\\d{6}','toll_free' => '','fixed_line' => '0549(?:8[0157-9]|9\\d)\\d{4}','geographic' => '0549(?:8[0157-9]|9\\d)\\d{4}','pager' => ''};
 sub new {
   my $class = shift;
   my $number = shift;

@@ -1,3 +1,8 @@
+2014-08-22      3.0002  Be more consistent when formatting UK numbers
+                          for which we have incomplete data from OFCOM,,
+                          no matter how they're instantiated;
+                        New UK allocations
+
 2014-07-17      3.0001  Make N::P::UK->format() cope better when OFCOM
                           don't tell us how long 08 numbers are;
                         New UK allocations

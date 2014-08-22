@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20140617214232;
+our $VERSION = 1.20140822223715;
 
-my $formatters = [{'leading_digits' => '[1-4]','pattern' => '([1-4]\\d)(\\d{2})(\\d{2})(\\d{2})'},{'leading_digits' => '[5-8]','pattern' => '([5-8]\\d{2})(\\d{2})(\\d{2})(\\d{2})'},{'pattern' => '(9\\d)(\\d{3})(\\d{2})(\\d{2})','leading_digits' => '9'}];
-my $validators = {'special_rate' => '(80[12]1\\d{5})|(80[3-689]1\\d{5})|()','voip' => '98[23]\\d{6}','fixed_line' => '(?:1\\d|2[014-79]|3[0-8]|4[0135689])\\d{6}|9619\\d{5}','pager' => '','toll_free' => '800\\d{6}','personal_number' => '','mobile' => '(?:5[4-6]|7[7-9])\\d{7}|6(?:[569]\\d|7[0-3])\\d{6}','geographic' => '(?:1\\d|2[014-79]|3[0-8]|4[0135689])\\d{6}|9619\\d{5}'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (21321 => "Algiers",21327 => "Chlef",21329 => "Ghardaia\/Illizi\/Tamanrasset",21331 => "Constantine",21332 => "El\ Oued",21333 => "Batna\/Beskra",21334 => "B\Ã\©ja\Ã\¯a\/Jijel",21335 => "Bordj\ Bou\ Arreridj",21337 => "Tebessa",21338 => "Annaba\/Skikda",21341 => "Oran",21343 => "Tlemcen",21349 => "Adrar\/B\Ã\©char\/Tindouf",);
+my $formatters = [{'pattern' => '([1-4]\\d)(\\d{2})(\\d{2})(\\d{2})','leading_digits' => '[1-4]'},{'leading_digits' => '[5-8]','pattern' => '([5-8]\\d{2})(\\d{2})(\\d{2})(\\d{2})'},{'pattern' => '(9\\d)(\\d{3})(\\d{2})(\\d{2})','leading_digits' => '9'}];
+my $validators = {'special_rate' => '(80[12]1\\d{5})|(80[3-689]1\\d{5})|()','pager' => '','geographic' => '(?:1\\d|2[014-79]|3[0-8]|4[0135689])\\d{6}|9619\\d{5}','mobile' => '(?:5[4-6]|7[7-9])\\d{7}|6(?:[569]\\d|7[0-3])\\d{6}','fixed_line' => '(?:1\\d|2[014-79]|3[0-8]|4[0135689])\\d{6}|9619\\d{5}','toll_free' => '800\\d{6}','voip' => '98[23]\\d{6}','personal_number' => ''};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (21321 => "Algiers",21327 => "Chlef",21329 => "Ghardaia\/Illizi\/Tamanrasset",21331 => "Constantine",21332 => "El\ Oued",21333 => "Batna\/Beskra",21334 => "B\Ã\©ja\Ã\¯a\/Jijel",21335 => "Bordj\ Bou\ Arreridj",21337 => "Tebessa",21338 => "Annaba\/Skikda",21341 => "Oran",21343 => "Tlemcen",21349 => "Adrar\/B\Ã\©char\/Tindouf",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"213$prefix"} if exists($map{"213$prefix"});
       }

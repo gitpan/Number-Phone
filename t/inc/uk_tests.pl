@@ -87,7 +87,7 @@ skip_if_mocked("libphonenumber doesn't know about location/operators/network-ser
   $number = Number::Phone->new('+448450033845');
   ok($number->is_specialrate(), "special-rate numbers correctly identified");
 
-  $number = Number::Phone->new('+449088791234');
+  $number = Number::Phone->new('+449088761234');
   ok($number->is_adult() && $number->is_specialrate(), "0908 'adult' numbers correctly identified");
   $number = Number::Phone->new('+449090901234');
   ok($number->is_adult() && $number->is_specialrate(), "0909 'adult' numbers correctly identified");
@@ -95,7 +95,7 @@ skip_if_mocked("libphonenumber doesn't know about location/operators/network-ser
   $number = Number::Phone->new('+445588301234');
   ok($number->is_corporate(), "corporate numbers correctly identified");
 
-  $number = Number::Phone->new('+448200123456');
+  $number = Number::Phone->new('+448200803456');
   ok($number->is_network_service(), "network service numbers correctly identified");
 
   $number = Number::Phone->new('+448450033845');
@@ -198,21 +198,28 @@ is($number->format(), '+44 1302 622123', "OFCOM's stupid 6+4 format for 1302 62[
 $number = Number::Phone->new('+441302623123');
 is($number->format(), '+44 1302 623123', "OFCOM's missing format for 1302 623 is corrected");
 
-$number = Number::Phone->new('+448435235305');
-is(
-    $number->format(),
-    is_mocked_uk() ? '+44 843 523 5305' : '+448435235305',
-    "OFCOM's missing format for 843 doesn't break shit"
-);
-is_deeply(
-    [sort $number->type()],
-    [sort ('is_valid', is_mocked_uk() ? (): qw(is_allocated is_specialrate))],
-    "... and its type looks OK"
-) || print Dumper($number->type());
+foreach my $tuple (
+  [ 'Number::Phone'     => '+448435235305' ],
+  (is_mocked_uk() ? () : [ 'Number::Phone::UK' =>   '08435235305' ]),
+) {
+  my($class, $digits) = @{$tuple};
+  $number = $class->new($digits);
+  is(
+      $number->format(),
+      # libphonenumber can format this, N::P::UK can't because OFCOM's data is deficient
+      is_mocked_uk() ? '+44 843 523 5305' : '+448435235305',
+      "OFCOM's missing format for 843 doesn't break shit: $class->new($digits)->format()"
+  );
+  is_deeply(
+      [sort $number->type()],
+      [sort ('is_valid', is_mocked_uk() ? (): qw(is_allocated is_specialrate))],
+      "... and its type looks OK"
+  ) || print Dumper($number->type());
+}
 
 foreach my $tuple (
-  [ 'Number::Phone::UK' => '0844000000'   ],
-  [ 'Number::Phone'     => '+44844000000' ]
+  [ 'Number::Phone::UK' => '0844000100'   ],
+  [ 'Number::Phone'     => '+44844000100' ]
 ) {
   my($class, $number) = @{$tuple};
   skip_if_mocked("Stubs aren't intended to be constructed directly", 1, sub {
@@ -221,8 +228,8 @@ foreach my $tuple (
   });
 }
 
-foreach my $invalid (qw(+44844000000 +44275939345 +44208771292 +44113203160 +44113325000)) {
-                  #                  Protected    Normal       Normal       Protected
+foreach my $invalid (qw(+44275939345 +44208771292 +44113203160 +44113325000)) {
+                  #        Protected    Normal       Normal       Protected
     $number = Number::Phone->new($invalid);
     ok(!defined($number), "$invalid is invalid (too short)");
 }

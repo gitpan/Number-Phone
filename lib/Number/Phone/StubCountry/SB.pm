@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20140617214232;
+our $VERSION = 1.20140822223716;
 
-my $formatters = [{'leading_digits' => '[7-9]','pattern' => '(\\d{3})(\\d{4})'}];
-my $validators = {'geographic' => '(?:1[4-79]|[23]\\d|4[01]|5[03]|6[0-37])\\d{3}','toll_free' => '1[38]\\d{3}','personal_number' => '','mobile' => '48\\d{3}|7(?:[46-8]\\d|5[025-9]|90)\\d{4}|8[4-8]\\d{5}|9(?:[46]\\d|5[0-46-9]|7[0-689]|8[0-79]|9[0-8])\\d{4}','fixed_line' => '(?:1[4-79]|[23]\\d|4[01]|5[03]|6[0-37])\\d{3}','pager' => '','special_rate' => '()|()|()','voip' => '5[12]\\d{3}'};
+my $formatters = [{'pattern' => '(\\d{3})(\\d{4})','leading_digits' => '[7-9]'}];
+my $validators = {'special_rate' => '()|()|()','pager' => '','mobile' => '48\\d{3}|7(?:[0146-8]\\d|5[025-9]|90)\\d{4}|8[4-8]\\d{5}|9(?:[46]\\d|5[0-46-9]|7[0-689]|8[0-79]|9[0-8])\\d{4}','fixed_line' => '(?:1[4-79]|[23]\\d|4[01]|5[03]|6[0-37])\\d{3}','toll_free' => '1[38]\\d{3}','geographic' => '(?:1[4-79]|[23]\\d|4[01]|5[03]|6[0-37])\\d{3}','personal_number' => '','voip' => '5[12]\\d{3}'};
 sub new {
   my $class = shift;
   my $number = shift;
