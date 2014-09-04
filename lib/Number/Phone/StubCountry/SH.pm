@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20140822223716;
+our $VERSION = 1.20140904220737;
 
 my $formatters = [];
-my $validators = {'special_rate' => '()|((?:[59]\\d|7[2-9])\\d{2})|()','mobile' => 'NA','fixed_line' => '2(?:[0-57-9]\\d|6[4-9])\\d{2}|(?:[2-46]\\d|7[01])\\d{2}','toll_free' => '','geographic' => '2(?:[0-57-9]\\d|6[4-9])\\d{2}|(?:[2-46]\\d|7[01])\\d{2}','personal_number' => '','voip' => '','pager' => ''};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2902 => "Jamestown",2903 => "St\.\ Helena",2904 => "St\.\ Helena",2906 => "St\.\ Helena",2907 => "St\.\ Helena",2908 => "Tristan\ da\ Cunha",);
+my $validators = {'fixed_line' => '2(?:[0-57-9]\\d|6[4-9])\\d{2}|(?:[2-46]\\d|7[01])\\d{2}','voip' => '','pager' => '','mobile' => 'NA','special_rate' => '()|((?:[59]\\d|7[2-9])\\d{2})|()','toll_free' => '','personal_number' => '','geographic' => '2(?:[0-57-9]\\d|6[4-9])\\d{2}|(?:[2-46]\\d|7[01])\\d{2}'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2902 => "Jamestown",2903 => "St\.\ Helena",2904 => "St\.\ Helena",2906 => "St\.\ Helena",2907 => "St\.\ Helena",2908 => "Tristan\ da\ Cunha",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"290$prefix"} if exists($map{"290$prefix"});
       }
@@ -34,6 +34,7 @@ sub new {
   my $class = shift;
   my $number = shift;
   $number =~ s/(^\+290|\D)//g;
+  $number =~ s/(^)//g;
   my $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
   return $self->is_valid() ? $self : undef;
 }

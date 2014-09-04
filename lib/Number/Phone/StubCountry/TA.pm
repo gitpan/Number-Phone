@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20140822223716;
+our $VERSION = 1.20140904220737;
 
 my $formatters = [];
-my $validators = {'pager' => '','geographic' => '8\\d{3}','mobile' => 'NA','toll_free' => '','fixed_line' => '8\\d{3}','voip' => '','personal_number' => '','special_rate' => '()|()|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2902 => "Jamestown",2903 => "St\.\ Helena",2904 => "St\.\ Helena",2906 => "St\.\ Helena",2907 => "St\.\ Helena",2908 => "Tristan\ da\ Cunha",);
+my $validators = {'special_rate' => '()|()|()','personal_number' => '','toll_free' => '','geographic' => '8\\d{3}','fixed_line' => '8\\d{3}','pager' => '','voip' => '','mobile' => 'NA'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2902 => "Jamestown",2903 => "St\.\ Helena",2904 => "St\.\ Helena",2906 => "St\.\ Helena",2907 => "St\.\ Helena",2908 => "Tristan\ da\ Cunha",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"290$prefix"} if exists($map{"290$prefix"});
       }
@@ -34,6 +34,7 @@ sub new {
   my $class = shift;
   my $number = shift;
   $number =~ s/(^\+290|\D)//g;
+  $number =~ s/(^)//g;
   my $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
   return $self->is_valid() ? $self : undef;
 }

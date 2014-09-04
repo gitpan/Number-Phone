@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20140822223714;
+our $VERSION = 1.20140904220736;
 
-my $formatters = [{'pattern' => '(\\d{2})(\\d{3})(\\d{4})','leading_digits' => '12'},{'pattern' => '([89]\\d{2})(\\d{3})(\\d{3})','leading_digits' => '8[0-2459]|9'},{'leading_digits' => '88','pattern' => '(\\d{2})(\\d{2})(\\d{3})'},{'leading_digits' => '[1-6]','pattern' => '(\\d{2})(\\d{5})'}];
-my $validators = {'special_rate' => '()|()|()','personal_number' => '','voip' => '','fixed_line' => '1(?:2\\d{7}|\\d{6})|[2-6]\\d{6}','toll_free' => '','mobile' => '8(?:[0-2459]\\d{2}|8)\\d{5}|9[7-9]\\d{7}','geographic' => '1(?:2\\d{7}|\\d{6})|[2-6]\\d{6}','pager' => ''};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2431 => "Kinshasa",2432 => "Katanga",2433 => "Bas\-Congo\/Bandundu",2434 => "Kasai\-Oriental\/Kasai\-Occidental",2435 => "Oriental\ Province\ \(Kisanga\/Mbandaka\)",2436 => "North\ Kivu\/South\ Kivu\/Maniema",);
+my $formatters = [{'leading_digits' => '12','pattern' => '(\\d{2})(\\d{3})(\\d{4})'},{'leading_digits' => '8[0-2459]|9','pattern' => '([89]\\d{2})(\\d{3})(\\d{3})'},{'leading_digits' => '88','pattern' => '(\\d{2})(\\d{2})(\\d{3})'},{'leading_digits' => '[1-6]','pattern' => '(\\d{2})(\\d{5})'}];
+my $validators = {'special_rate' => '()|()|()','personal_number' => '','toll_free' => '','geographic' => '1(?:2\\d{7}|\\d{6})|[2-6]\\d{6}','fixed_line' => '1(?:2\\d{7}|\\d{6})|[2-6]\\d{6}','voip' => '','pager' => '','mobile' => '8(?:[0-2459]\\d{2}|8)\\d{5}|9[7-9]\\d{7}'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2431 => "Kinshasa",2432 => "Katanga",2433 => "Bas\-Congo\/Bandundu",2434 => "Kasai\-Oriental\/Kasai\-Occidental",2435 => "Oriental\ Province\ \(Kisanga\/Mbandaka\)",2436 => "North\ Kivu\/South\ Kivu\/Maniema",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"243$prefix"} if exists($map{"243$prefix"});
       }
@@ -34,6 +34,7 @@ sub new {
   my $class = shift;
   my $number = shift;
   $number =~ s/(^\+243|\D)//g;
+  $number =~ s/(^0)//g;
   my $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
   return $self->is_valid() ? $self : undef;
 }

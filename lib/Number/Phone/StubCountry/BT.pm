@@ -21,14 +21,15 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20140822223714;
+our $VERSION = 1.20140904220736;
 
 my $formatters = [{'pattern' => '([17]7)(\\d{2})(\\d{2})(\\d{2})','leading_digits' => '1|77'},{'pattern' => '([2-8])(\\d{3})(\\d{3})','leading_digits' => '[2-68]|7[246]'}];
-my $validators = {'geographic' => '(?:2[3-6]|[34][5-7]|5[236]|6[2-46]|7[246]|8[2-4])\\d{5}','fixed_line' => '(?:2[3-6]|[34][5-7]|5[236]|6[2-46]|7[246]|8[2-4])\\d{5}','toll_free' => '','mobile' => '[17]7\\d{6}','voip' => '','personal_number' => '','pager' => '','special_rate' => '()|()|()'};
+my $validators = {'special_rate' => '()|()|()','geographic' => '(?:2[3-6]|[34][5-7]|5[236]|6[2-46]|7[246]|8[2-4])\\d{5}','personal_number' => '','toll_free' => '','fixed_line' => '(?:2[3-6]|[34][5-7]|5[236]|6[2-46]|7[246]|8[2-4])\\d{5}','mobile' => '[17]7\\d{6}','voip' => '','pager' => ''};
 sub new {
   my $class = shift;
   my $number = shift;
   $number =~ s/(^\+975|\D)//g;
+  $number =~ s/(^)//g;
   my $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
   return $self->is_valid() ? $self : undef;
 }

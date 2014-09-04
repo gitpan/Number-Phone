@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20140822223715;
+our $VERSION = 1.20140904220737;
 
 my $formatters = [{'pattern' => '(\\d{2})(\\d{5,7})','leading_digits' => '[24-6]'},{'leading_digits' => '7','pattern' => '(\\d{3})(\\d{6,7})'},{'leading_digits' => '[89]','pattern' => '(\\d{3})(\\d{3})(\\d{3,4})'}];
-my $validators = {'special_rate' => '()|(900[02-9]\\d{5})|()','geographic' => '20\\d{6,7}|4(?:[0136]\\d{7}|[245]\\d{5,7})|5(?:[08]\\d{7}|[1-79]\\d{5,7})|6(?:[01457-9]\\d{5,7}|[26]\\d{7})','mobile' => '7(?:[0-3]\\d|5[0-6]|7[0-5]|8[0-25-9])\\d{6}','toll_free' => '800[24-8]\\d{5,6}','fixed_line' => '20\\d{6,7}|4(?:[0136]\\d{7}|[245]\\d{5,7})|5(?:[08]\\d{7}|[1-79]\\d{5,7})|6(?:[01457-9]\\d{5,7}|[26]\\d{7})','voip' => '','personal_number' => '','pager' => ''};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (25420 => "Nairobi",25440 => "Kwale",25441 => "Mombasa\/Mariakani\/Kilifi",25442 => "Malindi\/Lamu\/Garsen",25443 => "Voi\/Wundanyi\/Mwatate\/Taveta",25444 => "Machakos\/Makueni\/Mwingi\/Kitui",25445 => "Kajiado\/Ngong\/Loitokitok\/Athi\ River",25446 => "Garissa\/Hola\/Wajir\/Mandera",25450 => "Naivasha\/Narok",25451 => "Nakuru",25452 => "Kericho\/Bomet",25453 => "Eldoret\/Turbo\/Kapsabet\/Iten\/Kabarnet",25454 => "Kitale\/Moi\'s\ Bridge\/Kapenguria\/Lodwar",25455 => "Bungoma\/Busia",25456 => "Kakamega\/Mbale\/Butere\/Mumias",25457 => "Kisumu\/Siaya",25458 => "Kisii\/Kilgoris\/Oyugis\/Nyamira",25459 => "Homabay\/Migori",25460 => "Muranga\/Kerugoya",25461 => "Nyeri",25462 => "Nanyuki",25464 => "Meru\/Maua\/Chuka",25465 => "Nyahururu\/Maralal",25466 => "Kiambu\/Kikuyu",25467 => "Thika\/Ruiru",25468 => "Embu",25469 => "Marsabit\/Moyale",);
+my $validators = {'fixed_line' => '20\\d{6,7}|4(?:[0136]\\d{7}|[245]\\d{5,7})|5(?:[08]\\d{7}|[1-79]\\d{5,7})|6(?:[01457-9]\\d{5,7}|[26]\\d{7})','mobile' => '7(?:[0-3]\\d|5[0-6]|7[0-5]|8[0-25-9])\\d{6}','voip' => '','pager' => '','special_rate' => '()|(900[02-9]\\d{5})|()','geographic' => '20\\d{6,7}|4(?:[0136]\\d{7}|[245]\\d{5,7})|5(?:[08]\\d{7}|[1-79]\\d{5,7})|6(?:[01457-9]\\d{5,7}|[26]\\d{7})','personal_number' => '','toll_free' => '800[24-8]\\d{5,6}'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (25420 => "Nairobi",25440 => "Kwale",25441 => "Mombasa\/Mariakani\/Kilifi",25442 => "Malindi\/Lamu\/Garsen",25443 => "Voi\/Wundanyi\/Mwatate\/Taveta",25444 => "Machakos\/Makueni\/Mwingi\/Kitui",25445 => "Kajiado\/Ngong\/Loitokitok\/Athi\ River",25446 => "Garissa\/Hola\/Wajir\/Mandera",25450 => "Naivasha\/Narok",25451 => "Nakuru",25452 => "Kericho\/Bomet",25453 => "Eldoret\/Turbo\/Kapsabet\/Iten\/Kabarnet",25454 => "Kitale\/Moi\'s\ Bridge\/Kapenguria\/Lodwar",25455 => "Bungoma\/Busia",25456 => "Kakamega\/Mbale\/Butere\/Mumias",25457 => "Kisumu\/Siaya",25458 => "Kisii\/Kilgoris\/Oyugis\/Nyamira",25459 => "Homabay\/Migori",25460 => "Muranga\/Kerugoya",25461 => "Nyeri",25462 => "Nanyuki",25464 => "Meru\/Maua\/Chuka",25465 => "Nyahururu\/Maralal",25466 => "Kiambu\/Kikuyu",25467 => "Thika\/Ruiru",25468 => "Embu",25469 => "Marsabit\/Moyale",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"254$prefix"} if exists($map{"254$prefix"});
       }
@@ -34,6 +34,7 @@ sub new {
   my $class = shift;
   my $number = shift;
   $number =~ s/(^\+254|\D)//g;
+  $number =~ s/(^0)//g;
   my $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
   return $self->is_valid() ? $self : undef;
 }

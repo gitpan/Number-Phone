@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20140822223716;
+our $VERSION = 1.20140904220737;
 
 my $formatters = [{'pattern' => '(\\d{2})(\\d{2})(\\d{2})(\\d{2})'}];
-my $validators = {'toll_free' => '','fixed_line' => '2(?:2[2-7]|3[23]|44|55|66|77)\\d{5}','mobile' => '9[0-289]\\d{6}','geographic' => '2(?:2[2-7]|3[23]|44|55|66|77)\\d{5}','personal_number' => '','voip' => '','pager' => '','special_rate' => '()|()|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (22822 => "Lome",22823 => "Maritime\ region",22824 => "Plateaux\ region",22825 => "Central\ region",22826 => "Kara\ region",22827 => "Savannah\ region",);
+my $validators = {'mobile' => '9[0-289]\\d{6}','pager' => '','voip' => '','fixed_line' => '2(?:2[2-7]|3[23]|44|55|66|77)\\d{5}','geographic' => '2(?:2[2-7]|3[23]|44|55|66|77)\\d{5}','personal_number' => '','toll_free' => '','special_rate' => '()|()|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (22822 => "Lome",22823 => "Maritime\ region",22824 => "Plateaux\ region",22825 => "Central\ region",22826 => "Kara\ region",22827 => "Savannah\ region",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"228$prefix"} if exists($map{"228$prefix"});
       }
@@ -34,6 +34,7 @@ sub new {
   my $class = shift;
   my $number = shift;
   $number =~ s/(^\+228|\D)//g;
+  $number =~ s/(^)//g;
   my $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
   return $self->is_valid() ? $self : undef;
 }

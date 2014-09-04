@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20140822223714;
+our $VERSION = 1.20140904220736;
 
 my $formatters = [{'pattern' => '(\\d{2})(\\d{2})(\\d{2})(\\d{2})'}];
-my $validators = {'special_rate' => '()|()|()','pager' => '','fixed_line' => '(?:2(?:0[023]|1[02357]|[23][045]|4[03-5])|3(?:0[06]|1[069]|[2-4][07]|5[09]|6[08]))\\d{5}','mobile' => '(?:0[1-9]|4[0-24-9]|5[4-9]|6[015-79]|77)\\d{6}','toll_free' => '','geographic' => '(?:2(?:0[023]|1[02357]|[23][045]|4[03-5])|3(?:0[06]|1[069]|[2-4][07]|5[09]|6[08]))\\d{5}','personal_number' => '','voip' => ''};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (22520 => "Plateau",22521 => "Abidjan",22522 => "Cocody",22523 => "Banco",22524 => "Abobo",22530 => "Yamoussoukro",22531 => "Bouak\Ã\©",22532 => "Daloa",22533 => "Man",22534 => "San\ Pedro",22535 => "Abengourou",22536 => "Korhogo",);
+my $validators = {'mobile' => '(?:0[1-9]|4[0-24-9]|5[4-9]|6[015-79]|77)\\d{6}','pager' => '','voip' => '','fixed_line' => '(?:2(?:0[023]|1[02357]|[23][045]|4[03-5])|3(?:0[06]|1[069]|[2-4][07]|5[09]|6[08]))\\d{5}','geographic' => '(?:2(?:0[023]|1[02357]|[23][045]|4[03-5])|3(?:0[06]|1[069]|[2-4][07]|5[09]|6[08]))\\d{5}','personal_number' => '','toll_free' => '','special_rate' => '()|()|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (22520 => "Plateau",22521 => "Abidjan",22522 => "Cocody",22523 => "Banco",22524 => "Abobo",22530 => "Yamoussoukro",22531 => "Bouak\Ã\©",22532 => "Daloa",22533 => "Man",22534 => "San\ Pedro",22535 => "Abengourou",22536 => "Korhogo",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"225$prefix"} if exists($map{"225$prefix"});
       }
@@ -34,6 +34,7 @@ sub new {
   my $class = shift;
   my $number = shift;
   $number =~ s/(^\+225|\D)//g;
+  $number =~ s/(^)//g;
   my $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
   return $self->is_valid() ? $self : undef;
 }

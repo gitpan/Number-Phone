@@ -21,14 +21,15 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20140822223716;
+our $VERSION = 1.20140904220737;
 
 my $formatters = [{'pattern' => '(\\d{2})(\\d{2})(\\d{2})(\\d{2})'}];
-my $validators = {'voip' => '','personal_number' => '','geographic' => '22(?:[3789]0|5[0-5]|6[89])\\d{4}','fixed_line' => '22(?:[3789]0|5[0-5]|6[89])\\d{4}','mobile' => '(?:6[02368]\\d|77\\d|9(?:5[0-4]|9\\d))\\d{5}','toll_free' => '','pager' => '','special_rate' => '()|()|()'};
+my $validators = {'special_rate' => '()|()|()','geographic' => '22(?:[3789]0|5[0-5]|6[89])\\d{4}','toll_free' => '','personal_number' => '','fixed_line' => '22(?:[3789]0|5[0-5]|6[89])\\d{4}','mobile' => '(?:6[02368]\\d|77\\d|9(?:5[0-4]|9\\d))\\d{5}','pager' => '','voip' => ''};
 sub new {
   my $class = shift;
   my $number = shift;
   $number =~ s/(^\+235|\D)//g;
+  $number =~ s/(^)//g;
   my $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
   return $self->is_valid() ? $self : undef;
 }

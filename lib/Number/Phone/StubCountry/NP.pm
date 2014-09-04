@@ -21,14 +21,15 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20140822223716;
+our $VERSION = 1.20140904220737;
 
-my $formatters = [{'pattern' => '(1)(\\d{7})','leading_digits' => '1[2-6]'},{'leading_digits' => '1[01]|[2-8]|9(?:[1-69]|7[15-9])','pattern' => '(\\d{2})(\\d{6})'},{'pattern' => '(9\\d{2})(\\d{7})','leading_digits' => '9(?:7[45]|8)'}];
-my $validators = {'voip' => '','personal_number' => '','geographic' => '(?:1[0124-6]|2[13-79]|3[135-8]|4[146-9]|5[135-7]|6[13-9]|7[15-9]|8[1-46-9]|9[1-79])\\d{6}','toll_free' => '','mobile' => '9(?:7[45]|8[01456])\\d{7}','fixed_line' => '(?:1[0124-6]|2[13-79]|3[135-8]|4[146-9]|5[135-7]|6[13-9]|7[15-9]|8[1-46-9]|9[1-79])\\d{6}','pager' => '','special_rate' => '()|()|()'};
+my $formatters = [{'pattern' => '(1)(\\d{7})','leading_digits' => '1[2-6]'},{'pattern' => '(\\d{2})(\\d{6})','leading_digits' => '1[01]|[2-8]|9(?:[1-69]|7[15-9])'},{'leading_digits' => '9(?:7[45]|8)','pattern' => '(9\\d{2})(\\d{7})'}];
+my $validators = {'toll_free' => '','personal_number' => '','geographic' => '(?:1[0124-6]|2[13-79]|3[135-8]|4[146-9]|5[135-7]|6[13-9]|7[15-9]|8[1-46-9]|9[1-79])\\d{6}','special_rate' => '()|()|()','voip' => '','pager' => '','mobile' => '9(?:7[45]|8[01456])\\d{7}','fixed_line' => '(?:1[0124-6]|2[13-79]|3[135-8]|4[146-9]|5[135-7]|6[13-9]|7[15-9]|8[1-46-9]|9[1-79])\\d{6}'};
 sub new {
   my $class = shift;
   my $number = shift;
   $number =~ s/(^\+977|\D)//g;
+  $number =~ s/(^0)//g;
   my $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
   return $self->is_valid() ? $self : undef;
 }

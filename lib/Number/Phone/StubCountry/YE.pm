@@ -21,14 +21,15 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20140822223716;
+our $VERSION = 1.20140904220737;
 
 my $formatters = [{'leading_digits' => '[1-6]|7[24-68]','pattern' => '([1-7])(\\d{3})(\\d{3,4})'},{'pattern' => '(7\\d{2})(\\d{3})(\\d{3})','leading_digits' => '7[0137]'}];
-my $validators = {'special_rate' => '()|()|()','mobile' => '7[0137]\\d{7}','toll_free' => '','fixed_line' => '(?:1(?:7\\d|[2-68])|2[2-68]|3[2358]|4[2-58]|5[2-6]|6[3-58]|7[24-68])\\d{5}','geographic' => '(?:1(?:7\\d|[2-68])|2[2-68]|3[2358]|4[2-58]|5[2-6]|6[3-58]|7[24-68])\\d{5}','personal_number' => '','voip' => '','pager' => ''};
+my $validators = {'mobile' => '7[0137]\\d{7}','pager' => '','voip' => '','fixed_line' => '(?:1(?:7\\d|[2-68])|2[2-68]|3[2358]|4[2-58]|5[2-6]|6[3-58]|7[24-68])\\d{5}','geographic' => '(?:1(?:7\\d|[2-68])|2[2-68]|3[2358]|4[2-58]|5[2-6]|6[3-58]|7[24-68])\\d{5}','personal_number' => '','toll_free' => '','special_rate' => '()|()|()'};
 sub new {
   my $class = shift;
   my $number = shift;
   $number =~ s/(^\+967|\D)//g;
+  $number =~ s/(^0)//g;
   my $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
   return $self->is_valid() ? $self : undef;
 }

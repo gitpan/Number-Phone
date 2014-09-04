@@ -21,14 +21,15 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20140822223714;
+our $VERSION = 1.20140904220736;
 
 my $formatters = [{'pattern' => '(\\d{2})(\\d{2})(\\d{2})(\\d{2})'}];
-my $validators = {'personal_number' => '','voip' => '','fixed_line' => '2[12]\\d{6}','mobile' => '7[0257]\\d{6}','toll_free' => '','geographic' => '2[12]\\d{6}','pager' => '','special_rate' => '()|(8776\\d{4})|()'};
+my $validators = {'special_rate' => '()|(8776\\d{4})|()','geographic' => '2[12]\\d{6}','personal_number' => '','toll_free' => '','fixed_line' => '2[12]\\d{6}','mobile' => '7[0257]\\d{6}','voip' => '','pager' => ''};
 sub new {
   my $class = shift;
   my $number = shift;
   $number =~ s/(^\+236|\D)//g;
+  $number =~ s/(^)//g;
   my $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
   return $self->is_valid() ? $self : undef;
 }

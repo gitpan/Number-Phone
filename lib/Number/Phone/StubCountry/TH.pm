@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
   
 use strict;
 use warnings;
-our $VERSION = 1.20140822223716;
+our $VERSION = 1.20140904220737;
 
-my $formatters = [{'leading_digits' => '2','pattern' => '(2)(\\d{3})(\\d{4})'},{'pattern' => '([3-9]\\d)(\\d{3})(\\d{3,4})','leading_digits' => '[3-9]'},{'pattern' => '(1[89]00)(\\d{3})(\\d{3})','leading_digits' => '1'}];
-my $validators = {'voip' => '6[08]\\d{7}','personal_number' => '','geographic' => '(?:2\\d|3[2-9]|4[2-5]|5[2-6]|7[3-7])\\d{6}','toll_free' => '1800\\d{6}','mobile' => '[89]\\d{8}','fixed_line' => '(?:2\\d|3[2-9]|4[2-5]|5[2-6]|7[3-7])\\d{6}','pager' => '','special_rate' => '()|(1900\\d{6})|(1\\d{3})'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (662 => "Bangkok\/Nonthaburi\/Pathum\ Thani\/Samut\ Prakan",6632 => "Phetchaburi\/Prachuap\ Khiri\ Khan\/Ratchaburi",6633 => "Chachoengsao\/Chon\ Buri\/Rayong",6634 => "Kanchanaburi\/Nakhon\ Pathom\/Samut\ Sakhon\/Samut\ Songkhram",6635 => "Ang\ Thong\/Phra\ Nakhon\ Si\ Ayutthaya\/Suphan\ Buri",6636 => "Lop\ Buri\/Saraburi\/Sing\ Buri",6637 => "Nakhon\ Nayok\/Prachin\ Buri\/Sa\ Kaeo",6638 => "Chachoengsao\/Chon\ Buri\/Rayong",6639 => "Chanthaburi\/Trat",6642 => "Loei\/Mukdahan\/Nakhon\ Phanom\/Nong\ Khai\/Sakon\ Nakhon\/Udon\ Thani",6643 => "Kalasin\/Khon\ Kaen\/Maha\ Sarakham\/Roi\ Et",6644 => "Buri\ Ram\/Chaiyaphum\/Nakhon\ Ratchasima\/Surin",6645 => "Amnat\ Charoen\/Si\ Sa\ Ket\/Ubon\ Ratchathani\/Yasothon",6652 => "Chiang\ Mai\/Chiang\ Rai\/Lamphun\/Mae\ Hong\ Son",6653 => "Chiang\ Mai\/Chiang\ Rai\/Lamphun\/Mae\ Hong\ Son",6654 => "Lampang\/Nan\/Phayao\/Phrae",6655 => "Kamphaeng\ Phet\/Phitsanulok\/Sukhothai\/Tak\/Uttaradit",6656 => "Chai\ Nat\/Nakhon\ Sawan\/Phetchabun\/Phichit\/Uthai\ Thani",6673 => "Narathiwat\/Pattani\/Yala",6674 => "Phatthalung\/Satun\/Songkhla",6675 => "Krabi\/Nakhon\ Si\ Thammarat\/Trang",6676 => "Phang\ Nga\/Phuket",6677 => "Chumphon\/Ranong\/Surat\ Thani",);
+my $formatters = [{'pattern' => '(2)(\\d{3})(\\d{4})','leading_digits' => '2'},{'pattern' => '([3-9]\\d)(\\d{3})(\\d{3,4})','leading_digits' => '[3-9]'},{'leading_digits' => '1','pattern' => '(1[89]00)(\\d{3})(\\d{3})'}];
+my $validators = {'special_rate' => '()|(1900\\d{6})|(1\\d{3})','personal_number' => '','toll_free' => '1800\\d{6}','geographic' => '(?:2\\d|3[2-9]|4[2-5]|5[2-6]|7[3-7])\\d{6}','fixed_line' => '(?:2\\d|3[2-9]|4[2-5]|5[2-6]|7[3-7])\\d{6}','voip' => '6[08]\\d{7}','pager' => '','mobile' => '[89]\\d{8}'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (662 => "Bangkok\/Nonthaburi\/Pathum\ Thani\/Samut\ Prakan",6632 => "Phetchaburi\/Prachuap\ Khiri\ Khan\/Ratchaburi",6633 => "Chachoengsao\/Chon\ Buri\/Rayong",6634 => "Kanchanaburi\/Nakhon\ Pathom\/Samut\ Sakhon\/Samut\ Songkhram",6635 => "Ang\ Thong\/Phra\ Nakhon\ Si\ Ayutthaya\/Suphan\ Buri",6636 => "Lop\ Buri\/Saraburi\/Sing\ Buri",6637 => "Nakhon\ Nayok\/Prachin\ Buri\/Sa\ Kaeo",6638 => "Chachoengsao\/Chon\ Buri\/Rayong",6639 => "Chanthaburi\/Trat",6642 => "Loei\/Mukdahan\/Nakhon\ Phanom\/Nong\ Khai\/Sakon\ Nakhon\/Udon\ Thani",6643 => "Kalasin\/Khon\ Kaen\/Maha\ Sarakham\/Roi\ Et",6644 => "Buri\ Ram\/Chaiyaphum\/Nakhon\ Ratchasima\/Surin",6645 => "Amnat\ Charoen\/Si\ Sa\ Ket\/Ubon\ Ratchathani\/Yasothon",6652 => "Chiang\ Mai\/Chiang\ Rai\/Lamphun\/Mae\ Hong\ Son",6653 => "Chiang\ Mai\/Chiang\ Rai\/Lamphun\/Mae\ Hong\ Son",6654 => "Lampang\/Nan\/Phayao\/Phrae",6655 => "Kamphaeng\ Phet\/Phitsanulok\/Sukhothai\/Tak\/Uttaradit",6656 => "Chai\ Nat\/Nakhon\ Sawan\/Phetchabun\/Phichit\/Uthai\ Thani",6673 => "Narathiwat\/Pattani\/Yala",6674 => "Phatthalung\/Satun\/Songkhla",6675 => "Krabi\/Nakhon\ Si\ Thammarat\/Trang",6676 => "Phang\ Nga\/Phuket",6677 => "Chumphon\/Ranong\/Surat\ Thani",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"66$prefix"} if exists($map{"66$prefix"});
       }
@@ -34,6 +34,7 @@ sub new {
   my $class = shift;
   my $number = shift;
   $number =~ s/(^\+66|\D)//g;
+  $number =~ s/(^0)//g;
   my $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
   return $self->is_valid() ? $self : undef;
 }
