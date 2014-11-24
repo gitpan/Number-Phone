@@ -8,9 +8,9 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,19 +18,21 @@
 # limitations under the License.
 package Number::Phone::StubCountry::GU;
 use base qw(Number::Phone::StubCountry);
-  
+
 use strict;
 use warnings;
-our $VERSION = 1.20140904220737;
+our $VERSION = 1.20141124170812;
 
 my $formatters = [{'pattern' => '(\\d{3})(\\d{4})'},{'pattern' => '(\\d{3})(\\d{3})(\\d{4})'}];
-my $validators = {'pager' => '','voip' => '','special_rate' => '()|(900[2-9]\\d{6})|()','geographic' => '(671(?:3(?:00|3[39]|4[349]|55|6[26])|4(?:56|7[1-9]|8[236-9])|5(?:55|6[2-5]|88)|6(?:3[2-578]|4[24-9]|5[34]|78|8[5-9])|7(?:[079]7|2[0167]|3[45]|8[789])|8(?:[2-5789]8|6[48])|9(?:2[29]|6[79]|7[179]|8[789]|9[78]))\\d{4}|671(?:3(?:00|3[39]|4[349]|55|6[26])|4(?:56|7[1-9]|8[236-9])|5(?:55|6[2-5]|88)|6(?:3[2-578]|4[24-9]|5[34]|78|8[5-9])|7(?:[079]7|2[0167]|3[45]|8[789])|8(?:[2-5789]8|6[48])|9(?:2[29]|6[79]|7[179]|8[789]|9[78]))\\d{4})','toll_free' => '8(?:00|44|55|66|77|88)[2-9]\\d{6}','personal_number' => '5(?:00|33|44|66|77)[2-9]\\d{6}'};use Number::Phone::NANP::Data;sub areaname { Number::Phone::NANP::Data::areaname("1".shift()->{number}); }
+my $validators = {'toll_free' => '8(?:00|44|55|66|77|88)[2-9]\\d{6}','voip' => '','special_rate' => '()|(900[2-9]\\d{6})|()','personal_number' => '5(?:00|33|44|66|77)[2-9]\\d{6}','pager' => '','geographic' => '(671(?:3(?:00|3[39]|4[349]|55|6[26])|4(?:56|7[1-9]|8[236-9])|5(?:55|6[2-5]|88)|6(?:3[2-578]|4[24-9]|5[34]|78|8[5-9])|7(?:[079]7|2[0167]|3[45]|8[789])|8(?:[2-5789]8|6[48])|9(?:2[29]|6[79]|7[179]|8[789]|9[78]))\\d{4}|671(?:3(?:00|3[39]|4[349]|55|6[26])|4(?:56|7[1-9]|8[236-9])|5(?:55|6[2-5]|88)|6(?:3[2-578]|4[24-9]|5[34]|78|8[5-9])|7(?:[079]7|2[0167]|3[45]|8[789])|8(?:[2-5789]8|6[48])|9(?:2[29]|6[79]|7[179]|8[789]|9[78]))\\d{4})'};use Number::Phone::NANP::Data;sub areaname { Number::Phone::NANP::Data::areaname("1".shift()->{number}); }
 sub new {
   my $class = shift;
   my $number = shift;
   $number =~ s/(^\+1|\D)//g;
-  $number =~ s/(^1)//g;
   my $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
+  return $self if ($self->is_valid());
+  $number =~ s/(^1)//g;
+  $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
   return $self->is_valid() ? $self : undef;
 }
 

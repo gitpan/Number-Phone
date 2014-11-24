@@ -8,9 +8,9 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,13 +18,13 @@
 # limitations under the License.
 package Number::Phone::StubCountry::TN;
 use base qw(Number::Phone::StubCountry);
-  
+
 use strict;
 use warnings;
-our $VERSION = 1.20140904220737;
+our $VERSION = 1.20141124170813;
 
 my $formatters = [{'pattern' => '(\\d{2})(\\d{3})(\\d{3})'}];
-my $validators = {'geographic' => '3[012]\\d{6}|7\\d{7}|81200\\d{3}','personal_number' => '','toll_free' => '8010\\d{4}','special_rate' => '(8[12]10\\d{4})|(88\\d{6})|()','mobile' => '(?:[259]\\d|4[0-2])\\d{6}','voip' => '','pager' => '','fixed_line' => '3[012]\\d{6}|7\\d{7}|81200\\d{3}'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (21670 => "Ben\ Arous",21671 => "Ariana\/Ben\ Arous\/Carthage\/Tunis",21672 => "Bizerte\/Nabeul\/Zaghouan",21673 => "Chebba\/Hamman\-Sousse\/Khenis\/Mahdia\/Monastir\/Sousse",21674 => "Agareb\/Sfax",21675 => "Gabes\/Kebili\/Medenine\/Tataouine",21676 => "Gafsa\/Sidi\ Bouzid\/Tozeur",21677 => "Haffouz\/Kairouan\/Kasserine",21678 => "Beja\/Jendouba\/Kef\/La\ Kef\/Siliana\/Tabarka",);
+my $validators = {'toll_free' => '8010\\d{4}','mobile' => '(?:[259]\\d|4[0-24])\\d{6}','voip' => '','fixed_line' => '3[012]\\d{6}|7\\d{7}|81200\\d{3}','special_rate' => '(8[12]10\\d{4})|(88\\d{6})|()','personal_number' => '','pager' => '','geographic' => '3[012]\\d{6}|7\\d{7}|81200\\d{3}'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (21670 => "Ben\ Arous",21671 => "Ariana\/Ben\ Arous\/Carthage\/Tunis",21672 => "Bizerte\/Nabeul\/Zaghouan",21673 => "Chebba\/Hamman\-Sousse\/Khenis\/Mahdia\/Monastir\/Sousse",21674 => "Agareb\/Sfax",21675 => "Gabes\/Kebili\/Medenine\/Tataouine",21676 => "Gafsa\/Sidi\ Bouzid\/Tozeur",21677 => "Haffouz\/Kairouan\/Kasserine",21678 => "Beja\/Jendouba\/Kef\/La\ Kef\/Siliana\/Tabarka",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"216$prefix"} if exists($map{"216$prefix"});
       }
@@ -34,9 +34,8 @@ sub new {
   my $class = shift;
   my $number = shift;
   $number =~ s/(^\+216|\D)//g;
-  $number =~ s/(^)//g;
   my $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
-  return $self->is_valid() ? $self : undef;
+  return $self if ($self->is_valid());
 }
 
 1;

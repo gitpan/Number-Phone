@@ -8,9 +8,9 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,19 +18,21 @@
 # limitations under the License.
 package Number::Phone::StubCountry::YT;
 use base qw(Number::Phone::StubCountry);
-  
+
 use strict;
 use warnings;
-our $VERSION = 1.20140904220737;
+our $VERSION = 1.20141124170813;
 
 my $formatters = [];
-my $validators = {'geographic' => '2696[0-4]\\d{4}','toll_free' => '80\\d{7}','personal_number' => '','special_rate' => '()|()|()','mobile' => '639\\d{6}','voip' => '','pager' => '','fixed_line' => '2696[0-4]\\d{4}'};
+my $validators = {'toll_free' => '80\\d{7}','mobile' => '639\\d{6}','voip' => '','fixed_line' => '2696[0-4]\\d{4}','special_rate' => '()|()|()','personal_number' => '','pager' => '','geographic' => '2696[0-4]\\d{4}'};
 sub new {
   my $class = shift;
   my $number = shift;
   $number =~ s/(^\+262|\D)//g;
-  $number =~ s/(^0)//g;
   my $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
+  return $self if ($self->is_valid());
+  $number =~ s/(^0)//g;
+  $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
   return $self->is_valid() ? $self : undef;
 }
 

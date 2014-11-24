@@ -7,7 +7,7 @@ use Scalar::Util 'blessed';
 use Number::Phone::Country qw(noexport uk);
 use Number::Phone::StubCountry;
 
-our $VERSION = '3.0003';
+our $VERSION = '3.0004';
 
 my $NOSTUBS = 0;
 sub import {
@@ -151,7 +151,7 @@ Number::Phone::Country, the constructor will return undef.
 =head1 COMPATIBILTY WITH libphonenumber
 
 libphonenumber is a similar project for other languages, maintained
-by Google. 
+by Google.
 
 If you pass in a country code for which
 no supporting module is available, the constructor will try to use a 'stub'
@@ -597,7 +597,12 @@ going like Number::Phone::NANP::XX.
 
 Please report bugs by at L<https://github.com/DrHyde/perl-modules-Number-Phone/issues>, including, if possible, a test case.
 
-I welcome feedback from users.
+=head1 MAILING LIST
+
+There is a mailing list for discussion and help. Please subscribe at
+L<http://lists.scsys.co.uk/cgi-bin/mailman/listinfo/number-phone>.
+
+Kindly hosted by L<Shadowcat|http://scsys.co.uk>.
 
 =head1 SEE ALSO
 

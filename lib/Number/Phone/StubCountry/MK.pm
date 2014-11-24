@@ -8,9 +8,9 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,13 +18,13 @@
 # limitations under the License.
 package Number::Phone::StubCountry::MK;
 use base qw(Number::Phone::StubCountry);
-  
+
 use strict;
 use warnings;
-our $VERSION = 1.20140904220737;
+our $VERSION = 1.20141124170812;
 
 my $formatters = [{'pattern' => '(2)(\\d{3})(\\d{4})','leading_digits' => '2'},{'pattern' => '([347]\\d)(\\d{3})(\\d{3})','leading_digits' => '[347]'},{'pattern' => '([58]\\d{2})(\\d)(\\d{2})(\\d{2})','leading_digits' => '[58]'}];
-my $validators = {'fixed_line' => '(?:2(?:[23]\\d|5[124578]|6[01])|3(?:1[3-6]|[23][2-6]|4[2356])|4(?:[23][2-6]|4[3-6]|5[256]|6[25-8]|7[24-6]|8[4-6]))\\d{5}','voip' => '','pager' => '','mobile' => '7(?:[0-25-8]\\d{2}|32\\d|421)\\d{4}','special_rate' => '(8(?:0[1-9]|[1-9]\\d)\\d{5})|(5[02-9]\\d{6})|()','personal_number' => '','toll_free' => '800\\d{5}','geographic' => '(?:2(?:[23]\\d|5[124578]|6[01])|3(?:1[3-6]|[23][2-6]|4[2356])|4(?:[23][2-6]|4[3-6]|5[256]|6[25-8]|7[24-6]|8[4-6]))\\d{5}'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (3892 => "Skopje",38931 => "Kumanovo\/Kriva\ Palanka\/Kratovo",38932 => "Stip\/Probistip\/Sveti\ Nikole\/Radovis",38933 => "Kocani\/Berovo\/Delcevo\/Vinica",38934 => "Gevgelija\/Valandovo\/Strumica\/Dojran",38942 => "Gostivar",38943 => "Veles\/Kavadarci\/Negotino",38944 => "Tetovo",38945 => "Kicevo\/Makedonski\ Brod",38946 => "Ohrid\/Struga\/Debar",38947 => "Bitola\/Demir\ Hisar\/Resen",38948 => "Prilep\/Krusevo",);
+my $validators = {'toll_free' => '800\\d{5}','mobile' => '7(?:[0-25-8]\\d{2}|32\\d|421)\\d{4}','voip' => '','fixed_line' => '(?:2(?:[23]\\d|5[124578]|6[01])|3(?:1[3-6]|[23][2-6]|4[2356])|4(?:[23][2-6]|4[3-6]|5[256]|6[25-8]|7[24-6]|8[4-6]))\\d{5}','special_rate' => '(8(?:0[1-9]|[1-9]\\d)\\d{5})|(5[02-9]\\d{6})|()','personal_number' => '','pager' => '','geographic' => '(?:2(?:[23]\\d|5[124578]|6[01])|3(?:1[3-6]|[23][2-6]|4[2356])|4(?:[23][2-6]|4[3-6]|5[256]|6[25-8]|7[24-6]|8[4-6]))\\d{5}'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (3892 => "Skopje",38931 => "Kumanovo\/Kriva\ Palanka\/Kratovo",38932 => "Stip\/Probistip\/Sveti\ Nikole\/Radovis",38933 => "Kocani\/Berovo\/Delcevo\/Vinica",38934 => "Gevgelija\/Valandovo\/Strumica\/Dojran",38942 => "Gostivar",38943 => "Veles\/Kavadarci\/Negotino",38944 => "Tetovo",38945 => "Kicevo\/Makedonski\ Brod",38946 => "Ohrid\/Struga\/Debar",38947 => "Bitola\/Demir\ Hisar\/Resen",38948 => "Prilep\/Krusevo",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"389$prefix"} if exists($map{"389$prefix"});
       }
@@ -34,8 +34,10 @@ sub new {
   my $class = shift;
   my $number = shift;
   $number =~ s/(^\+389|\D)//g;
-  $number =~ s/(^0)//g;
   my $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
+  return $self if ($self->is_valid());
+  $number =~ s/(^0)//g;
+  $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
   return $self->is_valid() ? $self : undef;
 }
 

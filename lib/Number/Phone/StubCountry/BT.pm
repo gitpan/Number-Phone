@@ -8,9 +8,9 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,20 +18,19 @@
 # limitations under the License.
 package Number::Phone::StubCountry::BT;
 use base qw(Number::Phone::StubCountry);
-  
+
 use strict;
 use warnings;
-our $VERSION = 1.20140904220736;
+our $VERSION = 1.20141124170811;
 
 my $formatters = [{'pattern' => '([17]7)(\\d{2})(\\d{2})(\\d{2})','leading_digits' => '1|77'},{'pattern' => '([2-8])(\\d{3})(\\d{3})','leading_digits' => '[2-68]|7[246]'}];
-my $validators = {'special_rate' => '()|()|()','geographic' => '(?:2[3-6]|[34][5-7]|5[236]|6[2-46]|7[246]|8[2-4])\\d{5}','personal_number' => '','toll_free' => '','fixed_line' => '(?:2[3-6]|[34][5-7]|5[236]|6[2-46]|7[246]|8[2-4])\\d{5}','mobile' => '[17]7\\d{6}','voip' => '','pager' => ''};
+my $validators = {'toll_free' => '','mobile' => '[17]7\\d{6}','voip' => '','fixed_line' => '(?:2[3-6]|[34][5-7]|5[236]|6[2-46]|7[246]|8[2-4])\\d{5}','special_rate' => '()|()|()','personal_number' => '','pager' => '','geographic' => '(?:2[3-6]|[34][5-7]|5[236]|6[2-46]|7[246]|8[2-4])\\d{5}'};
 sub new {
   my $class = shift;
   my $number = shift;
   $number =~ s/(^\+975|\D)//g;
-  $number =~ s/(^)//g;
   my $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
-  return $self->is_valid() ? $self : undef;
+  return $self if ($self->is_valid());
 }
 
 1;
