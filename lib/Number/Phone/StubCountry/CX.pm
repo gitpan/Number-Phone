@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
 
 use strict;
 use warnings;
-our $VERSION = 1.20141124170812;
+our $VERSION = 1.20141125232349;
 
 my $formatters = [];
-my $validators = {'toll_free' => '1(?:80(?:0\\d{2})?|3(?:00\\d{2})?)\\d{4}','mobile' => '14(?:5\\d|71)\\d{5}|4(?:[0-2]\\d|3[0-57-9]|4[47-9]|5[0-25-9]|6[6-9]|7[03-9]|8[17-9]|9[017-9])\\d{6}','voip' => '550\\d{6}','fixed_line' => '89164\\d{4}','special_rate' => '()|(190[0126]\\d{6})|()','personal_number' => '500\\d{6}','pager' => '','geographic' => '89164\\d{4}'};
+my $validators = {'toll_free' => '1(?:80(?:0\\d{2})?|3(?:00\\d{2})?)\\d{4}','pager' => '','geographic' => '89164\\d{4}','voip' => '550\\d{6}','personal_number' => '500\\d{6}','mobile' => '14(?:5\\d|71)\\d{5}|4(?:[0-2]\\d|3[0-57-9]|4[47-9]|5[0-25-9]|6[6-9]|7[03-9]|8[17-9]|9[017-9])\\d{6}','special_rate' => '()|(190[0126]\\d{6})|()','fixed_line' => '89164\\d{4}'};
 sub new {
   my $class = shift;
   my $number = shift;

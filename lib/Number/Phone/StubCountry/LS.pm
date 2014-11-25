@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
 
 use strict;
 use warnings;
-our $VERSION = 1.20141124170812;
+our $VERSION = 1.20141125232349;
 
 my $formatters = [{'pattern' => '(\\d{4})(\\d{4})'}];
-my $validators = {'toll_free' => '800[256]\\d{4}','mobile' => '[56]\\d{7}','voip' => '','fixed_line' => '2\\d{7}','special_rate' => '()|()|()','personal_number' => '','pager' => '','geographic' => '2\\d{7}'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (26622 => "Maseru",);
+my $validators = {'toll_free' => '800[256]\\d{4}','pager' => '','geographic' => '2\\d{7}','fixed_line' => '2\\d{7}','mobile' => '[56]\\d{7}','personal_number' => '','special_rate' => '()|()|()','voip' => ''};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (26622 => "Maseru",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"266$prefix"} if exists($map{"266$prefix"});
       }
@@ -35,7 +35,7 @@ sub new {
   my $number = shift;
   $number =~ s/(^\+266|\D)//g;
   my $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
-  return $self if ($self->is_valid());
+  return $self->is_valid() ? $self : undef;
 }
 
 1;

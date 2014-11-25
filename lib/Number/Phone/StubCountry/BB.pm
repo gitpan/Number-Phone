@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
 
 use strict;
 use warnings;
-our $VERSION = 1.20141124170811;
+our $VERSION = 1.20141125232348;
 
 my $formatters = [{'pattern' => '(\\d{3})(\\d{4})'},{'pattern' => '(\\d{3})(\\d{3})(\\d{4})'}];
-my $validators = {'toll_free' => '8(?:00|44|55|66|77|88)[2-9]\\d{6}','voip' => '','special_rate' => '()|(900[2-9]\\d{6})|()','personal_number' => '5(?:00|33|44|66|77)[2-9]\\d{6}','pager' => '','geographic' => '(246[2-9]\\d{6}|246(?:(?:2[346]|45|82)\\d|25[0-4])\\d{4})'};use Number::Phone::NANP::Data;sub areaname { Number::Phone::NANP::Data::areaname("1".shift()->{number}); }
+my $validators = {'toll_free' => '8(?:00|44|55|66|77|88)[2-9]\\d{6}','pager' => '','geographic' => '(246[2-9]\\d{6}|246(?:(?:2[346]|45|82)\\d|25[0-4])\\d{4})','special_rate' => '()|(900[2-9]\\d{6})|()','personal_number' => '5(?:00|33|44|66|77)[2-9]\\d{6}','voip' => ''};use Number::Phone::NANP::Data;sub areaname { Number::Phone::NANP::Data::areaname("1".shift()->{number}); }
 sub new {
   my $class = shift;
   my $number = shift;

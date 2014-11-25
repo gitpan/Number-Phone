@@ -21,16 +21,16 @@ use base qw(Number::Phone::StubCountry);
 
 use strict;
 use warnings;
-our $VERSION = 1.20141124170813;
+our $VERSION = 1.20141125232349;
 
 my $formatters = [{'pattern' => '(\\d{3})(\\d{3})','leading_digits' => '[2-4]|5[2-58]'},{'pattern' => '(\\d{2})(\\d{2})(\\d{2})','leading_digits' => '56'},{'pattern' => '(\\d{3})(\\d{4})','leading_digits' => '59|[6-8]'}];
-my $validators = {'toll_free' => '','mobile' => '(?:7[124-7]|8[1-9])\\d{5}','voip' => '5(?:6\\d{4}|90[0-4]\\d{3})','fixed_line' => '(?:2[1-3]|3[0-7]|4\\d|5[2-58]|68\\d)\\d{4}','special_rate' => '()|()|()','personal_number' => '','pager' => '','geographic' => '(?:2[1-3]|3[0-7]|4\\d|5[2-58]|68\\d)\\d{4}'};
+my $validators = {'pager' => '','toll_free' => '','geographic' => '(?:2[1-3]|3[0-7]|4\\d|5[2-58]|68\\d)\\d{4}','voip' => '5(?:6\\d{4}|90[0-4]\\d{3})','fixed_line' => '(?:2[1-3]|3[0-7]|4\\d|5[2-58]|68\\d)\\d{4}','mobile' => '(?:7[124-7]|8[1-9])\\d{5}','personal_number' => '','special_rate' => '()|()|()'};
 sub new {
   my $class = shift;
   my $number = shift;
   $number =~ s/(^\+597|\D)//g;
   my $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
-  return $self if ($self->is_valid());
+  return $self->is_valid() ? $self : undef;
 }
 
 1;

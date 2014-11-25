@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
 
 use strict;
 use warnings;
-our $VERSION = 1.20141124170812;
+our $VERSION = 1.20141125232349;
 
-my $formatters = [{'pattern' => '(\\d{3})(\\d{4})','leading_digits' => '[4-9]'},{'pattern' => '(3\\d{2})(\\d{3})(\\d{3})','leading_digits' => '3'}];
-my $validators = {'toll_free' => '800\\d{4}','mobile' => '38[589]\\d{6}|(?:6(?:1[1-8]|3[089]|4[0167]|5[019]|[67][0-69]|9\\d)|7(?:5[057]|7\\d|8[0-36-8])|8(?:2[0-5]|3[0-4]|[469]\\d|5[1-9]))\\d{4}','voip' => '49\\d{5}','fixed_line' => '(?:4(?:1[0-24-6]|2[0-7]|[37][0-8]|4[0-245]|5[0-3568]|6\\d|8[0-36-8])|5(?:05|[156]\\d|2[02578]|3[013-7]|4[03-7]|7[0-2578]|8[0-35-9]|9[013-689])|87[23])\\d{4}','special_rate' => '()|(90\\d{5})|()','personal_number' => '','pager' => '','geographic' => '(?:4(?:1[0-24-6]|2[0-7]|[37][0-8]|4[0-245]|5[0-3568]|6\\d|8[0-36-8])|5(?:05|[156]\\d|2[02578]|3[013-7]|4[03-7]|7[0-2578]|8[0-35-9]|9[013-689])|87[23])\\d{4}'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (354421 => "Keflav\Ã\­k",354462 => "Akureyri",354551 => "Reykjav\Ã\­k\/Vesturb\Ã\¦r\/Mi\Ã\°b\Ã\¦rinn",354552 => "Reykjav\Ã\­k\/Vesturb\Ã\¦r\/Mi\Ã\°b\Ã\¦rinn",354561 => "Reykjav\Ã\­k\/Vesturb\Ã\¦r\/Mi\Ã\°b\Ã\¦rinn",354562 => "Reykjav\Ã\­k\/Vesturb\Ã\¦r\/Mi\Ã\°b\Ã\¦rinn",);
+my $formatters = [{'pattern' => '(\\d{3})(\\d{4})','leading_digits' => '[4-9]'},{'leading_digits' => '3','pattern' => '(3\\d{2})(\\d{3})(\\d{3})'}];
+my $validators = {'voip' => '49\\d{5}','personal_number' => '','special_rate' => '()|(90\\d{5})|()','mobile' => '38[589]\\d{6}|(?:6(?:1[1-8]|3[089]|4[0167]|5[019]|[67][0-69]|9\\d)|7(?:5[057]|7\\d|8[0-36-8])|8(?:2[0-5]|3[0-4]|[469]\\d|5[1-9]))\\d{4}','fixed_line' => '(?:4(?:1[0-24-6]|2[0-7]|[37][0-8]|4[0-245]|5[0-3568]|6\\d|8[0-36-8])|5(?:05|[156]\\d|2[02578]|3[013-7]|4[03-7]|7[0-2578]|8[0-35-9]|9[013-689])|87[23])\\d{4}','geographic' => '(?:4(?:1[0-24-6]|2[0-7]|[37][0-8]|4[0-245]|5[0-3568]|6\\d|8[0-36-8])|5(?:05|[156]\\d|2[02578]|3[013-7]|4[03-7]|7[0-2578]|8[0-35-9]|9[013-689])|87[23])\\d{4}','toll_free' => '800\\d{4}','pager' => ''};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (354421 => "Keflav\Ã\­k",354462 => "Akureyri",354551 => "Reykjav\Ã\­k\/Vesturb\Ã\¦r\/Mi\Ã\°b\Ã\¦rinn",354552 => "Reykjav\Ã\­k\/Vesturb\Ã\¦r\/Mi\Ã\°b\Ã\¦rinn",354561 => "Reykjav\Ã\­k\/Vesturb\Ã\¦r\/Mi\Ã\°b\Ã\¦rinn",354562 => "Reykjav\Ã\­k\/Vesturb\Ã\¦r\/Mi\Ã\°b\Ã\¦rinn",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"354$prefix"} if exists($map{"354$prefix"});
       }
@@ -35,7 +35,7 @@ sub new {
   my $number = shift;
   $number =~ s/(^\+354|\D)//g;
   my $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
-  return $self if ($self->is_valid());
+  return $self->is_valid() ? $self : undef;
 }
 
 1;

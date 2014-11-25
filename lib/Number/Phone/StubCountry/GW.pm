@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
 
 use strict;
 use warnings;
-our $VERSION = 1.20141124170812;
+our $VERSION = 1.20141125232349;
 
 my $formatters = [{'pattern' => '(\\d{3})(\\d{4})'}];
-my $validators = {'toll_free' => '','mobile' => '(?:[5-7]\\d|9[012])\\d{5}','voip' => '40\\d{5}','fixed_line' => '3(?:2[0125]|3[1245]|4[12]|5[1-4]|70|9[1-467])\\d{4}','special_rate' => '()|()|()','personal_number' => '','pager' => '','geographic' => '3(?:2[0125]|3[1245]|4[12]|5[1-4]|70|9[1-467])\\d{4}'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (245320 => "Bissau",245321 => "Bissau",245322 => "St\.\ Luzia",245325 => "Br\Ã\¡",245331 => "Mans\Ã\´a",245332 => "Bigene\/Bissora",245334 => "Mansaba",245335 => "Farim",245341 => "Bafat\Ã\¡",245342 => "Bambadinca",245351 => "Gabu",245352 => "Sonaco",245353 => "Pirada",245354 => "Pitche",245370 => "Buba",245391 => "Canchungo",245392 => "Cacheu",245393 => "S\.\ Domingos",245394 => "Bula",245396 => "Ingor\Ã\©",);
+my $validators = {'geographic' => '3(?:2[0125]|3[1245]|4[12]|5[1-4]|70|9[1-467])\\d{4}','toll_free' => '','pager' => '','voip' => '40\\d{5}','fixed_line' => '3(?:2[0125]|3[1245]|4[12]|5[1-4]|70|9[1-467])\\d{4}','mobile' => '(?:[5-7]\\d|9[012])\\d{5}','personal_number' => '','special_rate' => '()|()|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (245320 => "Bissau",245321 => "Bissau",245322 => "St\.\ Luzia",245325 => "Br\Ã\¡",245331 => "Mans\Ã\´a",245332 => "Bigene\/Bissora",245334 => "Mansaba",245335 => "Farim",245341 => "Bafat\Ã\¡",245342 => "Bambadinca",245351 => "Gabu",245352 => "Sonaco",245353 => "Pirada",245354 => "Pitche",245370 => "Buba",245391 => "Canchungo",245392 => "Cacheu",245393 => "S\.\ Domingos",245394 => "Bula",245396 => "Ingor\Ã\©",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"245$prefix"} if exists($map{"245$prefix"});
       }
@@ -35,7 +35,7 @@ sub new {
   my $number = shift;
   $number =~ s/(^\+245|\D)//g;
   my $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
-  return $self if ($self->is_valid());
+  return $self->is_valid() ? $self : undef;
 }
 
 1;

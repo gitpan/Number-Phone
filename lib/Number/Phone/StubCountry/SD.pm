@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
 
 use strict;
 use warnings;
-our $VERSION = 1.20141124170813;
+our $VERSION = 1.20141125232349;
 
 my $formatters = [{'pattern' => '(\\d{2})(\\d{3})(\\d{4})'}];
-my $validators = {'toll_free' => '','mobile' => '9[012569]\\d{7}','voip' => '','fixed_line' => '1(?:[125]\\d|8[3567])\\d{6}','special_rate' => '()|()|()','personal_number' => '','pager' => '','geographic' => '1(?:[125]\\d|8[3567])\\d{6}'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (24911 => "Omdurman",24921 => "Atbara",249183 => "Khartoum",24931 => "Port\ Sudan",24941 => "Kassala",249441 => "Jedaraf",24951 => "Wadmedai",24961 => "Sennar",249616 => "Shetnzi",24971 => "Kosti",24981 => "Al\-Ubayyid",);
+my $validators = {'pager' => '','toll_free' => '','geographic' => '1(?:[125]\\d|8[3567])\\d{6}','voip' => '','fixed_line' => '1(?:[125]\\d|8[3567])\\d{6}','personal_number' => '','mobile' => '9[012569]\\d{7}','special_rate' => '()|()|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (24911 => "Omdurman",24921 => "Atbara",249183 => "Khartoum",24931 => "Port\ Sudan",24941 => "Kassala",249441 => "Jedaraf",24951 => "Wadmedai",24961 => "Sennar",249616 => "Shetnzi",24971 => "Kosti",24981 => "Al\-Ubayyid",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"249$prefix"} if exists($map{"249$prefix"});
       }

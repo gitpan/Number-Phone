@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
 
 use strict;
 use warnings;
-our $VERSION = 1.20141124170811;
+our $VERSION = 1.20141125232348;
 
 my $formatters = [];
-my $validators = {'toll_free' => '','mobile' => '5\\d{5}','voip' => '','fixed_line' => '(?:[267]\\d|3[0-5]|4[4-69])\\d{2}','special_rate' => '()|()|()','personal_number' => '','pager' => '','geographic' => '(?:[267]\\d|3[0-5]|4[4-69])\\d{2}'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2471 => "Georgetown",2472 => "U\.S\.\ Base",2473 => "Travellers\ Hill",2474 => "Two\ Boats",2475 => "Georgetown",2476 => "Georgetown",2477 => "Georgetown",2478 => "Georgetown",2479 => "Georgetown",);
+my $validators = {'geographic' => '(?:[267]\\d|3[0-5]|4[4-69])\\d{2}','pager' => '','toll_free' => '','voip' => '','fixed_line' => '(?:[267]\\d|3[0-5]|4[4-69])\\d{2}','special_rate' => '()|()|()','personal_number' => '','mobile' => '5\\d{5}'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2471 => "Georgetown",2472 => "U\.S\.\ Base",2473 => "Travellers\ Hill",2474 => "Two\ Boats",2475 => "Georgetown",2476 => "Georgetown",2477 => "Georgetown",2478 => "Georgetown",2479 => "Georgetown",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"247$prefix"} if exists($map{"247$prefix"});
       }
@@ -35,7 +35,7 @@ sub new {
   my $number = shift;
   $number =~ s/(^\+247|\D)//g;
   my $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
-  return $self if ($self->is_valid());
+  return $self->is_valid() ? $self : undef;
 }
 
 1;

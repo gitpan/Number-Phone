@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
 
 use strict;
 use warnings;
-our $VERSION = 1.20141124170811;
+our $VERSION = 1.20141125232348;
 
-my $formatters = [{'pattern' => '([2378])(\\d{4})(\\d{4})','leading_digits' => '[2378]'},{'pattern' => '(\\d{3})(\\d{3})(\\d{3})','leading_digits' => '[45]|14'},{'pattern' => '(16)(\\d{3})(\\d{2,4})','leading_digits' => '16'},{'pattern' => '(1[389]\\d{2})(\\d{3})(\\d{3})','leading_digits' => '1(?:[38]00|90)'},{'pattern' => '(180)(2\\d{3})','leading_digits' => '1802'},{'pattern' => '(19\\d)(\\d{3})','leading_digits' => '19[13]'},{'pattern' => '(19\\d{2})(\\d{4})','leading_digits' => '19[67]'},{'pattern' => '(13)(\\d{2})(\\d{2})','leading_digits' => '13[1-9]'}];
-my $validators = {'toll_free' => '180(?:0\\d{3}|2)\\d{3}','mobile' => '14(?:5\\d|71)\\d{5}|4(?:[0-2]\\d|3[0-57-9]|4[47-9]|5[0-25-9]|6[6-9]|7[03-9]|8[17-9]|9[017-9])\\d{6}','voip' => '550\\d{6}','fixed_line' => '[237]\\d{8}|8(?:[68]\\d{3}|7[0-69]\\d{2}|9(?:[02-9]\\d{2}|1(?:[0-57-9]\\d|6[0135-9])))\\d{4}','special_rate' => '(13(?:00\\d{2})?\\d{4})|(190[0126]\\d{6})|()','personal_number' => '500\\d{6}','pager' => '16\\d{3,7}','geographic' => '[237]\\d{8}|8(?:[68]\\d{3}|7[0-69]\\d{2}|9(?:[02-9]\\d{2}|1(?:[0-57-9]\\d|6[0135-9])))\\d{4}'};
+my $formatters = [{'leading_digits' => '[2378]','pattern' => '([2378])(\\d{4})(\\d{4})'},{'leading_digits' => '[45]|14','pattern' => '(\\d{3})(\\d{3})(\\d{3})'},{'leading_digits' => '16','pattern' => '(16)(\\d{3})(\\d{2,4})'},{'pattern' => '(1[389]\\d{2})(\\d{3})(\\d{3})','leading_digits' => '1(?:[38]00|90)'},{'pattern' => '(180)(2\\d{3})','leading_digits' => '1802'},{'leading_digits' => '19[13]','pattern' => '(19\\d)(\\d{3})'},{'leading_digits' => '19[67]','pattern' => '(19\\d{2})(\\d{4})'},{'pattern' => '(13)(\\d{2})(\\d{2})','leading_digits' => '13[1-9]'}];
+my $validators = {'pager' => '16\\d{3,7}','toll_free' => '180(?:0\\d{3}|2)\\d{3}','geographic' => '[237]\\d{8}|8(?:[68]\\d{3}|7[0-69]\\d{2}|9(?:[02-9]\\d{2}|1(?:[0-57-9]\\d|6[0135-9])))\\d{4}','voip' => '550\\d{6}','fixed_line' => '[237]\\d{8}|8(?:[68]\\d{3}|7[0-69]\\d{2}|9(?:[02-9]\\d{2}|1(?:[0-57-9]\\d|6[0135-9])))\\d{4}','special_rate' => '(13(?:00\\d{2})?\\d{4})|(190[0126]\\d{6})|()','personal_number' => '500\\d{6}','mobile' => '14(?:5\\d|71)\\d{5}|4(?:[0-2]\\d|3[0-57-9]|4[47-9]|5[0-25-9]|6[6-9]|7[03-9]|8[17-9]|9[017-9])\\d{6}'};
 sub new {
   my $class = shift;
   my $number = shift;

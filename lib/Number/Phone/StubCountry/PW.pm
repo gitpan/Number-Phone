@@ -21,16 +21,16 @@ use base qw(Number::Phone::StubCountry);
 
 use strict;
 use warnings;
-our $VERSION = 1.20141124170813;
+our $VERSION = 1.20141125232349;
 
 my $formatters = [{'pattern' => '(\\d{3})(\\d{4})'}];
-my $validators = {'toll_free' => '','mobile' => '(?:6[234689]0|77[45789])\\d{4}','voip' => '','fixed_line' => '2552255|(?:277|345|488|5(?:35|44|87)|6(?:22|54|79)|7(?:33|47)|8(?:24|55|76))\\d{4}','special_rate' => '()|()|()','personal_number' => '','pager' => '','geographic' => '2552255|(?:277|345|488|5(?:35|44|87)|6(?:22|54|79)|7(?:33|47)|8(?:24|55|76))\\d{4}'};
+my $validators = {'voip' => '','mobile' => '(?:6[234689]0|77[45789])\\d{4}','personal_number' => '','special_rate' => '()|()|()','fixed_line' => '2552255|(?:277|345|488|5(?:35|44|87)|6(?:22|54|79)|7(?:33|47)|8(?:24|55|76))\\d{4}','geographic' => '2552255|(?:277|345|488|5(?:35|44|87)|6(?:22|54|79)|7(?:33|47)|8(?:24|55|76))\\d{4}','pager' => '','toll_free' => ''};
 sub new {
   my $class = shift;
   my $number = shift;
   $number =~ s/(^\+680|\D)//g;
   my $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
-  return $self if ($self->is_valid());
+  return $self->is_valid() ? $self : undef;
 }
 
 1;

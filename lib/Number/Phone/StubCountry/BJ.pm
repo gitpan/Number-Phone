@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
 
 use strict;
 use warnings;
-our $VERSION = 1.20141124170811;
+our $VERSION = 1.20141125232348;
 
 my $formatters = [{'pattern' => '(\\d{2})(\\d{2})(\\d{2})(\\d{2})'}];
-my $validators = {'toll_free' => '7[3-5]\\d{2}','mobile' => '(?:6[146-8]|9[03-9])\\d{6}','voip' => '857[58]\\d{4}','fixed_line' => '2(?:02|1[037]|2[45]|3[68])\\d{5}','special_rate' => '()|()|(81\\d{6})','personal_number' => '','pager' => '','geographic' => '2(?:02|1[037]|2[45]|3[68])\\d{5}'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2292021 => "Ongala",2292022 => "Kandi\Ã\©v\Ã\©",2292024 => "S\Ã\¨m\Ã\¨",2292025 => "Pob\Ã\¨\/K\Ã\©tou",2292026 => "Sak\Ã\©t\Ã\©\/Igolo",2292027 => "Adjohoun",2292029 => "Ou\Ã\©m\Ã\©\/Plateau\ departments",2292130 => "Cadjehoun",2292131 => "Ganhi",2292132 => "J\Ã\©richo",2292133 => "Akpakpa",2292134 => "Ouidah",2292135 => "Godomey",2292136 => "Abomey\-Calaci",2292137 => "Allada",2292138 => "Kouhounou",2292139 => "Littoral\/Atlantique\ departments",2292241 => "Lokossa",2292243 => "Come",2292246 => "Dogbo",2292249 => "Mono\/Kouffo\/Zou\/Collines\ departments",2292250 => "Abomey",2292251 => "Bohicon",2292252 => "Cov\Ã\¨",2292253 => "Dassa\-Zoum\Ã\©",2292254 => "Savalou",2292255 => "Sav\Ã\¨",2292259 => "Mono\/Kouffo\/Zou\/Collines\ departments",2292361 => "Parakou",2292362 => "Nikki\/Ndali",2292363 => "Kandi\/Gogounou\/S\Ã\©gbana",2292365 => "Banikoara",2292367 => "Malanville",2292380 => "Djougou",2292382 => "Natitingou",2292383 => "Tangui\Ã\©ta",);
+my $validators = {'pager' => '','toll_free' => '7[3-5]\\d{2}','geographic' => '2(?:02|1[037]|2[45]|3[68])\\d{5}','mobile' => '(?:6[146-8]|9[03-9])\\d{6}','personal_number' => '','special_rate' => '()|()|(81\\d{6})','fixed_line' => '2(?:02|1[037]|2[45]|3[68])\\d{5}','voip' => '857[58]\\d{4}'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2292021 => "Ongala",2292022 => "Kandi\Ã\©v\Ã\©",2292024 => "S\Ã\¨m\Ã\¨",2292025 => "Pob\Ã\¨\/K\Ã\©tou",2292026 => "Sak\Ã\©t\Ã\©\/Igolo",2292027 => "Adjohoun",2292029 => "Ou\Ã\©m\Ã\©\/Plateau\ departments",2292130 => "Cadjehoun",2292131 => "Ganhi",2292132 => "J\Ã\©richo",2292133 => "Akpakpa",2292134 => "Ouidah",2292135 => "Godomey",2292136 => "Abomey\-Calaci",2292137 => "Allada",2292138 => "Kouhounou",2292139 => "Littoral\/Atlantique\ departments",2292241 => "Lokossa",2292243 => "Come",2292246 => "Dogbo",2292249 => "Mono\/Kouffo\/Zou\/Collines\ departments",2292250 => "Abomey",2292251 => "Bohicon",2292252 => "Cov\Ã\¨",2292253 => "Dassa\-Zoum\Ã\©",2292254 => "Savalou",2292255 => "Sav\Ã\¨",2292259 => "Mono\/Kouffo\/Zou\/Collines\ departments",2292361 => "Parakou",2292362 => "Nikki\/Ndali",2292363 => "Kandi\/Gogounou\/S\Ã\©gbana",2292365 => "Banikoara",2292367 => "Malanville",2292380 => "Djougou",2292382 => "Natitingou",2292383 => "Tangui\Ã\©ta",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"229$prefix"} if exists($map{"229$prefix"});
       }
@@ -35,7 +35,7 @@ sub new {
   my $number = shift;
   $number =~ s/(^\+229|\D)//g;
   my $self = bless({ number => $number, formatters => $formatters, validators => $validators }, $class);
-  return $self if ($self->is_valid());
+  return $self->is_valid() ? $self : undef;
 }
 
 1;

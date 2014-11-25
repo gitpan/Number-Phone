@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
 
 use strict;
 use warnings;
-our $VERSION = 1.20141124170812;
+our $VERSION = 1.20141125232349;
 
 my $formatters = [{'pattern' => '(\\d{3})(\\d{4})'},{'pattern' => '(\\d{3})(\\d{3})(\\d{4})'}];
-my $validators = {'toll_free' => '8(?:00|44|55|66|77|88)[2-9]\\d{6}','mobile' => '758(?:28[4-7]|384|4(?:6[01]|8[4-9])|5(?:1[89]|20|84)|7(?:1[2-9]|2[0-8]))\\d{4}','voip' => '','fixed_line' => '758(?:4(?:30|5[0-9]|6[2-9]|8[0-2])|57[0-2]|638)\\d{4}','special_rate' => '()|(900[2-9]\\d{6})|()','personal_number' => '5(?:00|33|44|66|77)[2-9]\\d{6}','pager' => '','geographic' => '758(?:4(?:30|5[0-9]|6[2-9]|8[0-2])|57[0-2]|638)\\d{4}'};use Number::Phone::NANP::Data;sub areaname { Number::Phone::NANP::Data::areaname("1".shift()->{number}); }
+my $validators = {'toll_free' => '8(?:00|44|55|66|77|88)[2-9]\\d{6}','pager' => '','geographic' => '758(?:4(?:30|5[0-9]|6[2-9]|8[0-2])|57[0-2]|638)\\d{4}','mobile' => '758(?:28[4-7]|384|4(?:6[01]|8[4-9])|5(?:1[89]|20|84)|7(?:1[2-9]|2[0-8]))\\d{4}','personal_number' => '5(?:00|33|44|66|77)[2-9]\\d{6}','special_rate' => '()|(900[2-9]\\d{6})|()','fixed_line' => '758(?:4(?:30|5[0-9]|6[2-9]|8[0-2])|57[0-2]|638)\\d{4}','voip' => ''};use Number::Phone::NANP::Data;sub areaname { Number::Phone::NANP::Data::areaname("1".shift()->{number}); }
 sub new {
   my $class = shift;
   my $number = shift;
