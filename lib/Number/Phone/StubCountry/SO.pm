@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
 
 use strict;
 use warnings;
-our $VERSION = 1.20141125232349;
+our $VERSION = 1.20141203221723;
 
-my $formatters = [{'leading_digits' => '2[0-79]|[13-5]','pattern' => '(\\d)(\\d{6})'},{'leading_digits' => '24|[67]','pattern' => '(\\d)(\\d{7})'},{'pattern' => '(\\d{2})(\\d{5,7})','leading_digits' => '15|28|6[1378]'},{'pattern' => '(69\\d)(\\d{6})','leading_digits' => '69'},{'leading_digits' => '90','pattern' => '(90\\d)(\\d{3})(\\d{3})'}];
-my $validators = {'fixed_line' => '(?:1\\d|2[0-79]|3[0-46-8]|4[0-7]|59)\\d{5}','personal_number' => '','mobile' => '(?:15\\d|2(?:4\\d|8)|6[137-9]?\\d{2}|7[1-9]\\d|907\\d)\\d{5}','special_rate' => '()|()|()','voip' => '','geographic' => '(?:1\\d|2[0-79]|3[0-46-8]|4[0-7]|59)\\d{5}','toll_free' => '','pager' => ''};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2521 => "Hargeisa",25251 => "Mangauno",25261 => "Mogadishu",);
+my $formatters = [{'pattern' => '(\\d)(\\d{6})','leading_digits' => '2[0-79]|[13-5]'},{'pattern' => '(\\d)(\\d{7})','leading_digits' => '24|[67]'},{'leading_digits' => '15|28|6[1378]','pattern' => '(\\d{2})(\\d{5,7})'},{'pattern' => '(69\\d)(\\d{6})','leading_digits' => '69'},{'pattern' => '(90\\d)(\\d{3})(\\d{3})','leading_digits' => '90'}];
+my $validators = {'personal_number' => '','voip' => '','fixed_line' => '(?:1\\d|2[0-79]|3[0-46-8]|4[0-7]|59)\\d{5}','toll_free' => '','pager' => '','geographic' => '(?:1\\d|2[0-79]|3[0-46-8]|4[0-7]|59)\\d{5}','mobile' => '(?:15\\d|2(?:4\\d|8)|6[137-9]?\\d{2}|7[1-9]\\d|907\\d)\\d{5}','special_rate' => '()|()|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2521 => "Hargeisa",25251 => "Mangauno",25261 => "Mogadishu",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"252$prefix"} if exists($map{"252$prefix"});
       }

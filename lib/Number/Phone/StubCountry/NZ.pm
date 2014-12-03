@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
 
 use strict;
 use warnings;
-our $VERSION = 1.20141125232349;
+our $VERSION = 1.20141203221723;
 
-my $formatters = [{'leading_digits' => '[3467]|9[1-9]','pattern' => '([34679])(\\d{3})(\\d{4})'},{'leading_digits' => '24099','pattern' => '(24099)(\\d{3})'},{'leading_digits' => '21','pattern' => '(\\d{2})(\\d{3})(\\d{3})'},{'leading_digits' => '2(?:1[1-9]|[69]|7[0-35-9])|86','pattern' => '(\\d{2})(\\d{3})(\\d{3,5})'},{'pattern' => '(2\\d)(\\d{3,4})(\\d{4})','leading_digits' => '2[028]'},{'pattern' => '(\\d{3})(\\d{3})(\\d{3,4})','leading_digits' => '2(?:10|74)|5|[89]0'}];
-my $validators = {'fixed_line' => '(?:3[2-79]|[49][2-689]|6[235-9]|7[2-5789])\\d{6}|24099\\d{3}','special_rate' => '()|(90\\d{7,9})|()','personal_number' => '','mobile' => '2(?:[028]\\d{7,8}|1(?:[03]\\d{5,7}|[12457]\\d{5,6}|[689]\\d{5})|[79]\\d{7})','voip' => '','geographic' => '(?:3[2-79]|[49][2-689]|6[235-9]|7[2-5789])\\d{6}|24099\\d{3}','pager' => '[28]6\\d{6,7}','toll_free' => '508\\d{6,7}|80\\d{6,8}'};
+my $formatters = [{'leading_digits' => '[3467]|9[1-9]','pattern' => '([34679])(\\d{3})(\\d{4})'},{'leading_digits' => '24099','pattern' => '(24099)(\\d{3})'},{'pattern' => '(\\d{2})(\\d{3})(\\d{3})','leading_digits' => '21'},{'pattern' => '(\\d{2})(\\d{3})(\\d{3,5})','leading_digits' => '2(?:1[1-9]|[69]|7[0-35-9])|86'},{'leading_digits' => '2[028]','pattern' => '(2\\d)(\\d{3,4})(\\d{4})'},{'pattern' => '(\\d{3})(\\d{3})(\\d{3,4})','leading_digits' => '2(?:10|74)|5|[89]0'}];
+my $validators = {'special_rate' => '()|(90\\d{7,9})|()','mobile' => '2(?:[028]\\d{7,8}|1(?:[03]\\d{5,7}|[12457]\\d{5,6}|[689]\\d{5})|[79]\\d{7})','geographic' => '(?:3[2-79]|[49][2-689]|6[235-9]|7[2-5789])\\d{6}|24099\\d{3}','pager' => '[28]6\\d{6,7}','toll_free' => '508\\d{6,7}|80\\d{6,8}','fixed_line' => '(?:3[2-79]|[49][2-689]|6[235-9]|7[2-5789])\\d{6}|24099\\d{3}','personal_number' => '','voip' => ''};
 sub new {
   my $class = shift;
   my $number = shift;

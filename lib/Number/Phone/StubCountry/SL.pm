@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
 
 use strict;
 use warnings;
-our $VERSION = 1.20141125232349;
+our $VERSION = 1.20141203221723;
 
 my $formatters = [{'pattern' => '(\\d{2})(\\d{6})'}];
-my $validators = {'geographic' => '[235]2[2-4][2-9]\\d{4}','pager' => '','toll_free' => '','voip' => '','fixed_line' => '[235]2[2-4][2-9]\\d{4}','personal_number' => '','mobile' => '(?:2[15]|3[034]|4[04]|5[05]|7[6-9]|88)\\d{6}','special_rate' => '()|()|()'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (23222 => "Freetown",23232 => "Bo\/Kenema",23252 => "Makeni\/Koidu",);
+my $validators = {'special_rate' => '()|()|()','mobile' => '(?:2[15]|3[034]|4[04]|5[05]|7[6-9]|88)\\d{6}','geographic' => '[235]2[2-4][2-9]\\d{4}','pager' => '','toll_free' => '','fixed_line' => '[235]2[2-4][2-9]\\d{4}','voip' => '','personal_number' => ''};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (23222 => "Freetown",23232 => "Bo\/Kenema",23252 => "Makeni\/Koidu",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"232$prefix"} if exists($map{"232$prefix"});
       }

@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
 
 use strict;
 use warnings;
-our $VERSION = 1.20141125232349;
+our $VERSION = 1.20141203221723;
 
 my $formatters = [{'pattern' => '(\\d{3})(\\d{4})'}];
-my $validators = {'fixed_line' => '22\\d{5}','mobile' => '9[89]\\d{5}','personal_number' => '','special_rate' => '()|()|()','voip' => '','geographic' => '22\\d{5}','toll_free' => '','pager' => ''};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2392220 => "Santo\ Amaro",2392221 => "\Ã\gua\ Grande",2392222 => "\Ã\gua\ Grande",2392223 => "\Ã\gua\ Grande",2392224 => "\Ã\gua\ Grande",2392225 => "\Ã\gua\ Grande",2392226 => "\Ã\gua\ Grande",2392227 => "\Ã\gua\ Grande",2392228 => "\Ã\gua\ Grande",2392231 => "Guadalupe",2392233 => "Neves\,\ Santa\ Catarina",239224 => "\Ã\gua\ Grande",2392251 => "Autonomous\ Region\ of\ Pr\Ã\­ncipe",2392261 => "Angolares\,\ Porto\ Alegre",2392265 => "Santana\,\ Ribeira\ Afonso",2392271 => "Trindade",2392272 => "Madalena",239228 => "\Ã\gua\ Grande",239229 => "\Ã\gua\ Grande",);
+my $validators = {'fixed_line' => '22\\d{5}','toll_free' => '','pager' => '','geographic' => '22\\d{5}','mobile' => '9[89]\\d{5}','special_rate' => '()|()|()','personal_number' => '','voip' => ''};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2392220 => "Santo\ Amaro",2392221 => "\Ã\gua\ Grande",2392222 => "\Ã\gua\ Grande",2392223 => "\Ã\gua\ Grande",2392224 => "\Ã\gua\ Grande",2392225 => "\Ã\gua\ Grande",2392226 => "\Ã\gua\ Grande",2392227 => "\Ã\gua\ Grande",2392228 => "\Ã\gua\ Grande",2392231 => "Guadalupe",2392233 => "Neves\,\ Santa\ Catarina",239224 => "\Ã\gua\ Grande",2392251 => "Autonomous\ Region\ of\ Pr\Ã\­ncipe",2392261 => "Angolares\,\ Porto\ Alegre",2392265 => "Santana\,\ Ribeira\ Afonso",2392271 => "Trindade",2392272 => "Madalena",239228 => "\Ã\gua\ Grande",239229 => "\Ã\gua\ Grande",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"239$prefix"} if exists($map{"239$prefix"});
       }

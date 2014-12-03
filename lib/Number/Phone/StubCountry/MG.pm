@@ -21,10 +21,10 @@ use base qw(Number::Phone::StubCountry);
 
 use strict;
 use warnings;
-our $VERSION = 1.20141125232349;
+our $VERSION = 1.20141203221723;
 
 my $formatters = [{'pattern' => '([23]\\d)(\\d{2})(\\d{3})(\\d{2})'}];
-my $validators = {'geographic' => '20(?:2\\d{2}|4[47]\\d|5[3467]\\d|6[279]\\d|7(?:2[29]|[35]\\d)|8[268]\\d|9[245]\\d)\\d{4}','pager' => '','toll_free' => '','mobile' => '3[2-49]\\d{7}','personal_number' => '','special_rate' => '()|()|()','fixed_line' => '20(?:2\\d{2}|4[47]\\d|5[3467]\\d|6[279]\\d|7(?:2[29]|[35]\\d)|8[268]\\d|9[245]\\d)\\d{4}','voip' => '22\\d{7}'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2612022 => "Antananarivo",2612042 => "Ambatolampy",2612044 => "Antsirabe",2612047 => "Ambositra",2612048 => "Mid\-West\ Madagascar",2612053 => "Toamasina",2612054 => "Ambatondrazaka",2612056 => "Moramanga",2612057 => "Maroantsetra\/Sainte\ Marie",2612062 => "Mahajanga",2612067 => "Antsohihy",2612069 => "Maintirano",26120722 => "Manakara",26120729 => "Mananjary",2612073 => "Farafangana",2612075 => "Fianarantsoa",2612082 => "Antsiranana",2612086 => "Nosy\ Be",2612088 => "Sambava",2612092 => "Taola\Ã\±aro",2612094 => "Toliary",2612095 => "Morondava",);
+my $validators = {'personal_number' => '','voip' => '22\\d{7}','fixed_line' => '20(?:2\\d{2}|4[47]\\d|5[3467]\\d|6[279]\\d|7(?:2[29]|[35]\\d)|8[268]\\d|9[245]\\d)\\d{4}','toll_free' => '','pager' => '','geographic' => '20(?:2\\d{2}|4[47]\\d|5[3467]\\d|6[279]\\d|7(?:2[29]|[35]\\d)|8[268]\\d|9[245]\\d)\\d{4}','special_rate' => '()|()|()','mobile' => '3[2-49]\\d{7}'};sub areaname { my $self = shift; my $number = $self->{number}; my %map = (2612022 => "Antananarivo",2612042 => "Ambatolampy",2612044 => "Antsirabe",2612047 => "Ambositra",2612048 => "Mid\-West\ Madagascar",2612053 => "Toamasina",2612054 => "Ambatondrazaka",2612056 => "Moramanga",2612057 => "Maroantsetra\/Sainte\ Marie",2612062 => "Mahajanga",2612067 => "Antsohihy",2612069 => "Maintirano",26120722 => "Manakara",26120729 => "Mananjary",2612073 => "Farafangana",2612075 => "Fianarantsoa",2612082 => "Antsiranana",2612086 => "Nosy\ Be",2612088 => "Sambava",2612092 => "Taola\Ã\±aro",2612094 => "Toliary",2612095 => "Morondava",);
       foreach my $prefix (map { substr($number, 0, $_) } reverse(1..length($number))) {
         return $map{"261$prefix"} if exists($map{"261$prefix"});
       }
